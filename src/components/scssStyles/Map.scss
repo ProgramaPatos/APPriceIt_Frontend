@@ -1,0 +1,10 @@
+.Map {
+    text-align: center;
+    z-index: -1;
+  }
+  
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 77px);
+  }
