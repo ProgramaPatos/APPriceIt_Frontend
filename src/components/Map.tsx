@@ -1,10 +1,11 @@
-import * as React from 'react';
-import Map, {NavigationControl} from 'react-map-gl';
+
+import {Map, NavigationControl} from 'react-map-gl';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import './App.css';
+import './scssStyles/Map.scss'
 
-function Map() {
+
+function MyMap() {
   return (
     <div className="Map">
       <Map mapLib={maplibregl} 
@@ -13,13 +14,16 @@ function Map() {
           latitude: 4.638243,
           zoom: 14
         }}
-        style={{width: "100%", height: " calc(100vh - 77px)"}}
+        style={{width: "100%", height: "100%"}}
         mapStyle="https://api.maptiler.com/maps/streets/style.json?key=adwU4Tce1NNStPubalmv"
       >
-        <NavigationControl position="top-left" />
+        <div className='navControl'>
+          <NavigationControl position="bottom-right"  />
+        </div>
+       
       </Map>
     </div>
   );
 }
 
-export default Map;
+export default MyMap;
