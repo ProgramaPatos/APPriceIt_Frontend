@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import { SideBarMenu } from './components/SideBarMenu';
+import  MyMap  from './components/Map';
 import './App.css';
 import { SideBarMenuItem, SideMenuCard } from './types/types';
 import {FcAdvertising, FcPlus, FcSearch,FcSettings, FcHome,FcDownLeft} from 'react-icons/fc'
@@ -54,8 +55,12 @@ function App() {
 
 
   return (
-    <div className="App">
-      <Header />
+    <div className='Container'>
+
+     <MyMap />
+     <Header />
+
+
       <SideBarMenu items={items}  card={card} />
     </div>
 
