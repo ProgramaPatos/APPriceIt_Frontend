@@ -14,6 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { IconButton, OutlinedInput } from "@mui/material";
+import { Box } from '@mui/system';
 
 
 export default function LoginForm(){
@@ -21,7 +22,7 @@ export default function LoginForm(){
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    
+
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -35,6 +36,7 @@ export default function LoginForm(){
         <Border/>
            <LoginBack>
                 <Tittle>Inicio Sesión</Tittle>
+                <Box >
                 <TextField
                         id="Name"
                         label="Tu Nombre"
@@ -72,10 +74,11 @@ export default function LoginForm(){
                     />
                 </FormControl>
                 <SimpleSeparator/>
-                <Button>Iniciar</Button>
-                
+                <Button type="submit">Iniciar</Button>
+
                 <Button><GitHubIcon/> Iniciar con GitHub
                     </Button>
+                </Box>
                 <SimpleSeparator/>
                 <Text>¿No tienes una cuenta? <a href="/register">Registrate</a></Text>
            </LoginBack> 

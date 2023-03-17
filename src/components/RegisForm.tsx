@@ -60,7 +60,9 @@ export default function RegisterForm(){
         <>
             <FormBack>
                 <Title>Registro</Title>
-               <Box component="form" onSubmit={handleSubmit} >
+               <Box component="form" onSubmit={handleSubmit}    display="flex" flexDirection="column"
+  justifyContent="center"
+  alignItems="center">
                 <Order>
                     <TextField
                         id="Name"

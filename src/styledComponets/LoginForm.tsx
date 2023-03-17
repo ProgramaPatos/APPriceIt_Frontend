@@ -48,7 +48,7 @@ justify-content: center;
 align-items: center;
 gap: 10px;
 margin: 16px 0px;
-width: 70%;
+width: 100%;
 height: 40px;
 border-radius: 5px;
 background-color: #2C3333;
