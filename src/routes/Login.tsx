@@ -1,7 +1,12 @@
+import LoginForm from "../components/LoginForm";
+import RegisBackground from "../components/RegisBackground";
+
 export default function Login(){
     return (
         <div>
-            <h1>Login</h1>
+            <RegisBackground/>
+            <LoginForm/>
+           
         </div>
     )
 }

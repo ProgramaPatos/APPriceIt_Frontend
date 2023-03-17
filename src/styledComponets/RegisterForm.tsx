@@ -19,7 +19,6 @@ transform: translate(-50%, -50%);
 `
 export const Order= styled.div`
     width: 100%;
-    
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -29,8 +28,6 @@ export const Order= styled.div`
 
 
 export const Title = styled.h1`
- grid-column: 2/4;
- grid-row: 1;
  margin-top: 20px;
  font-size: 40px;
  color: #2C3333;
@@ -39,9 +36,9 @@ export const Title = styled.h1`
  `
 
 export const Button = styled.button`
-    margin-top: 40px;
+    margin-top: 30px;
     width: 70%;
-    height: 50px;
+    height: 70px;
     border-radius: 5px;
     background-color: #2C3333;
     color: #F6F1F1;
@@ -60,7 +57,8 @@ export const Button = styled.button`
 
 
 export const Text = styled.p`
-    margin-top: 50px;
+    margin: 0px;
+    margin-top: 20px;
     font-size: 20px;
     color: #2C3333;
     font-weight: 500;
