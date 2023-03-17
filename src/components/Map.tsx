@@ -15,7 +15,7 @@ function MyMap() {
           zoom: 14
         }}
         style={{width: "100%", height: "100%"}}
-        mapStyle="https://api.maptiler.com/maps/streets/style.json?key=adwU4Tce1NNStPubalmv"
+        mapStyle="https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM"
       >
         <div className='navControl'>
           <NavigationControl position="bottom-right"  />
