@@ -6,7 +6,9 @@ import './App.css';
 import { SideBarMenuItem, SideMenuCard } from '../types/types';
 import {FcAdvertising, FcPlus, FcSearch,FcSettings, FcHome,FcDownLeft} from 'react-icons/fc'
 
+
 function App() {
+  
   const items:SideBarMenuItem[] = [
     {
       id: "1",
@@ -43,6 +45,12 @@ function App() {
       icon: FcDownLeft,
       url : "/"
     },
+    {
+      id: "6",
+      label: 'Create',
+      icon: FcAdvertising,
+      url : '/stores' //TODO: Change this or make it functional
+    }
   ];
 
   const card:SideMenuCard = {
