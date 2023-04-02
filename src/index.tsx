@@ -10,6 +10,7 @@ import Login from './routes/Login';
 import Register from './routes/Register';
 import Error from './routes/Error';
 import { Auth0Provider } from "@auth0/auth0-react";
+import Create from './routes/Create';
 
 const router  = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router  = createBrowserRouter([
   {
     path: '/login',
     element: <Login />  
+  },
+  {//TODO: Create a modal for this route Frontend
+    path: '/stores',
+    element: <Create /> 
   }
 
 

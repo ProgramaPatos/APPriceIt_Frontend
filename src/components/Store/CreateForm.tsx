@@ -23,17 +23,18 @@ function Create(): JSX.Element {
     e.preventDefault();
     setLoading(true);
     const formData = {
-        //TODO: update form data
       store_name: values.store_name,
       store_lon: values.store_lon,
       store_lat: values.store_lat,
       store_description: values.store_description,
-      store_schedule: values.store_shedule,
+      store_schedule: values.store_schedule,
+      store_appuser_id: values.store_appuser_id,
       author,
     };
     const submitSuccess: boolean = await submitform(formData);
     setSubmitSuccess(submitSuccess);
     setValues({...values, formData});
+    console.log(formData);
     setLoading(false);
     setTimeout(() => {
       navigate('/');
@@ -44,7 +45,7 @@ function Create(): JSX.Element {
     try {
       const accessToken = await getIdTokenClaims();
       if(!accessToken) return false;
-      const response = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/stores/create`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_BASE_URL}/stores`, {
         method: "post",
         headers: new Headers({
           "Content-Type": "application/json",
@@ -65,7 +66,7 @@ function Create(): JSX.Element {
     e.preventDefault();
     setFormValues({ [e.currentTarget.name]: e.currentTarget.value })
   }  
-  return (
+  return (//TODO: Make it pretty Frontend
     <div>
     <div className={"col-md-12 form-wrapper"}>
       <h2> Create Post </h2>
@@ -81,42 +82,76 @@ function Create(): JSX.Element {
       )}
       <form id={"create-post-form"} onSubmit={handleFormSubmission} noValidate={true}>
         <div className="form-group col-md-12">
-          <label htmlFor="Store_Name"> Store Name </label>
+          <label htmlFor="store_name"> Store Name </label>
           <input 
             type="text" 
             id="store_name" 
             onChange={(e) => handleInputChanges(e)} 
-            name="title" 
+            name="store_name" 
             className="form-control" 
             placeholder="Enter title" 
             />
         </div>
         <div className="form-group col-md-12">
-          <label htmlFor="lon"> Longitud </label>
+          <label htmlFor="store_lon"> Longitud </label>
           <input 
             type="number" 
             id="store_lon" 
             onChange={(e) => handleInputChanges(e)} 
-            name="longitud" 
+            name="store_lon" 
             className="form-control" 
             placeholder="Enter longitud" 
           />
         </div>
         <div className="form-group col-md-12">
-          <label htmlFor="lat"> Latitud </label>
-          <input type="number" id="store_lat" onChange={(e) => handleInputChanges(e)} name="body" className="form-control" placeholder="Enter content" />
+          <label htmlFor="store_lat"> Latitud </label>
+          <input 
+            type="number" 
+            id="store_lat" 
+            onChange={(e) => handleInputChanges(e)} 
+            name="store_lat" 
+            className="form-control" 
+            placeholder="Enter content" />
         </div>
         <div className="form-group col-md-12">
-          <label htmlFor="description"> Description </label>
-          <input type="text" id="store_description" onChange={(e) => handleInputChanges(e)} name="description" className="form-control" placeholder="Enter Description" />
+          <label htmlFor="store_description"> Description </label>
+          <input 
+            type="text" 
+            id="store_description" 
+            onChange={(e) => handleInputChanges(e)} 
+            name="store_description" 
+            className="form-control" 
+            placeholder="Enter Description" />
         </div>
         <div className="form-group col-md-12">
-          <label htmlFor="schedule"> Schedule </label>
-          <input type="text" id="store_schedule" onChange={(e) => handleInputChanges(e)} name="description" className="form-control" placeholder="Enter Description" />
+          <label htmlFor="store_schedule"> Schedule </label>
+          <input 
+            type="text" 
+            id="store_schedule" 
+            onChange={(e) => handleInputChanges(e)} 
+            name="store_schedule" 
+            className="form-control" 
+            placeholder="Enter Description" />
         </div>
         <div className="form-group col-md-12">
-          <label htmlFor="author"> Author </label>
-          <input type="text" id="store_appuser_id" defaultValue={author} onChange={(e) => handleInputChanges(e)} name="author" className="form-control" />
+          <label htmlFor="store_appuser_id"> Author </label>
+          <input 
+            type="number" 
+            id="store_appuser_id" 
+            //defaultValue={author} ToDo: get user id
+            onChange={(e) => handleInputChanges(e)} 
+            name="store_appuser_id" 
+            className="form-control" />
+        </div>
+        <div className="form-group col-md-12">
+          <label htmlFor="store_appuser_id"> Author Name </label>
+          <input 
+            type="text" 
+            id="store_appuser_id" 
+            defaultValue={author} 
+            onChange={(e) => handleInputChanges(e)} 
+            name="author" 
+            className="form-control" />
         </div>
         <div className="form-group col-md-4 pull-right">
           <button className="btn btn-success" type="submit">
