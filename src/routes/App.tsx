@@ -27,7 +27,7 @@ function App() {
 
         {
       id: "3",
-      label: 'Busqueda Avanzada',
+      label: 'Avanzada',
       icon: FcSearch,
       url : "/"
     },
