@@ -80,17 +80,12 @@ function MyMap({ lat, lng }: any) {
         .addTo(map);
 
       initialStores.forEach((store) => {
-        const elem = document.createElement("div");
-        elem.className = "marker";
-        elem.style.background = "red";
-        elem.style.width = "10px";
-        elem.style.height = "20px";
+        // var el = document.createElement("div");
+        // el.addEventListener("click", function () {
+        //   window.alert("holi");
+        // });
 
-        elem.addEventListener("click", function () {
-          window.alert("aquí está la tienda");
-        });
-
-        new maplibregl.Marker(elem)
+        new maplibregl.Marker({ color: "#FF0000" })
           .setLngLat([
             store.store_location.coordinates[0],
             store.store_location.coordinates[1],

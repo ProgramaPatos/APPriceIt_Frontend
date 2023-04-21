@@ -5,7 +5,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./scssStyles/Map.scss";
 
 function MyMap({ lat, lng }: any) {
-  const mapContainerRef = useRef(null);
+  const mapContainerRef = useRef();
   const [initialStores, setInitialStores] = useState([
     {
       store_id: 7722,
@@ -63,48 +63,30 @@ function MyMap({ lat, lng }: any) {
         },
       ]);
     }
+    const map = new maplibregl.Map({
+      if mapContainerRef.current === null: return;
+      container: mapContainerRef.current,
+      style:
+        "https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM",
+      center: [-74.086294, 4.638243],
+      zoom: 14,
+    });
 
-    if (mapContainerRef.current) {
-      const map = new maplibregl.Map({
-        container: mapContainerRef.current,
-        style:
-          "https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM",
-        center: [-74.086294, 4.638243],
-        zoom: 14,
-      });
+    map.addControl(new maplibregl.NavigationControl(), "top-right");
 
-      map.addControl(new maplibregl.NavigationControl({}), "top-right");
+    new maplibregl.Marker({ color: "#FF0000" })
+      .setLngLat([-74.086294, 4.638243])
+      .addTo(map);
 
+    initialStores.forEach((store) => {
       new maplibregl.Marker({ color: "#FF0000" })
-        .setLngLat([-74.086294, 4.638243])
+        .setLngLat(store.store_location.coordinates)
         .addTo(map);
+    });
 
-      initialStores.forEach((store) => {
-        const elem = document.createElement("div");
-        elem.className = "marker";
-        elem.style.background = "red";
-        elem.style.width = "10px";
-        elem.style.height = "20px";
-
-        elem.addEventListener("click", function () {
-          window.alert("aquí está la tienda");
-        });
-
-        new maplibregl.Marker(elem)
-          .setLngLat([
-            store.store_location.coordinates[0],
-            store.store_location.coordinates[1],
-          ])
-          .addTo(map);
-
-        console.log(typeof [-74.086294, 4.638243]);
-        console.log(typeof store.store_location.coordinates);
-      });
-
-      return () => {
-        map.remove();
-      };
-    }
+    return () => {
+      map.remove();
+    };
   }, []);
 
   return <div ref={mapContainerRef} className="map" />;

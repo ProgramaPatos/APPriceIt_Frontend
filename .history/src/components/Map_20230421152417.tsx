@@ -75,9 +75,17 @@ function MyMap({ lat, lng }: any) {
 
       map.addControl(new maplibregl.NavigationControl({}), "top-right");
 
-      new maplibregl.Marker({ color: "#FF0000" })
-        .setLngLat([-74.086294, 4.638243])
-        .addTo(map);
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.background = "red";
+      el.style.width = "10px";
+      el.style.height = "20px";
+
+      el.addEventListener("click", function () {
+        window.alert("holi");
+      });
+
+      new maplibregl.Marker(el).setLngLat([-74.086294, 4.638243]).addTo(map);
 
       initialStores.forEach((store) => {
         const elem = document.createElement("div");

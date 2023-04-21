@@ -75,14 +75,23 @@ function MyMap({ lat, lng }: any) {
 
       map.addControl(new maplibregl.NavigationControl({}), "top-right");
 
-      new maplibregl.Marker({ color: "#FF0000" })
-        .setLngLat([-74.086294, 4.638243])
-        .addTo(map);
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.background = "red";
+      el.style.width = "10px";
+      el.style.height = "20px";
+
+      el.addEventListener("click", function () {
+        window.alert("holi");
+      });
+
+      new maplibregl.Marker(el).setLngLat([-74.086294, 4.638243]).addTo(map);
 
       initialStores.forEach((store) => {
         const elem = document.createElement("div");
         elem.className = "marker";
-        elem.style.background = "red";
+        elem.style.backgroundImage =
+          "url(https://th.bing.com/th/id/R.931b695c0935bd88e95e9d62a3216c85?rik=dkCVEx%2b735i2cg&pid=ImgRaw&r=0)";
         elem.style.width = "10px";
         elem.style.height = "20px";
 

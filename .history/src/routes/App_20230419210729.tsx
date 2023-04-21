@@ -80,7 +80,7 @@ function App() {
 
   return (
     <div className="Container">
-      <MyMap lat={currentLocation.lat} lng={currentLocation.lng} />
+      <MyMap />
       <Header />
 
       <SideBarMenu items={items} card={card} />

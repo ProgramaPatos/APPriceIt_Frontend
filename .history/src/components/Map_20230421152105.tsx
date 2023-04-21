@@ -75,22 +75,20 @@ function MyMap({ lat, lng }: any) {
 
       map.addControl(new maplibregl.NavigationControl({}), "top-right");
 
-      new maplibregl.Marker({ color: "#FF0000" })
-        .setLngLat([-74.086294, 4.638243])
-        .addTo(map);
+      const el = document.createElement("div");
+      el.className = "marker";
+      el.style.backgroundImage = "url(https://placekitten.com/g/";
+      el.style.width = "10px";
+      el.style.height = "20px";
+
+      el.addEventListener("click", function () {
+        window.alert("holi");
+      });
+
+      new maplibregl.Marker(el).setLngLat([-74.086294, 4.638243]).addTo(map);
 
       initialStores.forEach((store) => {
-        const elem = document.createElement("div");
-        elem.className = "marker";
-        elem.style.background = "red";
-        elem.style.width = "10px";
-        elem.style.height = "20px";
-
-        elem.addEventListener("click", function () {
-          window.alert("aquí está la tienda");
-        });
-
-        new maplibregl.Marker(elem)
+        new maplibregl.Marker({ color: "#FF0000" })
           .setLngLat([
             store.store_location.coordinates[0],
             store.store_location.coordinates[1],
