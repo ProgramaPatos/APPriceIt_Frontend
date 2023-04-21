@@ -1,9 +1,9 @@
 import { SideBarMenuItem, SideMenuCard } from '../../types/types'
 import { useState } from 'react'
-import {classNames} from '../../utils/classes'
 import {HiMenu} from 'react-icons/hi'
 import SideBarMenuCardView from './SideBarMenuCardView'
 import SideBarMenuItemView from './SideBarMenuItemView'
+import { MenuDisplay, BurgerButton , MenuButton } from '../../styledComponets/SideBarMenuStyle'
 import '../scssStyles/SideBarMenu.scss'
 
 
@@ -21,19 +21,19 @@ export function SideBarMenu({items, card}: SideBarMenuProps)   {
     }
 
     return (
-        <div className={classNames('SideBarMenu', isOPen? 'expanded' : 'collapsed')}> 
-            <div className = "menuButton">
-               <button className='burgerButton' onClick={handleClick} >
+        <MenuDisplay className= {isOPen? 'expanded' : 'collapsed'}> 
+            <MenuButton>
+               <BurgerButton  onClick={handleClick} >
                     <HiMenu/>
-               </button>
+               </BurgerButton>
 
-            </div>
+            </MenuButton>
             <SideBarMenuCardView card={card}  isOpen= {isOPen}/>
                 {items.map((item) => (
                     <SideBarMenuItemView item={item} key={item.id} isOpen= {isOPen}/>
                 ))}
 
-        </div>
+        </MenuDisplay>
     )
 
 

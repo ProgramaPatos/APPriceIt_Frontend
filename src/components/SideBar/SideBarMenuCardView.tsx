@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { SideMenuCard } from '../../types/types'
-import { classNames } from '../../utils/classes';
-import '../scssStyles/SideBarMenuCardView.scss'
+import { SideBarMenuCardViewSty, Profile, ProfileInfo, Name , Title  } from '../../styledComponets/MenuCardStyle';
 
 
 interface SideBarMenuCardViewProps {
@@ -11,18 +10,15 @@ interface SideBarMenuCardViewProps {
     isOpen: boolean;
 }
 
-
-
-
 export default function SideBarMenuCardView({card, isOpen}: SideBarMenuCardViewProps ){
     return (
-        <div className="SideBarMenuCardView">
-            <img className='profile' src= {card.photoURL} alt="profile"  width="100%"/>
-            <div className={classNames('profileInfo', isOpen? '' : 'collapsed')}>
-                <div className="name">{card.displayName}</div>
-                <div className="title">{card.title}</div>
+        <SideBarMenuCardViewSty>
+            <Profile src= {card.photoURL} alt="profile"  width="100%"/>
+            <ProfileInfo className={ isOpen? '' : 'collapsed'}>
+                <Name >{card.displayName}</Name>
+                <Title >{card.title}</Title>
 
-            </div>
-        </div>
+            </ProfileInfo>
+        </SideBarMenuCardViewSty>
     )
 }

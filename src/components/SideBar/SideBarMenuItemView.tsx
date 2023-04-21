@@ -1,7 +1,6 @@
 
 import { SideBarMenuItem } from "../../types/types";
-import { classNames } from "../../utils/classes";
-import '../scssStyles/SideBarMenuItemView.scss'
+import { SideBarMenuItemStyle, ItemContent,A,  Icon , Label , ToolTip } from "../../styledComponets/MenuItenStyle";
 
 
 interface SideBarMenuItemViewProps {
@@ -12,17 +11,17 @@ interface SideBarMenuItemViewProps {
 
 export default function SideBarMenuItemView({item, isOpen}: SideBarMenuItemViewProps){
     return (
-        <div className="SideBarMenuItem">
-            <a href="{item.url}">
-                <div className={classNames('ItemContent', isOpen? '' : 'collapsed')}>
-                    <div className="icon">
+        <SideBarMenuItemStyle>
+            <A href="{item.url}">
+                <ItemContent className={isOpen? '' : 'collapsed'}>
+                    <Icon>
                         <item.icon size="32" />    
-                    </div>
-                    <span className="label">{item.label}</span>   
-                </div>
+                    </Icon>
+                    <Label>{item.label}</Label>   
+                </ItemContent>
 
-            </a>
-            {isOpen? " ":  <div className="toolTip">{item.label} </div>  } 
-        </div>
+            </A>
+            {isOpen? " ":  <ToolTip>{item.label} </ToolTip>  } 
+        </SideBarMenuItemStyle>
     )
 }

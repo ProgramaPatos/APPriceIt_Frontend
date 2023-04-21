@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { paleteColors } from '../utils/colors';
 
+const [ lightMain , lightSecondary, neutral, darkSecondary, darkMain] = paleteColors();
 export const FormBack = styled.div`
 
 display: flex;

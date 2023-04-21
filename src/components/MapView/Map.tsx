@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import {Map, NavigationControl, Marker, useMap} from 'react-map-gl';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import '../scssStyles/Map.scss'
+import { MapStyle, NavControl } from '../../styledComponets/MapStyle';
 
-import SidePanel from '../SidePanel';
+import SidePanel from '../SidePanel/SidePanel';
 
 
 function MyMap() {
@@ -26,7 +26,7 @@ function MyMap() {
 
 
   return (
-    <div className="Map">
+    <MapStyle>
       <Map mapLib={maplibregl} 
         initialViewState={{
           longitude: -74.086294,
@@ -38,9 +38,9 @@ function MyMap() {
         style={{width: "100%", height: "100%"}}
         mapStyle="https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM"
       >
-        <div className='navControl'>
+        <NavControl>
           <NavigationControl position="bottom-right"  />
-        </div>
+        </NavControl>
 
         
         <Marker longitude={coordenates.lng} latitude={coordenates.lat}>
@@ -50,7 +50,7 @@ function MyMap() {
       
       </Map>
       <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel}/>
-    </div>
+    </MapStyle>
   );
 }
 
