@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Icon from '@mui/material/Icon';
 import SearchIcon from '@mui/icons-material/Search';
-import Icons from '../styledComponets/Icons';
+import Icons from '../../styledComponets/Icons';
 import LocalGroceryStoreSharpIcon from '@mui/icons-material/LocalGroceryStoreSharp';
 
 

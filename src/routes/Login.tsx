@@ -1,5 +1,5 @@
-import LoginForm from "../components/LoginForm";
-import RegisBackground from "../components/RegisBackground";
+import LoginForm from "../components/LoginView/LoginForm";
+import RegisBackground from "../components/RegisterView/RegisBackground";
 
 export default function Login(){
     return (

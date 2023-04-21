@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderStyle } from "../styledComponets/HeaderStyle";
+import { HeaderStyle } from "../../styledComponets/HeaderStyle";
 import { Avatar, Button  } from "@mui/material";
 import  SearchBar from "./Search";
 

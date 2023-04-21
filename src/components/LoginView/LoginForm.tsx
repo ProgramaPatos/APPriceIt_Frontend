@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { LoginBack, Border, Tittle, Button, Text, SimpleSeparator } from '../styledComponets/LoginForm';
+import { LoginBack, Border, Tittle, Button, Text, SimpleSeparator } from '../../styledComponets/LoginForm';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle'

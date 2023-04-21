@@ -3,9 +3,9 @@ import React, {useState} from 'react';
 import {Map, NavigationControl, Marker, useMap} from 'react-map-gl';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import './scssStyles/Map.scss'
+import '../scssStyles/Map.scss'
 
-import SidePanel from './SidePanel';
+import SidePanel from '../SidePanel';
 
 
 function MyMap() {

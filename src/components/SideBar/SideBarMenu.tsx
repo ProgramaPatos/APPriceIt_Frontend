@@ -1,10 +1,10 @@
-import { SideBarMenuItem, SideMenuCard } from '../types/types'
+import { SideBarMenuItem, SideMenuCard } from '../../types/types'
 import { useState } from 'react'
-import {classNames} from '../utils/classes'
+import {classNames} from '../../utils/classes'
 import {HiMenu} from 'react-icons/hi'
 import SideBarMenuCardView from './SideBarMenuCardView'
 import SideBarMenuItemView from './SideBarMenuItemView'
-import './scssStyles/SideBarMenu.scss'
+import '../scssStyles/SideBarMenu.scss'
 
 
 interface SideBarMenuProps {

@@ -1,7 +1,7 @@
 
-import { SideBarMenuItem } from "../types/types";
-import { classNames } from "../utils/classes";
-import './scssStyles/SideBarMenuItemView.scss'
+import { SideBarMenuItem } from "../../types/types";
+import { classNames } from "../../utils/classes";
+import '../scssStyles/SideBarMenuItemView.scss'
 
 
 interface SideBarMenuItemViewProps {

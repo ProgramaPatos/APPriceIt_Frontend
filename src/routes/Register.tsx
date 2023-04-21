@@ -1,6 +1,6 @@
 import React from "react"
-import RegisBackground from "../components/RegisBackground"
-import RegisterForm from "../components/RegisForm"
+import RegisBackground from "../components/RegisterView/RegisBackground"
+import RegisterForm from "../components/RegisterView/RegisForm"
 
 export default function Register(){
     return (

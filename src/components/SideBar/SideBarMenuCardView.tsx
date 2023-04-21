@@ -1,9 +1,9 @@
 
 
 import React from 'react';
-import { SideMenuCard } from '../types/types'
-import { classNames } from '../utils/classes';
-import './scssStyles/SideBarMenuCardView.scss'
+import { SideMenuCard } from '../../types/types'
+import { classNames } from '../../utils/classes';
+import '../scssStyles/SideBarMenuCardView.scss'
 
 
 interface SideBarMenuCardViewProps {
