@@ -1,49 +1,72 @@
-import React from 'react';
-import Header from '../components/MapView/Header';
-import { SideBarMenu } from '../components/SideBar/SideBarMenu';
-import  MyMap  from '../components/MapView/Map';
-import './App.css';
-import { SideBarMenuItem, SideMenuCard } from '../types/types';
-import {FcAdvertising, FcPlus, FcSearch,FcSettings, FcHome,FcDownLeft} from 'react-icons/fc'
-
-
+import React from "react";
+import Header from "../components/MapView/Header";
+import { SideBarMenu } from "../components/SideBar/SideBarMenu";
+import MyMap from "../components/MapView/Map";
+import "./App.css";
+import { SideBarMenuItem, SideMenuCard } from "../types/types";
+import {
+  FcAdvertising,
+  FcPlus,
+  FcSearch,
+  FcSettings,
+  FcHome,
+  FcDownLeft,
+} from "react-icons/fc";
+import { useState, useEffect } from "react";
 function App() {
-  
-  const items:SideBarMenuItem[] = [
+  const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setCurrentLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+
+    if (currentLocation.lat !== 0 && currentLocation.lng !== 0) {
+      console.log(
+        "lat: " + currentLocation.lat + " lng: " + currentLocation.lng
+      );
+    }
+  }, []);
+
+  const items: SideBarMenuItem[] = [
+
     {
       id: "1",
-      label: 'Home',
+      label: "Home",
       icon: FcHome,
-      url : "/"
+      url: "/",
     },
-
 
     {
       id: "2",
-      label: 'Añadir',
+      label: "Añadir",
       icon: FcPlus,
-      url : "/"
+      url: "/",
     },
 
-        {
+    {
       id: "3",
-      label: 'Avanzada',
+
+      label: "Busqueda Avanzada",
       icon: FcSearch,
-      url : "/"
+      url: "/",
     },
 
-        {
+    {
       id: "4",
-      label: 'Ajustes',
+      label: "Ajustes",
       icon: FcSettings,
-      url : "/"
+      url: "/",
     },
 
-        {
+    {
       id: "5",
-      label: 'Salir',
+      label: "Salir",
       icon: FcDownLeft,
-      url : "/"
+      url: "/",
     },
     {
       id: "6",
@@ -53,25 +76,22 @@ function App() {
     }
   ];
 
-  const card:SideMenuCard = {
-    id : "card01",
-    displayName : "Usuario Juan",
-    title : "Usuario",
-    photoURL: "https://media.tycsports.com/files/2022/06/14/440403/las-20-mejores-fotos-de-perfil-para-tu-cuenta-de-free-fire_w416.webp",
-    url : "/"
-  }
-
+  const card: SideMenuCard = {
+    id: "card01",
+    displayName: "Usuario Juan",
+    title: "Usuario",
+    photoURL:
+      "https://media.tycsports.com/files/2022/06/14/440403/las-20-mejores-fotos-de-perfil-para-tu-cuenta-de-free-fire_w416.webp",
+    url: "/",
+  };
 
   return (
-    <div className='Container'>
+    <div className="Container">
+      <MyMap lat={currentLocation.lat} lng={currentLocation.lng} />
+      <Header />
 
-     <MyMap />
-     <Header />
-
-
-      <SideBarMenu items={items}  card={card} />
+      <SideBarMenu items={items} card={card} />
     </div>
-
   );
 }
 

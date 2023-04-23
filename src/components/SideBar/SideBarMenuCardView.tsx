@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { SideMenuCard } from '../../types/types'
 import { SideBarMenuCardViewSty, Profile, ProfileInfo, Name , Title  } from '../../styledComponets/MenuCardStyle';
