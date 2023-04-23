@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { paleteColors } from '../utils/colors';
 
+const [ lightMain , lightSecondary, neutral, darkSecondary, darkMain] = paleteColors();
 export const LoginBack = styled.div`
 display: flex;
 flex-direction: column;

@@ -1,4 +1,4 @@
-import  {FormBack, Title,Text,Order, Button}  from "../styledComponets/RegisterForm" 
+import  {FormBack, Title,Text,Order, Button}  from "../../styledComponets/RegisterForm" 
 import React, { useState } from 'react'
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';

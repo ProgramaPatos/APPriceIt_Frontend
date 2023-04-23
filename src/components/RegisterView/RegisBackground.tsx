@@ -1,4 +1,4 @@
-import { BackgroundReg, BackgroundImg } from "../styledComponets/BackgroundReg";
+import { BackgroundReg, BackgroundImg } from "../../styledComponets/BackgroundReg";
 
 
 export default function RegisBackground(){

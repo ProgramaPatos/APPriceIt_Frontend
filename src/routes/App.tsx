@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../components/Header";
-import { SideBarMenu } from "../components/SideBarMenu";
-import MyMap from "../components/Map";
+import Header from "../components/MapView/Header";
+import { SideBarMenu } from "../components/SideBar/SideBarMenu";
+import MyMap from "../components/MapView/Map";
 import "./App.css";
 import { SideBarMenuItem, SideMenuCard } from "../types/types";
 import {
@@ -13,7 +13,6 @@ import {
   FcDownLeft,
 } from "react-icons/fc";
 import { useState, useEffect } from "react";
-
 function App() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
 
@@ -33,6 +32,7 @@ function App() {
   }, []);
 
   const items: SideBarMenuItem[] = [
+
     {
       id: "1",
       label: "Home",
@@ -49,6 +49,7 @@ function App() {
 
     {
       id: "3",
+
       label: "Busqueda Avanzada",
       icon: FcSearch,
       url: "/",
@@ -67,6 +68,12 @@ function App() {
       icon: FcDownLeft,
       url: "/",
     },
+    {
+      id: "6",
+      label: 'Create',
+      icon: FcAdvertising,
+      url : '/stores' //TODO: Change this or make it functional
+    }
   ];
 
   const card: SideMenuCard = {

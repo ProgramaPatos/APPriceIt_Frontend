@@ -1,11 +1,30 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import maplibregl from "maplibre-gl";
+import maplibregl, { Map, Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import "./scssStyles/Map.scss";
+import "../scssStyles/Map.scss";
+
+import SidePanel from "../SidePanel/SidePanel";
+
 
 function MyMap({ lat, lng }: any) {
+  
   const mapContainerRef = useRef(null);
+  const [viewPanel, setViewPanel] = useState(false);
+  const [coordenates, setCoordenates] = useState({lat: 0, lng: 0});
+  const [marker, setMarker] = useState<Marker | null>(null);
+  function putMarket(evt: any) {
+    console.log(evt.lngLat.lng, evt.lngLat.lat)
+    setCoordenates({lat: evt.lngLat.lat, lng: evt.lngLat.lng})
+    if(viewPanel === false){
+      setViewPanel(true)
+    }
+
+    
+    
+  } 
+
+
   const [initialStores, setInitialStores] = useState([
     {
       store_id: 7722,
@@ -66,18 +85,29 @@ function MyMap({ lat, lng }: any) {
 
     if (mapContainerRef.current) {
       const map = new maplibregl.Map({
+        
         container: mapContainerRef.current,
         style:
           "https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM",
         center: [-74.086294, 4.638243],
         zoom: 14,
-      });
 
-      map.addControl(new maplibregl.NavigationControl({}), "top-right");
+      }
+
+      );
+    
+
+      map.addControl(new maplibregl.NavigationControl({}), "bottom-right");
+      map.on("click", putMarket);
 
       new maplibregl.Marker({ color: "#FF0000" })
         .setLngLat([-74.086294, 4.638243])
         .addTo(map);
+
+      const marker =    new maplibregl.Marker({ color: "#FF0000" })
+        .setLngLat([coordenates.lng, coordenates.lat])
+        .addTo(map); 
+      setMarker(marker);
 
       initialStores.forEach((store) => {
         const elem = document.createElement("div");
@@ -107,7 +137,21 @@ function MyMap({ lat, lng }: any) {
     }
   }, []);
 
-  return <div ref={mapContainerRef} className="map" />;
+  useEffect(() => {
+  
+    if(marker != null){
+      marker.setLngLat([coordenates.lng, coordenates.lat])
+    }
+  
+
+  }, [coordenates] )
+  
+
+  return( <>
+    <div ref={mapContainerRef} className="map" />;
+    <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel}/>
+  </>
+  );
 }
 
 export default MyMap;
