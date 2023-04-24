@@ -6,7 +6,7 @@ function Tienda() {
   return (
     <Container>
         <h1> Tienda </h1>
-        <Buttons> Añadir </Buttons>
+        <Buttons > Añadir </Buttons>
 
     </Container>
     )

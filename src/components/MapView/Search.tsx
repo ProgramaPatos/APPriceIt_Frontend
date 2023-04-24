@@ -14,9 +14,9 @@ export default function CustomizedInputBase() {
     <Paper
       component="form"
 
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 600 ,  background : '#EEE9DA'}}
+      sx={{ p: '0.1rem 0.3rem', display: 'flex', alignItems: 'center', width: 600 ,  background : '#EEE9DA'}}
     >
-      <Icon sx={{ p: '10px' }} aria-label="menu">
+      <Icon sx={{ p: '0.7rem' }} aria-label="menu">
       <Icons  />
       </Icon>
       <InputBase
@@ -26,7 +26,7 @@ export default function CustomizedInputBase() {
       />
 
       <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+      <IconButton color="primary" sx={{ p: '0.7rem' }} aria-label="directions">
         <LocalGroceryStoreSharpIcon />
       </IconButton>
     </Paper>
