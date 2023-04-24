@@ -14,5 +14,5 @@ z-index: -1;
 `
 
 export const NavControl = styled.div`
- right: 100px;
+ right: 96rem;
  `

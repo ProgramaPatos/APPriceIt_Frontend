@@ -4,7 +4,7 @@ import { paleteColors } from '../utils/colors';
 const [ lightMain , lightSecondary, neutral, darkSecondary, darkMain] = paleteColors();
 export const SidePanelView = styled.div`
 
-background-color: #222;
+background-color: ${darkMain};
 
 position: absolute;
 left: 0;
@@ -15,21 +15,19 @@ display: flex;
 flex-direction: column;
 
 &.expanded {
-    width: 300px;
+    width: 20rem;
 }
 
 &.collapsed {
     overflow: hidden;
-    width: 0px;
+    width: 0rem;
 }
-
 `
 
 export const MenuButton = styled.div`
 display: flex;
-margin-top: 5px;
+margin-top: 0.5rem;
 justify-content: flex-end;
-
 `
 
 export const BurgerButton = styled.button`
@@ -37,6 +35,6 @@ cursor: pointer;
 border: none;
 background-color: transparent;
 color: white;
-padding: 10px;
-width: 68px;
+padding: 0.7rem;
+width: 4.1rem;
 `

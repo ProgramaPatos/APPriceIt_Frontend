@@ -6,7 +6,7 @@ export const Container = styled.div`
     position: absolute;
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 1.2rem;
     align-items: center;
     justify-content: center;
     translate : translate(-50%, -50%);
@@ -17,19 +17,19 @@ export const Container = styled.div`
 
 export const Buttons = styled.button`
 
-    background-color: #4CAF50; /* Green */
+    background-color: ${lightMain};
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 1rem 2rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    font-size: 1rem;
+    margin: 0.3rem 0.2rem;
     cursor: pointer;
-    border-radius: 12px;    
+    border-radius: 0.8rem;    
     width: 70%;
-    height: 50px;
-    margin-top: 10px;
+    height: 4rem;
+    margin-top: 0.5rem;
     
 `;

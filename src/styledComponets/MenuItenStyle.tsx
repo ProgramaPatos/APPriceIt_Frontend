@@ -6,12 +6,13 @@ export const SideBarMenuItemStyle = styled.div`
 text-align: left;
 display: flex;
 align-items: center;
-margin: 0 5px;
+margin: 0rem 0.4rem;
 
 
 &:hover{
-    background-color: blue;
+    background-color: ${darkSecondary};
     color:  white;
+    border-radius: 1rem;
 
 }
 &:hover{
@@ -32,16 +33,16 @@ white-space: nowrap;
 
 
 &.collapsed {
-    width: 35px;
+    width: 2.2rem;
 `
 
 export const Icon = styled.div`
-width: 32px;
-        height: 32px;
+width: 2rem;
+        height: 2rem;
 `
 export const Label = styled.span`
-font-weight: 500;
-        margin-left: 10px;
+        font-weight: 500;
+        margin-left: 0.7rem;
         overflow: hidden;
 `
 
@@ -49,9 +50,9 @@ export const ToolTip = styled.div`
 position: absolute;
 background-color: black;
 color: white;
-left: -80px;
+left: -5rem;
 padding: 10%;
-border-radius: 5px;
+border-radius: 0.5rem;
 text-transform: capitalize;
 display: none;
 
@@ -64,8 +65,8 @@ export const A = styled.a`
 color : white;
 text-decoration: none;
 display: block;
-padding: 10px;
+padding: 0.7rem;
 width: 100%;
-border-radius: 5px;
+border-radius: 0.5rem;
 `
 

@@ -14,6 +14,7 @@ function SidePanel({viewPanel, setViewPanel}: SidePanelProps){
 return (
     <SidePanelView className={viewPanel? 'expanded' : 'collapsed'}> 
         <MenuButton>
+        
            <BurgerButton onClick={handleClick} >
             <ImCross/> 
 

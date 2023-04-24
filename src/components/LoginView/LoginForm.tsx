@@ -79,9 +79,9 @@ export default function LoginForm() {
                     <SimpleSeparator />
                     {!isLoading && !user && ( //TODO: Redirect and cookies settings BackEnd
                         <>
-                            <button className="btn btn-dark" onClick={loginWithRedirect}> 
+                            {/* <button className="btn btn-dark" onClick={loginWithRedirect}> 
                                 Sign In
-                            </button>
+                            </button> */}
                         </>
                     )}{!isLoading && user && (
                         <>

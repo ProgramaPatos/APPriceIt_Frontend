@@ -5,7 +5,7 @@ const [ lightMain , lightSecondary, neutral, darkSecondary, darkMain] = paleteCo
 
 export const MenuDisplay = styled.div`
 
-background-color: #222 ;
+background-color: ${darkMain} ;
 
 position: absolute;
 right: 0;
@@ -17,11 +17,11 @@ flex-direction: column;
 
 
 &.expanded {
-    width: 300px;
+    width: 20rem;
 }
 
 &.collapsed {
-    width: 65px;
+    width: 4rem;
 }
 
 `
@@ -35,7 +35,7 @@ export const BurgerButton = styled.button`
  background-color: transparent;
  border: none;
  color: white;
- padding: 10px;
- width: 68px;
+ padding: 0.7rem;
+ width: 4.1rem;
 `
 

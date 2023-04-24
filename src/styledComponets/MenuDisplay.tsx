@@ -5,15 +5,15 @@ const [ lightMain , lightSecondary, neutral, darkSecondary, darkMain] = paleteCo
 export const MenuDisplay = styled.div`
     position: absolute;
     display: flex;
-    top: 30px;
-    left: 24px;
-    width: 50px;
+    top: 2rem;
+    left: 1.5rem;
+    width: 3rem;
     justify-content: center;
     align-items: center;
 
-    height: 50px;
-    background-color: #6096B4;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+    height: 3rem;
+    background-color: #red;
+    border-radius: 0.5rem;
+    box-shadow: 0rem 0.1rem 0.2rem -0.1rem rgba(0,0,0,0.2), 0rem 0.2rem 0.4rem 0rem rgba(0,0,0,0.14), 0rem 0.1rem 0.7rem 0rem rgba(0,0,0,0.12);
 
 `

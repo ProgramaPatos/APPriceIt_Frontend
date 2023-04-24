@@ -7,14 +7,14 @@ text-align: center;
 `
 export const Profile = styled.img`
 border-radius: 50%;
-padding: 10px;
+padding: 0.7rem;
 box-sizing: border-box;
-max-width: 150px;
+max-width: 9.4rem;
 `
 
 export const ProfileInfo = styled.div`
 overflow: hidden;
-height: 80px;
+height: 5rem;
 
 &.collapsed {
     opacity: 0;
@@ -23,13 +23,13 @@ height: 80px;
 `
 
 export const Name = styled.div`
-font-size: 1.5em;
+font-size: 1.5rem;
 font-weight: 600;
 margin: 0;
 padding: 0;
 `
 export const Title = styled.div`
-font-size: 1em;
+font-size: 1rem;
 font-weight: 400;
 margin: 0;
 padding: 0;
