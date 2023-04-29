@@ -1,0 +1,64 @@
+@import '../../commons.scss';
+@use '../../variables' as v;
+
+.SideBarMenu {
+    background-color: #222;
+
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    @include transition(width);
+
+    &.expanded {
+        width: 300px;
+    }
+
+    
+
+    &.collapsed {
+        width: 65px;
+    }
+
+    .menuButton {
+        display: flex;
+        justify-content: flex-end;
+
+
+    .burgerButton {
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        color: white;
+        padding: 10px;
+        width: 68px;
+    }
+
+    }
+
+
+}
+
+.MenuDisplay{
+    background-color: v.$darkMain;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &.expanded {
+    width: 20rem;
+  }
+
+  &.collapsed {
+    width: 4rem;
+  }
+}
+
