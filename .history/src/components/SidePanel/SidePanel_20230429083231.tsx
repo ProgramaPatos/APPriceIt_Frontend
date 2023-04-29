@@ -3,7 +3,6 @@ import {
   MenuButton,
   BurgerButton,
 } from "../../styledComponets/SidePanelView";
-import { ImCross } from "react-icons/im";
 import Tienda from "../Tienda";
 interface SidePanelProps {
   viewPanel: boolean;
@@ -17,9 +16,7 @@ function SidePanel({ viewPanel, setViewPanel }: SidePanelProps) {
   return (
     <SidePanelView className={viewPanel ? "expanded" : "collapsed"}>
       <MenuButton>
-        <BurgerButton onClick={handleClick}>
-          <ImCross />
-        </BurgerButton>
+        <BurgerButton onClick={handleClick}>X</BurgerButton>
       </MenuButton>
       <Tienda />
     </SidePanelView>

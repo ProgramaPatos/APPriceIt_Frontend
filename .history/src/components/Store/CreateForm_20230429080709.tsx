@@ -32,7 +32,7 @@ function Create(): JSX.Element {
       store_appuser_id: values.store_appuser_id,
       // author,
     };
-    const submitSuccess: boolean = true || (await submitform(formData)); //delete true
+    const submitSuccess: boolean = true || (await submitform(formData));
     setSubmitSuccess(submitSuccess);
     setValues({ ...values, formData });
     console.log(formData);
