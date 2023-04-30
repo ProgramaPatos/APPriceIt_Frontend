@@ -1,3 +1,4 @@
+import { BackgroundReg, BackgroundImg } from "./BackgroundReg.style";
 import "./RegisBackground.scss";
 
 export default function RegisBackground() {

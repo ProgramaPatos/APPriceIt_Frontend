@@ -1,0 +1,67 @@
+.SideBarMenuCardView {
+  text-align: center;
+}
+
+.SideBarMenuCardView .profile {
+  border-radius: 50%;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  max-width: 150px;
+}
+
+.SideBarMenuCardView .profileInfo {
+  overflow: hidden;
+  height: 80px;
+  -webkit-transition: height 0.3s ease-in-out;
+  transition: height 0.3s ease-in-out;
+}
+
+.SideBarMenuCardView .profileInfo.collapsed {
+  opacity: 0;
+  height: 0;
+}
+
+.SideBarMenuCardView .profileInfo .name {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.SideBarMenuCardViewSty {
+  text-align: center;
+}
+
+.Profile {
+  border-radius: 50%;
+  padding: 0.7rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  max-width: 9.4rem;
+}
+
+.ProfileInfo {
+  overflow: hidden;
+  height: 5rem;
+}
+
+.ProfileInfo.collapsed {
+  opacity: 0;
+  height: 0;
+}
+
+.Name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.Title {
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+}
+/*# sourceMappingURL=SideBarMenuCardView.css.map */

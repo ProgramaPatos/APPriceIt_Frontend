@@ -1,3 +1,4 @@
+import { FormBack, Title, Text, Order, Button } from "./RegisterForm.style";
 import "./RegisForm.scss";
 import React, { useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -185,16 +186,16 @@ export default function RegisterForm() {
               />
             </FormControl>
           </div>
-          <button className="Button" type="submit">
+          <button className="Button" ype="submit">
             Registrarme
           </button>
         </Box>
-        <p className="Text">
+        <Text>
           Ya tienes una cuenta?{" "}
           <a style={{ textDecoration: "none" }} href="/login">
             Inicia Sesion
           </a>
-        </p>
+        </Text>
       </div>
     </>
   );

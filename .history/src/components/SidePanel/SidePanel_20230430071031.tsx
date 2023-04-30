@@ -12,8 +12,8 @@ function SidePanel({ viewPanel, setViewPanel }: SidePanelProps) {
 
   return (
     <div className={`SidePanelView ${viewPanel ? "expanded" : "collapsed"}`}>
-      <div className="MenuButton">
-        <button className="BurgerButton" type="button" onClick={handleClick}>
+      <div className="MenuButton" onClick={handleClick}>
+        <button className="BurgerButton" type="button">
           <ImCross />
         </button>
       </div>
