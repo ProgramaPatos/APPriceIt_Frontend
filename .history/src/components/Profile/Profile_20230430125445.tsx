@@ -24,8 +24,8 @@ export default function Profile({ card }: ProfileProps) {
         style={{ display: isOpen ? "block" : "none" }}
       >
         <LoginForm />
-        {/* <div className="Name">{card.displayName}</div>
-        <div className="Title">{card.title}</div> */}
+        <div className="Name">{card.displayName}</div>
+        <div className="Title">{card.title}</div>
       </div>
     </div>
   );

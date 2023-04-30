@@ -10,7 +10,7 @@ interface ProfileProps {
 export default function Profile({ card }: ProfileProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <div className={`ProfileContainer ${isOpen ? "expanded" : ""}`}>
+    <div className="ProfileContainer">
       <img
         className="Profile"
         src={card.photoURL}
@@ -20,12 +20,12 @@ export default function Profile({ card }: ProfileProps) {
         }}
       />
       <div
-        // className="ProfileInfo"
+        className="ProfileInfo"
         style={{ display: isOpen ? "block" : "none" }}
       >
         <LoginForm />
-        {/* <div className="Name">{card.displayName}</div>
-        <div className="Title">{card.title}</div> */}
+        <div className="Name">{card.displayName}</div>
+        <div className="Title">{card.title}</div>
       </div>
     </div>
   );
