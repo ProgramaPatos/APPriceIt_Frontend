@@ -15,7 +15,7 @@ export default function CustomizedInputBase() {
         p: "0.1rem 0.3rem",
         display: "flex",
         alignItems: "center",
-        width: 450,
+        width: 600,
         background: "#EEE9DA",
         boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
       }}
@@ -23,7 +23,7 @@ export default function CustomizedInputBase() {
       <Icon sx={{ p: "0.7rem" }} aria-label="menu"></Icon>
       <InputBase
         sx={{ ml: 3, flex: 1 }}
-        placeholder="¿Qué estás buscando?"
+        placeholder="A comprar"
         inputProps={{ "aria-label": "search google maps" }}
       />
 

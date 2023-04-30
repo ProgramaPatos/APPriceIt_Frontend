@@ -4,6 +4,7 @@ import maplibregl, { Map, Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.scss";
 import { SideMenuCard, SideBarMenuItem } from "../../../types/types";
+import SidePanel from "../../SidePanel/SidePanel";
 import {
   FcAdvertising,
   FcPlus,
@@ -12,7 +13,7 @@ import {
   FcHome,
   FcDownLeft,
 } from "react-icons/fc";
-import { SideBarMenu } from "../../../components/SideBar/Menu/SideBarMenu";
+import { SideBarMenu } from "../components/SideBar/Menu/SideBarMenu";
 
 function MyMap({ lat, lng }: any) {
   const mapContainerRef = useRef(null);
@@ -196,13 +197,8 @@ function MyMap({ lat, lng }: any) {
   return (
     <>
       <div ref={mapContainerRef} className="map" />;
-      <SideBarMenu
-        items={items}
-        card={card}
-        viewPanel={viewPanel}
-        setViewPanel={setViewPanel}
-      />
-      {/* <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel} /> */}
+      <SideBarMenu items={items} card={card} />
+      <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel} />
     </>
   );
 }

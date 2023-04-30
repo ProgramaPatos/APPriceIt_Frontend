@@ -4,6 +4,7 @@ import maplibregl, { Map, Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.scss";
 import { SideMenuCard, SideBarMenuItem } from "../../../types/types";
+import SidePanel from "../../SidePanel/SidePanel";
 import {
   FcAdvertising,
   FcPlus,
@@ -196,12 +197,7 @@ function MyMap({ lat, lng }: any) {
   return (
     <>
       <div ref={mapContainerRef} className="map" />;
-      <SideBarMenu
-        items={items}
-        card={card}
-        viewPanel={viewPanel}
-        setViewPanel={setViewPanel}
-      />
+      <SideBarMenu items={items} card={card} viewPanel={viewPanel} />
       {/* <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel} /> */}
     </>
   );

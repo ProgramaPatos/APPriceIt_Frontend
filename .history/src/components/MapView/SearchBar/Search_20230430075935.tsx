@@ -15,7 +15,7 @@ export default function CustomizedInputBase() {
         p: "0.1rem 0.3rem",
         display: "flex",
         alignItems: "center",
-        width: 450,
+        width: 400,
         background: "#EEE9DA",
         boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
       }}

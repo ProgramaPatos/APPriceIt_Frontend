@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/MapView/Header/Header";
-import Profile from "../components/Profile/Profile";
 import { SideBarMenu } from "../components/SideBar/Menu/SideBarMenu";
 import MyMap from "../components/MapView/Map/Map";
 import "./App.css";

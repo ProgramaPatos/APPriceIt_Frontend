@@ -9,43 +9,25 @@ interface SideBarMenuProps {
   items: SideBarMenuItem[];
   card: SideMenuCard;
   viewPanel: boolean;
-  setViewPanel: (value: boolean) => void;
 }
 
-export function SideBarMenu({
-  items,
-  card,
-  viewPanel,
-  setViewPanel,
-}: SideBarMenuProps) {
-  const [isOPen, setIsOpen] = useState<boolean>(false);
+export function SideBarMenu({ items, card, viewPanel }: SideBarMenuProps) {
+  const [isOPen, setIsOpen] = useState<boolean>(viewPanel);
 
   const handleClick = (): void => {
     setIsOpen(!isOPen);
-    setViewPanel(false);
   };
 
   return (
-    <div
-      className={`MenuDisplay ${
-        isOPen || viewPanel ? "expanded" : "collapsed"
-      }`}
-    >
+    <div className={`MenuDisplay ${isOPen ? "expanded" : "collapsed"}`}>
       <div className="MenuButton">
         <button className="BurgerButton" onClick={handleClick}>
-          <HiMenu style={{ height: "2.7vh", width: "100%" }} />
+          <HiMenu />
         </button>
       </div>
-      {/* <SideBarMenuCardView card={card} isOpen={isOPen || viewPanel} /> */}
+      <SideBarMenuCardView card={card} isOpen={isOPen} />
       {items.map((item) => (
-        <SideBarMenuItemView
-          item={item}
-          key={item.id}
-          isOpen={isOPen || viewPanel}
-        />
-
-        //TODO: add Store component here
-        //<Tienda />
+        <SideBarMenuItemView item={item} key={item.id} isOpen={isOPen} />
       ))}
     </div>
   );

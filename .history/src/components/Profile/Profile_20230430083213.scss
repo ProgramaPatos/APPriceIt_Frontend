@@ -1,0 +1,36 @@
+.ProfileContainer {
+   text-align: center;
+   padding-top: 1vh;
+   z-index: 1;
+ }
+ 
+ .Profile {
+   border-radius: 50%;
+   padding: 0.7rem;
+   box-sizing: border-box;
+   max-width: 9.4rem;
+ }
+ 
+ .ProfileInfo{ 
+   overflow: hidden;
+   height: 5rem;
+ 
+   &.collapsed {
+     opacity: 0;
+     height: 0;
+   }
+ }
+ 
+ .Name{
+   font-size: 1.5rem;
+   font-weight: 600;
+   margin: 0;
+   padding: 0;
+ }
+ 
+ .Title{
+   font-size: 1rem;
+   font-weight: 400;
+   margin: 0;
+   padding: 0;
+ }

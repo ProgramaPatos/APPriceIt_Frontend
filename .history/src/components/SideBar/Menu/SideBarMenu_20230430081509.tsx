@@ -36,7 +36,7 @@ export function SideBarMenu({
           <HiMenu style={{ height: "2.7vh", width: "100%" }} />
         </button>
       </div>
-      {/* <SideBarMenuCardView card={card} isOpen={isOPen || viewPanel} /> */}
+      <SideBarMenuCardView card={card} isOpen={isOPen || viewPanel} />
       {items.map((item) => (
         <SideBarMenuItemView
           item={item}

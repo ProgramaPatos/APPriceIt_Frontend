@@ -3,16 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import maplibregl, { Map, Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.scss";
-import { SideMenuCard, SideBarMenuItem } from "../../../types/types";
-import {
-  FcAdvertising,
-  FcPlus,
-  FcSearch,
-  FcSettings,
-  FcHome,
-  FcDownLeft,
-} from "react-icons/fc";
-import { SideBarMenu } from "../../../components/SideBar/Menu/SideBarMenu";
+import { SideMenuCard } from "../../../types/types";
+import SidePanel from "../../SidePanel/SidePanel";
 
 function MyMap({ lat, lng }: any) {
   const mapContainerRef = useRef(null);
@@ -85,6 +77,15 @@ function MyMap({ lat, lng }: any) {
       ]);
     }
 
+    const card: SideMenuCard = {
+      id: "card01",
+      displayName: "Usuario Juan",
+      title: "Usuario",
+      photoURL:
+        "https://media.tycsports.com/files/2022/06/14/440403/las-20-mejores-fotos-de-perfil-para-tu-cuenta-de-free-fire_w416.webp",
+      url: "/",
+    };
+
     if (mapContainerRef.current) {
       const map = new maplibregl.Map({
         container: mapContainerRef.current,
@@ -140,69 +141,10 @@ function MyMap({ lat, lng }: any) {
     }
   }, [coordenates]);
 
-  const items: SideBarMenuItem[] = [
-    {
-      id: "1",
-      label: "Home",
-      icon: FcHome,
-      url: "/",
-    },
-
-    {
-      id: "2",
-      label: "Añadir",
-      icon: FcPlus,
-      url: "/",
-    },
-
-    {
-      id: "3",
-
-      label: "Busqueda Avanzada",
-      icon: FcSearch,
-      url: "/",
-    },
-
-    {
-      id: "4",
-      label: "Ajustes",
-      icon: FcSettings,
-      url: "/",
-    },
-
-    {
-      id: "5",
-      label: "Salir",
-      icon: FcDownLeft,
-      url: "/",
-    },
-    {
-      id: "6",
-      label: "Create",
-      icon: FcAdvertising,
-      url: "/stores", //TODO: Change this or make it functional
-    },
-  ];
-
-  const card: SideMenuCard = {
-    id: "card01",
-    displayName: "Usuario Juan",
-    title: "Usuario",
-    photoURL:
-      "https://media.tycsports.com/files/2022/06/14/440403/las-20-mejores-fotos-de-perfil-para-tu-cuenta-de-free-fire_w416.webp",
-    url: "/",
-  };
-
   return (
     <>
       <div ref={mapContainerRef} className="map" />;
-      <SideBarMenu
-        items={items}
-        card={card}
-        viewPanel={viewPanel}
-        setViewPanel={setViewPanel}
-      />
-      {/* <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel} /> */}
+      <SidePanel viewPanel={viewPanel} setViewPanel={setViewPanel} />
     </>
   );
 }

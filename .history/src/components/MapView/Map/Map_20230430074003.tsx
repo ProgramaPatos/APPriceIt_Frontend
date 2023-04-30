@@ -4,6 +4,7 @@ import maplibregl, { Map, Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./Map.scss";
 import { SideMenuCard, SideBarMenuItem } from "../../../types/types";
+import SidePanel from "../../SidePanel/SidePanel";
 import {
   FcAdvertising,
   FcPlus,

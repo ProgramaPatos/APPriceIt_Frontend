@@ -32,11 +32,15 @@ export function SideBarMenu({
       }`}
     >
       <div className="MenuButton">
-        <button className="BurgerButton" onClick={handleClick}>
-          <HiMenu style={{ height: "2.7vh", width: "100%" }} />
+        <button
+          className="BurgerButton"
+          onClick={handleClick}
+          style={"width: 100%; height: 100%;"}
+        >
+          <HiMenu />
         </button>
       </div>
-      {/* <SideBarMenuCardView card={card} isOpen={isOPen || viewPanel} /> */}
+      <SideBarMenuCardView card={card} isOpen={isOPen || viewPanel} />
       {items.map((item) => (
         <SideBarMenuItemView
           item={item}

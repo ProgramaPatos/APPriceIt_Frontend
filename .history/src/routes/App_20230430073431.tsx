@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/MapView/Header/Header";
-import Profile from "../components/Profile/Profile";
 import { SideBarMenu } from "../components/SideBar/Menu/SideBarMenu";
 import MyMap from "../components/MapView/Map/Map";
 import "./App.css";
@@ -89,8 +88,6 @@ function App() {
     <div className="Container">
       <MyMap lat={currentLocation.lat} lng={currentLocation.lng} />
       <Header />
-      <Profile card={card} />
-
       {/* <SideBarMenu items={items} card={card} /> */}
     </div>
   );
