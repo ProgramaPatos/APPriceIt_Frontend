@@ -32,11 +32,13 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const [authAxios,] = useState(
-        () => new AuthApi(new Configuration({
-            basePath: "http://localhost:3000"
-        }))
+        () => {
+            console.log(process.env.REACT_APP_API_BASE_URL);
+            return new AuthApi(new Configuration({
+                basePath: process.env.REACT_APP_API_BASE_URL
+            }))
+        }
     );
-    console.log(authAxios);
 
 
 
