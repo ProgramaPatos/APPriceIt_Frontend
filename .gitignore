@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# doom emacs project search ignore
+.ignore
+
+# vscode local history
+.history
