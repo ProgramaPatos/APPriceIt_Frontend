@@ -14,6 +14,7 @@ import {
   FcDownLeft,
 } from "react-icons/fc";
 import { useState, useEffect } from "react";
+import { UserContextProvider } from "../contexts/UserContext";
 function App() {
   const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
 
@@ -86,13 +87,15 @@ function App() {
   };
 
   return (
-    <div className="Container">
-      <MyMap lat={currentLocation.lat} lng={currentLocation.lng} />
-      {/* <Header />*/}
-      <Profile card={card} />
+    <UserContextProvider>
+      <div className="Container">
+        <MyMap lat={currentLocation.lat} lng={currentLocation.lng} />
+        {/* <Header />*/}
+        <Profile card={card} />
 
-      {/* <SideBarMenu items={items} card={card} /> */}
-    </div>
+        {/* <SideBarMenu items={items} card={card} /> */}
+      </div>
+    </UserContextProvider>
   );
 }
 

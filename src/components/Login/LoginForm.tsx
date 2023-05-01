@@ -1,24 +1,57 @@
-import React, { useState } from "react";
+import React, { FormEventHandler, useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
-import TextField from "@mui/material/TextField";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import InputLabel from "@mui/material/InputLabel";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { IconButton, OutlinedInput } from "@mui/material";
+import { IconButton } from "@mui/material";
 import "./LoginForm.scss";
-import { Box } from "@mui/system";
+import useUser from "../../hooks/useUser";
+
+type LoginInputFieldProps = TextFieldProps & { endIcon: React.ReactNode };
+
+const LoginInputField: React.FC<LoginInputFieldProps> = (props) => {
+  const { id, label, value, onChange, endIcon } = props;
+  return (
+    <TextField
+      id={id}
+      label={label}
+      required={true}
+      value={value}
+      onChange={onChange}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            {endIcon}
+          </InputAdornment>
+        )
+      }}
+      variant="outlined"
+      {...props}
+    />
+  );
+}
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
+  const { signIn, isLoading, hasAuthError } = useUser();
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (username && password) {
+      signIn({ userName: username, password: password });
+    }
+
+  }
+
   return (
     <>
       <div className="Border" />
@@ -26,50 +59,50 @@ export default function LoginForm() {
         <h1 className="Tittle">Inicio Sesión</h1>
         {/* <Box > */}
         <div>
-          <TextField
-            id="Name"
-            label="Tu Nombre"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  {" "}
-                  <AccountCircle />{" "}
-                </InputAdornment>
-              ),
-            }}
-            variant="outlined"
-          />
-          <div className="SimpleSeparator"></div>
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-password"
-              type={showPassword ? "text" : "password"}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    edge="end"
-                  >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              label="Password"
+          <form onSubmit={handleSubmit}>
+            <LoginInputField
+              id="Name"
+              label="Tu Nombre"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              endIcon={(
+                // TODO: this should not be a button
+                // but the style achieved by edge="end"
+                // isn't available with <Icon>
+                <IconButton
+                  edge="end"
+                  disabled={true}
+                >
+                  <AccountCircle />
+                </IconButton>
+              )}
             />
-          </FormControl>
-          <div className="SimpleSeparator" />
-          <button className="Button" type="submit">
-            Iniciar
-          </button>
-          <div className="SimpleSeparator" />
-          <button className="Button">
-            <GitHubIcon /> Iniciar con GitHub
-          </button>
+            <div className="SimpleSeparator"></div>
+            <LoginInputField
+              id="password"
+              label="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              endIcon={(
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              )}
+              type={showPassword ? "text" : "password"}
+            />
+
+            <div className="SimpleSeparator" />
+            {isLoading && (<strong>Cargando...</strong>)}
+            {hasAuthError && (<strong>Error de autenticación</strong>)}
+            <button className="Button" type="submit">
+              Iniciar
+            </button>
+          </form>
         </div>
         {/* </Box> */}
         <div className="SimpleSeparator" />
