@@ -13,6 +13,18 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./priceApiModels";
+
+/**
+ * 
+ * @export
+ * @interface RefreshRequestDTO
+ */
+export interface RefreshRequestDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof RefreshRequestDTO
+     */
+    'refreshToken': string;
+}
+

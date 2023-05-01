@@ -13,6 +13,15 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./priceApiModels";
+// May contain unused imports in some cases
+// @ts-ignore
+import { GeoPoint } from './geo-point';
+
+/**
+ * @type StoreResponseDTOStoreLocation
+ * A GeoJSON point
+ * @export
+ */
+export type StoreResponseDTOStoreLocation = GeoPoint;
+
+

@@ -13,6 +13,24 @@
  */
 
 
-export * from "./api";
-export * from "./configuration";
-export * from "./priceApiModels";
+
+/**
+ * 
+ * @export
+ * @interface GeoPoint
+ */
+export interface GeoPoint {
+    /**
+     * 
+     * @type {string}
+     * @memberof GeoPoint
+     */
+    'type': string;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof GeoPoint
+     */
+    'coordinates': Array<number>;
+}
+
