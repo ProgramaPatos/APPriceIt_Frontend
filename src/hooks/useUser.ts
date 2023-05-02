@@ -6,7 +6,7 @@ import { AuthApiFp, SignInRequestDTO } from "../services/api";
 const useUser = () => {
     const userCtxVal = useContext(UserContext);
     if (userCtxVal == undefined) {
-        throw new Error("useUser must be withing UserContextProvider");
+        throw new Error("useUser must be within UserContextProvider");
     }
 
     const {
@@ -16,7 +16,7 @@ const useUser = () => {
         refreshToken,
         setRefreshToken,
         deleteRefreshToken,
-        authAxios
+        authApi: authAxios
     } = userCtxVal;
 
     const [isLoading, setIsLoading] = useState(false);

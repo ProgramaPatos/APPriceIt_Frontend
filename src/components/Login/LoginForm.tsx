@@ -12,7 +12,7 @@ import useUser from "../../hooks/useUser";
 type LoginInputFieldProps = TextFieldProps & { endIcon: React.ReactNode };
 
 const LoginInputField: React.FC<LoginInputFieldProps> = (props) => {
-  const { id, label, value, onChange, endIcon } = props;
+  const { id, label, value, onChange, endIcon, ...other } = props;
   return (
     <TextField
       id={id}
@@ -28,15 +28,15 @@ const LoginInputField: React.FC<LoginInputFieldProps> = (props) => {
         )
       }}
       variant="outlined"
-      {...props}
+      {...other}
     />
   );
 }
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState<string | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>

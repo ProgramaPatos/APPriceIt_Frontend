@@ -16,23 +16,6 @@ import {
 import { useState, useEffect } from "react";
 import { UserContextProvider } from "../contexts/UserContext";
 function App() {
-  const [currentLocation, setCurrentLocation] = useState({ lat: 0, lng: 0 });
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setCurrentLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
-    });
-
-    if (currentLocation.lat !== 0 && currentLocation.lng !== 0) {
-      console.log(
-        "lat: " + currentLocation.lat + " lng: " + currentLocation.lng
-      );
-    }
-  }, []);
-
   const items: SideBarMenuItem[] = [
     {
       id: "1",
@@ -89,7 +72,7 @@ function App() {
   return (
     <UserContextProvider>
       <div className="Container">
-        <MyMap lat={currentLocation.lat} lng={currentLocation.lng} />
+        <MyMap />
         {/* <Header />*/}
         <Profile card={card} />
 

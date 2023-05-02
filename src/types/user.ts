@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { Dispatch, SetStateAction } from "react";
-import { AuthApi } from "../services/api";
+import { AuthApi, StoreApi } from "../services/api";
 
 export type UserContextValue = {
     id: number;
@@ -10,5 +10,6 @@ export type UserContextValue = {
     refreshToken: string | null;
     setRefreshToken: (newAT: string) => void;
     deleteRefreshToken: () => void;
-    authAxios: AuthApi
+    authApi: AuthApi;
+    storeApi: StoreApi;
 }
