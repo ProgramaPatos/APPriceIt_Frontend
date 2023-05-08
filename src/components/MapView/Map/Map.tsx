@@ -10,8 +10,13 @@ import useUser from "../../../hooks/useUser";
 
 function MyMap() {
   const mapContainerRef = useRef(null);
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated();
-  const [coordenates, setCoordenates] = useState(coords ? { lat: coords.latitude, lng: coords.longitude } : { lat: 0, lng: 0 });
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+    useGeolocated();
+  const [coordenates, setCoordenates] = useState(
+    coords
+      ? { lat: coords.latitude, lng: coords.longitude }
+      : { lat: 0, lng: 0 }
+  );
   const [map, setMap] = useState<Map | null>(null);
   const { storeApi } = useStoreApi();
   const [marker, setMarker] = useState<Marker | null>(null);
@@ -27,14 +32,13 @@ function MyMap() {
       m.remove();
     });
     setStores(newStores);
-  }
-
+  };
 
   useEffect(() => {
     marker?.setLngLat([coordenates.lng, coordenates.lat]);
     // console.log("ref", mapContainerRef);
     map?.flyTo({
-      center: [coordenates.lng, coordenates.lat]
+      center: [coordenates.lng, coordenates.lat],
     });
 
     if (!isAuthenticated) {
@@ -43,29 +47,25 @@ function MyMap() {
       return;
     }
 
-    storeApi.storeControllerSearchStores(coordenates.lat, coordenates.lng, 500)
-      .then(
-        ({ data }) => {
-          if (map) {
-            const newStores = data.map((store) => {
-              const storeMarker = new maplibregl.Marker()
-                .setLngLat([
-                  store.store_location.coordinates[0],
-                  store.store_location.coordinates[1],
-                ]);
-              storeMarker.addTo(map);
+    storeApi
+      .storeControllerSearchStores(coordenates.lat, coordenates.lng, 500)
+      .then(({ data }) => {
+        if (map) {
+          const newStores = data.map((store) => {
+            const storeMarker = new maplibregl.Marker().setLngLat([
+              store.store_location.coordinates[0],
+              store.store_location.coordinates[1],
+            ]);
+            storeMarker.addTo(map);
 
-              return storeMarker;
-            });
-            changeStores(newStores);
-          }
-
+            return storeMarker;
+          });
+          changeStores(newStores);
         }
-      )
+      })
       .catch((err) => {
         changeStores([]);
-      })
-
+      });
   }, [coordenates]);
 
   useEffect(() => {
@@ -75,9 +75,7 @@ function MyMap() {
     }
   }, [coords]);
 
-
   useEffect(() => {
-
     console.log({ isGeolocationAvailable, isGeolocationEnabled, coords });
     console.log("ref", mapContainerRef);
     if (mapContainerRef.current) {
@@ -103,10 +101,8 @@ function MyMap() {
       setMarker(marker);
 
       let stores: StoreResponseDTO[] = [];
-
     }
     return () => {
-
       stores.forEach((m) => {
         m.remove();
       });
