@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../components/MapView/Header/Header";
 import Profile from "../components/Profile/Profile";
 import { SideBarMenu } from "../components/SideBar/Menu/SideBarMenu";
-import MyMap from "../components/MapView/Map/Map";
+import MyMap from "../components/MapView/MapContainer/Map";
 import "./App.css";
 import { SideBarMenuItem, SideMenuCard } from "../types/types";
 import {
@@ -15,6 +15,7 @@ import {
 } from "react-icons/fc";
 import { useState, useEffect } from "react";
 import { UserContextProvider } from "../contexts/UserContext";
+import MyMapContainer from "../components/MapView/MapContainer/Map";
 function App() {
   const items: SideBarMenuItem[] = [
     {
@@ -72,7 +73,7 @@ function App() {
   return (
     <UserContextProvider>
       <div className="Container">
-        <MyMap />
+        <MyMapContainer />
         {/* <Header />*/}
         <Profile card={card} />
 
