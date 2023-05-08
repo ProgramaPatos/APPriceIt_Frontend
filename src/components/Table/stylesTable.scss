@@ -1,0 +1,52 @@
+$table-font-size: 0.875rem;
+$table-padding: 0.5rem;
+$border-radius: 0.5rem;
+$primary-color: #006992;
+$secondary-color: #EAF8BF;
+$box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.15);
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+  border-radius: $border-radius;
+  text-align: center;
+  overflow: hidden;
+  
+  .thead {
+    position: sticky;
+    z-index: 100;
+  }
+
+  .trHead {
+    background: $primary-color;
+  }
+
+  .th {
+    font-weight: normal; 
+    color: #0000;
+    padding : $table-padding; 
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: $table-font-size;
+  }
+
+  .trBody {
+    background: $secondary-color;
+  }
+
+  .td {
+    padding: $table-padding;
+    border: 0.063rem solid #001D4A ;
+    font-size: $table-font-size;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+}
+
+.DinamicTable {
+  padding: $table-padding;
+  background: $secondary-color;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}

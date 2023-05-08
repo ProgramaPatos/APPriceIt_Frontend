@@ -10,6 +10,7 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Error from "./routes/Error";
 import Create from "./routes/Create";
+import Table from "./routes/Table";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/Table",
+    element: <Table />,
   },
   {
     //TODO: Create a modal for this route Frontend
