@@ -23,7 +23,20 @@ function MyMap() {
   const [stores, setStores] = useState<Marker[]>([]);
   const { isAuthenticated } = useUser();
 
+  const createMarker = (lat: number, lng: number, map: any, color = "") => {
+    const marker = new maplibregl.Marker({ color: color })
+      .setLngLat([lng, lat])
+      .addTo(map);
+    setMarker(marker);
+    return marker;
+  };
+
   const handleMapClick = (evt: MapMouseEvent) => {
+    if (
+      coordenates.lat === evt.lngLat.lat &&
+      coordenates.lng === evt.lngLat.lng
+    )
+      return;
     setCoordenates({ lat: evt.lngLat.lat, lng: evt.lngLat.lng });
   };
 
@@ -34,13 +47,7 @@ function MyMap() {
     setStores(newStores);
   };
 
-  useEffect(() => {
-    marker?.setLngLat([coordenates.lng, coordenates.lat]);
-    // console.log("ref", mapContainerRef);
-    map?.flyTo({
-      center: [coordenates.lng, coordenates.lat],
-    });
-
+  async function plotStoresData() {
     if (!isAuthenticated) {
       alert("Loggeate para ver tiendas");
       changeStores([]);
@@ -66,6 +73,16 @@ function MyMap() {
       .catch((err) => {
         changeStores([]);
       });
+  }
+
+  useEffect(() => {
+    marker?.setLngLat([coordenates.lng, coordenates.lat]);
+    // console.log("ref", mapContainerRef);
+    map?.flyTo({
+      center: [coordenates.lng, coordenates.lat],
+    });
+
+    plotStoresData();
   }, [coordenates]);
 
   useEffect(() => {
@@ -91,14 +108,7 @@ function MyMap() {
       newMap.addControl(new maplibregl.NavigationControl({}), "bottom-right");
       newMap.on("click", handleMapClick);
 
-      // new maplibregl.Marker({ color: "#FF0000" })
-      //   .setLngLat([-74.086294, 4.638243])
-      //   .addTo(newMap);
-
-      const marker = new maplibregl.Marker({ color: "#FF0000" })
-        .setLngLat([coordenates.lng, coordenates.lat])
-        .addTo(newMap);
-      setMarker(marker);
+      createMarker(coordenates.lat, coordenates.lng, newMap, "#FF0000");
 
       let stores: StoreResponseDTO[] = [];
     }
