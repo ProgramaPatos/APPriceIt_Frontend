@@ -1,0 +1,20 @@
+.EnableGeolocationContainer{
+   width: 100vw;
+   height: 100vh;
+   background: url(../../../Img/paticobuscador.png);
+   background-repeat: no-repeat;
+   z-index: 1;
+   position: absolute;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+.EnableGeolocation {
+   position: relative;
+   width: 50%;
+   display: flex;
+   justify-content: center;
+   overflow: hidden;
+   z-index: 2;
+}
+

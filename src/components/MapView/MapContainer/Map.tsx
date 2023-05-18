@@ -3,15 +3,17 @@ import Map, { ViewState, ViewStateChangeEvent } from "react-map-gl";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useGeolocated } from "react-geolocated";
+import Loading from "../Loading/Loading";
+import EnableGeolocation from "../EnableGeolocation/EnableGeolocation";
 import { TRUE } from "sass";
 
-const EnableGeolocation = () => {
-  return <div>por favor habilita tu ubicacion xs dsbdhsdh la gerencia</div>;
-};
+// const EnableGeolocation = () => {
+//   return <div>por favor habilita tu ubicacion xs dsbdhsdh la gerencia</div>;
+// };
 
-const LoadingGeolocation = () => {
-  return <div>Buscandote</div>;
-};
+// const LoadingGeolocation = () => {
+//   return <div>Buscandote</div>;
+// };
 
 export default function MyMapContainer() {
   const initialViewState = {
@@ -42,7 +44,7 @@ export default function MyMapContainer() {
 
   return (
     <>
-      {isLoading && <LoadingGeolocation />}
+      {isLoading && isGeolocationEnabled && <Loading />}
       {!(isGeolocationAvailable && isGeolocationEnabled) && (
         <EnableGeolocation />
       )}
