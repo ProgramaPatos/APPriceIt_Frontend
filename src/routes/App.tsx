@@ -13,53 +13,13 @@ import {
   FcHome,
   FcDownLeft,
 } from "react-icons/fc";
-import { useState, useEffect } from "react";
 import { UserContextProvider } from "../contexts/UserContext";
+import { QueryClientProvider, QueryClient } from "react-query";
 import MyMapContainer from "../components/MapView/MapContainer/Map";
+
+
+const queryClient = new QueryClient();
 function App() {
-  const items: SideBarMenuItem[] = [
-    {
-      id: "1",
-      label: "Home",
-      icon: FcHome,
-      url: "/",
-    },
-
-    {
-      id: "2",
-      label: "Añadir",
-      icon: FcPlus,
-      url: "/",
-    },
-
-    {
-      id: "3",
-
-      label: "Busqueda Avanzada",
-      icon: FcSearch,
-      url: "/",
-    },
-
-    {
-      id: "4",
-      label: "Ajustes",
-      icon: FcSettings,
-      url: "/",
-    },
-
-    {
-      id: "5",
-      label: "Salir",
-      icon: FcDownLeft,
-      url: "/",
-    },
-    {
-      id: "6",
-      label: "Create",
-      icon: FcAdvertising,
-      url: "/stores", //TODO: Change this or make it functional
-    },
-  ];
 
   const card: SideMenuCard = {
     id: "card01",
@@ -71,15 +31,14 @@ function App() {
   };
 
   return (
-    <UserContextProvider>
-      <div className="Container">
-        <MyMapContainer />
-        {/* <Header />*/}
-        <Profile card={card} />
-
-        {/* <SideBarMenu items={items} card={card} /> */}
-      </div>
-    </UserContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserContextProvider>
+        <div className="Container">
+          <MyMapContainer />
+          <Profile card={card} />
+        </div>
+      </UserContextProvider>
+    </QueryClientProvider>
   );
 }
 

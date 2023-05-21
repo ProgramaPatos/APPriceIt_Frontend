@@ -8,23 +8,28 @@ import {
 import { AuthApi, AuthApiFp, StoreApi } from "../services/api";
 import type { UserContextValue } from "../types/user";
 import { Configuration } from "../services/api";
-import axios from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosInterceptorOptions } from "axios";
 
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  const [authApi] = useState(() => {
-    return new AuthApi(
+  const [{ authApi, unauthenticatedAxiosInstance }] = useState(() => {
+    const unauthenticatedAxiosInstance = axios.create();
+    const authApi = new AuthApi(
       new Configuration({
         basePath: process.env.REACT_APP_API_BASE_URL,
-      })
+      }),
+      undefined,
     );
+    return {
+      authApi,
+      unauthenticatedAxiosInstance
+    }
   });
 
   const [authenticatedAxiosInstance] = useState(() => {
     return axios.create();
   });
-  // TODO: Maybe Refactor these two as a custom hook
   const [accessToken, setAccessTokenRaw] = useState<string | null>(() =>
     window.localStorage.getItem("accessToken")
   );
@@ -52,24 +57,6 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     setRefreshTokenRaw(null);
   };
 
-  useEffect(() => {
-    authenticatedAxiosInstance.interceptors.response.use(
-      (res) => res,
-      async (error) => {
-        const originalRequest = error.config;
-        console.log("hmmm");
-        if (error.response.status === 401 && refreshToken) {
-          console.log("hmmm2");
-          const { accessToken: newAccessToken } = (
-            await authApi.authControllerRefresh({ refreshToken })
-          ).data;
-          setAccessToken(newAccessToken);
-          return authenticatedAxiosInstance(originalRequest);
-        }
-        return Promise.reject(error);
-      }
-    );
-  }, [authenticatedAxiosInstance]);
 
   const [storeApi] = useState(() => {
     return new StoreApi(
@@ -93,6 +80,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         deleteRefreshToken,
         authApi,
         storeApi,
+        authenticatedAxiosInstance
       }}
     >
       {children}

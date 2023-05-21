@@ -7,7 +7,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import "./LoginForm.scss";
-import useUser from "../../hooks/useUser";
+import useUser, { AuthStatus } from "../../hooks/useUser";
 
 type LoginInputFieldProps = TextFieldProps & { endIcon: React.ReactNode };
 
@@ -43,7 +43,7 @@ export default function LoginForm() {
   ) => {
     event.preventDefault();
   };
-  const { signIn, isLoading, hasAuthError } = useUser();
+  const { signIn, userStatus, hasAuthError } = useUser();
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (username && password) {
@@ -97,7 +97,7 @@ export default function LoginForm() {
             />
 
             <div className="SimpleSeparator" />
-            {isLoading && (<strong>Cargando...</strong>)}
+            {(userStatus === AuthStatus.LOGGING_IN) && (<strong>Cargando...</strong>)}
             {hasAuthError && (<strong>Error de autenticación</strong>)}
             <button className="Button" type="submit">
               Iniciar

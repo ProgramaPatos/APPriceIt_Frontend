@@ -12,4 +12,5 @@ export type UserContextValue = {
     deleteRefreshToken: () => void;
     authApi: AuthApi;
     storeApi: StoreApi;
+    authenticatedAxiosInstance: AxiosInstance
 }

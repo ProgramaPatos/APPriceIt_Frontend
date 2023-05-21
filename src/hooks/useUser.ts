@@ -1,8 +1,13 @@
-import axios from "axios";
-import { useCallback, useContext, useState } from "react";
+import axios, { AxiosError } from "axios";
+import { useCallback, useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import { AuthApiFp, SignInRequestDTO } from "../services/api";
 
+export enum AuthStatus {
+    AUTHENTICATED = "AUTHENTICATED",
+    UNAUTHENTICATED = "UNAUTHENTICATED",
+    LOGGING_IN = "LOGGING_IN"
+}
 const useUser = () => {
     const userCtxVal = useContext(UserContext);
     if (userCtxVal == undefined) {
@@ -16,23 +21,23 @@ const useUser = () => {
         refreshToken,
         setRefreshToken,
         deleteRefreshToken,
-        authApi: authAxios
+        authApi,
+        authenticatedAxiosInstance
     } = userCtxVal;
 
-    const [isLoading, setIsLoading] = useState(false);
+    const [userStatus,setUserStatus] = useState<AuthStatus>(accessToken == null ? AuthStatus.UNAUTHENTICATED : AuthStatus.AUTHENTICATED);
     // TODO: send the error message to the login form
     const [hasAuthError, setHasAuthError] = useState(false);
 
     const signIn = useCallback((requestPayload: SignInRequestDTO) => {
 
-        setIsLoading(true);
-        authAxios.authControllerSignIn(requestPayload)
+        setUserStatus(AuthStatus.LOGGING_IN);
+        authApi.authControllerSignIn(requestPayload)
             .then(
                 ({ data: { accessToken, refreshToken } }) => {
-                    setIsLoading(false);
-                    setHasAuthError(false);
                     setAccessToken(accessToken);
                     setRefreshToken(refreshToken);
+                    setHasAuthError(false);
                 }
             )
             .catch(
@@ -40,11 +45,10 @@ const useUser = () => {
                     deleteAccessToken();
                     deleteRefreshToken();
                     setHasAuthError(true);
-                    setIsLoading(false);
                     console.log(err);
                 }
             );
-    }, [setAccessToken, setRefreshToken, setIsLoading, setHasAuthError, deleteAccessToken, deleteRefreshToken]);
+    }, [setAccessToken, setRefreshToken, setUserStatus, setHasAuthError, deleteAccessToken, deleteRefreshToken]);
     // ^ These functions should not change, but it's better to express
     // the dependency.
     const logOut = useCallback(() => {
@@ -52,12 +56,48 @@ const useUser = () => {
         deleteRefreshToken();
     }, [deleteAccessToken, deleteRefreshToken])
 
+  const onAuthError = useCallback<<T>(error: AxiosError) => Promise<T>>(
+    async (error) => {
+      const originalRequest = error.config;
+      console.log("hmmm");
+      console.log(error)
+
+      if (error.response?.status === 401 && refreshToken && originalRequest) {
+          deleteAccessToken();
+          setUserStatus(AuthStatus.LOGGING_IN)
+          try {
+            const { accessToken: newAccessToken } = (
+                await authApi.authControllerRefresh({ refreshToken })
+            ).data;
+            setAccessToken(newAccessToken);
+            return authenticatedAxiosInstance(originalRequest);
+          }
+          catch (e) {
+            deleteRefreshToken();
+          }
+      }
+      return Promise.reject(error);
+    }, [authApi, authenticatedAxiosInstance,setUserStatus]
+  );
+  useEffect(() => {
+    authenticatedAxiosInstance.interceptors.response.use(
+      undefined,
+      onAuthError
+    );
+  }, [authenticatedAxiosInstance,onAuthError]);
+    useEffect(() => {
+      if (accessToken !== null) {
+          setUserStatus(AuthStatus.AUTHENTICATED);
+      }
+      else {
+          setUserStatus(AuthStatus.UNAUTHENTICATED);
+      }
+    },[accessToken]);
 
     return {
         signIn,
         logOut,
-        isAuthenticated: accessToken !== null,
-        isLoading,
+        userStatus,
         hasAuthError
     }
 
