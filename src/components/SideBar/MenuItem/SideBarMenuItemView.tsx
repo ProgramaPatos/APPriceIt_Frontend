@@ -12,10 +12,13 @@ export default function SideBarMenuItemView({
 }: SideBarMenuItemViewProps) {
   return (
     <div className="SideBarMenuItemStyle">
-      <a className="A" href="{item.url}">
-        <div className={`ItemContent ${isOpen ? "" : "collapsed"}`}>
+      <a className="A" href={item.url}>
+        <div className={`ItemContent ${isOpen ? "expanded" : "collapsed"}`}>
           <div className="Icon">
-            <item.icon size="32" />
+            <item.icon
+              size="2.4vh"
+              style={{ display: "block", margin: "auto" }}
+            />
           </div>
           <span className="Label">{item.label}</span>
         </div>

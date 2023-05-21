@@ -44,7 +44,7 @@ export default function MyMapContainer() {
 
   return (
     <>
-      {isLoading && isGeolocationEnabled && <Loading />}
+      {/* {isLoading && isGeolocationEnabled && <Loading />} */}
       {!(isGeolocationAvailable && isGeolocationEnabled) && (
         <EnableGeolocation />
       )}
