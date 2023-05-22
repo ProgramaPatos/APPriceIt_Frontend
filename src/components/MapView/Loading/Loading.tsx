@@ -3,7 +3,7 @@ import "./Loading.scss";
 export default function Loading() {
   return (
     <div className="LoadingContainer">
-      <div className="Loading">
+      <div id="Loading">
         <span></span>
         <span></span>
         <span></span>

@@ -1,0 +1,102 @@
+@use '../variables' as v;
+@import '../commons.scss';
+
+.InfoDisplay{
+   background-color: v.$darkSecondary;
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   z-index: 1;
+   left: 4rem;
+   box-shadow: 0 1px 2px rgba(27, 29, 30, 0.3), 0 2px 6px 2rgba(33, 34, 35, 0.1);
+ 
+   &.expanded {
+     width: 27.5vw;
+   }
+ 
+   &.collapsed {
+     width: 0 ;
+   }
+ }
+ 
+ .InfoBurgerButton{
+     cursor: pointer;
+     background-color: transparent;
+     border: none;
+     color: v.$white;
+     padding: 0.7rem;
+     margin-top: 1.8vh;
+     width: 4.1rem;
+     height: 4.7vh;
+ }
+
+ .InfoBarContainer{
+  padding: 0 0.7vw;
+  color: v.$white;
+  font-size: 0.875rem;
+  margin-top: 9vh;
+  overflow-y: auto;
+ }
+
+ .InfoBarMainTitle{
+  margin: 0;
+  font-size: 1.37rem;
+  font-weight: 400;
+  line-height: 1.75rem;
+ }
+
+ .InfoBarMainSubTitle{
+  margin: 1vh 0 0 0;
+  font-size: 0.875rem;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(#dadce0, 0.12) ;
+  padding-bottom: 0.5vh;
+ }
+
+ .InfoCard{
+  background-color: v.$darkMain;
+  border-radius: 1vh;
+  margin-bottom: 1vh;
+  position: relative;
+  padding-bottom: 0.1vh;
+ }
+
+ .InfoCardArrow{
+  position: absolute;
+  right: 1vw;
+  top: 1vw;
+
+ }
+
+ .InfoCardHeader{
+  background-color: rgba(v.$darkSecondary , 0.3);
+  border-radius: 1vh;
+  padding: 0.5vw;
+ }
+
+ .InfoCardBody{
+  padding: 0 0.5vw;
+ }
+
+ .InfoCardPrice{
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.3vh;
+  margin-bottom: 0.3vh;
+ }
+
+ .InfoCardPriceValue{
+  background-color: rgba(v.$darkSecondary , 0.3);
+  border-radius: 1vh;
+  // min-width: 6vw;
+  height: 3vh;
+  padding: 0 0.5em;
+  display: flex;
+  justify-content: center;
+  margin-right: 0.5vw;
+  align-items: center;
+ }

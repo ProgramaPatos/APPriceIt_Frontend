@@ -22,7 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { StoreControllerGetStoreProducts200Response } from '../priceApiModels';
+import { ProductWithPricesResponseDTO } from '../priceApiModels';
 // @ts-ignore
 import { StoreCreateDTO } from '../priceApiModels';
 // @ts-ignore
@@ -117,15 +117,12 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * Gets products registered for store
          * @summary 
          * @param {number} storeId 
-         * @param {boolean} withPrices 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerGetStoreProducts: async (storeId: number, withPrices: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeControllerGetStoreProducts: async (storeId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'storeId' is not null or undefined
             assertParamExists('storeControllerGetStoreProducts', 'storeId', storeId)
-            // verify required parameter 'withPrices' is not null or undefined
-            assertParamExists('storeControllerGetStoreProducts', 'withPrices', withPrices)
             const localVarPath = `/store/{storeId}/products`
                 .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -142,10 +139,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             // authentication bearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (withPrices !== undefined) {
-                localVarQueryParameter['withPrices'] = withPrices;
-            }
 
 
     
@@ -164,11 +157,11 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {string} [namePrefix] 
+         * @param {number} [product] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerSearchStores: async (lat: number, lon: number, distance: number, namePrefix?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeControllerSearchStores: async (lat: number, lon: number, distance: number, product?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'lat' is not null or undefined
             assertParamExists('storeControllerSearchStores', 'lat', lat)
             // verify required parameter 'lon' is not null or undefined
@@ -203,8 +196,8 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['distance'] = distance;
             }
 
-            if (namePrefix !== undefined) {
-                localVarQueryParameter['name_prefix'] = namePrefix;
+            if (product !== undefined) {
+                localVarQueryParameter['product'] = product;
             }
 
 
@@ -298,12 +291,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * Gets products registered for store
          * @summary 
          * @param {number} storeId 
-         * @param {boolean} withPrices 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerGetStoreProducts(storeId: number, withPrices: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreControllerGetStoreProducts200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerGetStoreProducts(storeId, withPrices, options);
+        async storeControllerGetStoreProducts(storeId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductWithPricesResponseDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerGetStoreProducts(storeId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -312,12 +304,12 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {string} [namePrefix] 
+         * @param {number} [product] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerSearchStores(lat: number, lon: number, distance: number, namePrefix?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoreResponseDTO>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerSearchStores(lat, lon, distance, namePrefix, options);
+        async storeControllerSearchStores(lat: number, lon: number, distance: number, product?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoreResponseDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerSearchStores(lat, lon, distance, product, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -366,12 +358,11 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * Gets products registered for store
          * @summary 
          * @param {number} storeId 
-         * @param {boolean} withPrices 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerGetStoreProducts(storeId: number, withPrices: boolean, options?: any): AxiosPromise<StoreControllerGetStoreProducts200Response> {
-            return localVarFp.storeControllerGetStoreProducts(storeId, withPrices, options).then((request) => request(axios, basePath));
+        storeControllerGetStoreProducts(storeId: number, options?: any): AxiosPromise<Array<ProductWithPricesResponseDTO>> {
+            return localVarFp.storeControllerGetStoreProducts(storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `name_prefix` if provided
@@ -379,12 +370,12 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {string} [namePrefix] 
+         * @param {number} [product] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerSearchStores(lat: number, lon: number, distance: number, namePrefix?: string, options?: any): AxiosPromise<Array<StoreResponseDTO>> {
-            return localVarFp.storeControllerSearchStores(lat, lon, distance, namePrefix, options).then((request) => request(axios, basePath));
+        storeControllerSearchStores(lat: number, lon: number, distance: number, product?: number, options?: any): AxiosPromise<Array<StoreResponseDTO>> {
+            return localVarFp.storeControllerSearchStores(lat, lon, distance, product, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates *ALL* fields of an existing store with id `storeId`
@@ -435,13 +426,12 @@ export class StoreApi extends BaseAPI {
      * Gets products registered for store
      * @summary 
      * @param {number} storeId 
-     * @param {boolean} withPrices 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeControllerGetStoreProducts(storeId: number, withPrices: boolean, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).storeControllerGetStoreProducts(storeId, withPrices, options).then((request) => request(this.axios, this.basePath));
+    public storeControllerGetStoreProducts(storeId: number, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerGetStoreProducts(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -450,13 +440,13 @@ export class StoreApi extends BaseAPI {
      * @param {number} lat 
      * @param {number} lon 
      * @param {number} distance 
-     * @param {string} [namePrefix] 
+     * @param {number} [product] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeControllerSearchStores(lat: number, lon: number, distance: number, namePrefix?: string, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).storeControllerSearchStores(lat, lon, distance, namePrefix, options).then((request) => request(this.axios, this.basePath));
+    public storeControllerSearchStores(lat: number, lon: number, distance: number, product?: number, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerSearchStores(lat, lon, distance, product, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

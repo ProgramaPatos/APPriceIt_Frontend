@@ -7,14 +7,14 @@
    display: flex;
    align-items: center;
 }
-.Loading {
+#Loading {
    position: relative;
    width: 70%;
    display: flex;
    overflow: hidden;
    padding: 40px;
 }
-div span {
+#Loading span {
    position: absolute;
    left: 0;
    width: 15px;

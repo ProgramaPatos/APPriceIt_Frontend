@@ -42,9 +42,6 @@ export default function Profile({ card }: ProfileProps) {
         {(userStatus !== AuthStatus.AUTHENTICATED) ?
           <>
             <LoginForm />
-            <div>
-              {`${userStatus}`}
-            </div>
           </>
           :
           (<>

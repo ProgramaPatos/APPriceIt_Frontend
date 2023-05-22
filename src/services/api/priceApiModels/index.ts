@@ -8,7 +8,6 @@ export * from './refresh-request-dto';
 export * from './refresh-response-dto';
 export * from './sign-in-request-dto';
 export * from './sign-in-response-dto';
-export * from './store-controller-get-store-products200-response';
 export * from './store-create-dto';
 export * from './store-response-dto';
 export * from './store-response-dtostore-location';

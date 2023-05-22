@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Map, { Layer, MapRef, Marker, Source, ViewState, ViewStateChangeEvent } from "react-map-gl";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import './Map.scss';
 import { useGeolocated } from "react-geolocated";
 import Loading from "../Loading/Loading";
 import EnableGeolocation from "../EnableGeolocation/EnableGeolocation";
@@ -11,6 +12,7 @@ import { useQuery } from "react-query";
 import { getDistance } from "geolib";
 import GeoJSON from "geojson"
 import { AuthStatus } from "../../../types/user";
+import { StoreResponseDTO } from "../../../services/api";
 
 
 const getQueryDistance = (mapRef: MapRef | null) => {
@@ -24,10 +26,18 @@ const getQueryDistance = (mapRef: MapRef | null) => {
   );
 }
 
-export default function MyMapContainer() {
+type MyMapContainerProps = {
+  setStore: (store: StoreResponseDTO) => void;
+  isSearching: boolean;
+  setIsSearching: (b: boolean) => void;
+};
+const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsSearching }) => {
   const { userStatus } = useUser();
   const { storeApi } = useStoreApi();
 
+  const handleClick = (): void => {
+    setIsSearching(!isSearching);
+  };
   const mapRef = useRef<MapRef>(null);
 
   const onMapLoad = useCallback(() => {
@@ -37,7 +47,11 @@ export default function MyMapContainer() {
       console.log("miau");
       mapRef.current.on("click", "point", (e) => {
         console.log(e);
-        console.log(e.features);
+        if (e.features) {
+          const store = JSON.parse(e.features[0]!.properties?.store);
+          setStore(store);
+          handleClick();
+        }
       });
     }
   }, []);
@@ -97,9 +111,9 @@ export default function MyMapContainer() {
         store => ({
           type: "Feature" as const,
           geometry: store.store_location,
-          properties: { id: store.store_id, name: store.store_name }
+          properties: { store: store }
         })) ?? [],
-    } as GeoJSON.FeatureCollection<GeoJSON.Point, { id: number, name: string }>;
+    } as GeoJSON.FeatureCollection<GeoJSON.Point, { store: StoreResponseDTO }>;
     return result;
   }, [stores]);
   return (
@@ -171,3 +185,5 @@ export default function MyMapContainer() {
   //   );
   // })}
 }
+
+export default MyMapContainer;

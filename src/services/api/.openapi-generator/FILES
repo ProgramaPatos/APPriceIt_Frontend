@@ -21,7 +21,6 @@ priceApiModels/refresh-request-dto.ts
 priceApiModels/refresh-response-dto.ts
 priceApiModels/sign-in-request-dto.ts
 priceApiModels/sign-in-response-dto.ts
-priceApiModels/store-controller-get-store-products200-response.ts
 priceApiModels/store-create-dto.ts
 priceApiModels/store-response-dto.ts
 priceApiModels/store-response-dtostore-location.ts

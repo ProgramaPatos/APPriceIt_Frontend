@@ -5,32 +5,70 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Icon from "@mui/material/Icon";
 import SearchIcon from "@mui/icons-material/Search";
+import { AiOutlineClose } from "react-icons/ai";
 import LocalGroceryStoreSharpIcon from "@mui/icons-material/LocalGroceryStoreSharp";
+import "./Search.scss";
 
-export default function CustomizedInputBase() {
+interface SearchProps {
+  isSearching: boolean;
+  setIsSearching: (value: boolean) => void;
+  searchName: string;
+}
+
+export function Search({ setIsSearching, isSearching, searchName }: SearchProps) {
+  const handleClick = (): void => {
+    setIsSearching(!isSearching);
+  };
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+
+  };
+
+
   return (
-    <Paper
-      component="form"
-      sx={{
-        p: "0.1rem 0.3rem",
-        display: "flex",
-        alignItems: "center",
-        width: 450,
-        background: "#EEE9DA",
-        boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
-      }}
-    >
-      <Icon sx={{ p: "0.7rem" }} aria-label="menu"></Icon>
-      <InputBase
-        sx={{ ml: 3, flex: 1 }}
-        placeholder="¿Qué estás buscando?"
-        inputProps={{ "aria-label": "search google maps" }}
-      />
+    <div className="searchIcon">
+      <Paper
+        component="form"
+        sx={{
+          p: "0.1rem 0.3rem",
+          display: "flex",
+          alignItems: "center",
+          width: "25.6vw",
+          height: 48,
+          background: "#EEE9DA",
+          boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        {/* <Icon sx={{ p: "0.7rem" }} aria-label="menu"></Icon> */}
 
-      <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      <IconButton color="primary" sx={{ p: "0.7rem" }} aria-label="directions">
-        <LocalGroceryStoreSharpIcon />
-      </IconButton>
-    </Paper>
+        <InputBase
+          sx={{ flex: 1, paddingLeft: "0.5rem" }}
+          placeholder={isSearching ? searchName : "Qué estas buscando?"}
+          inputProps={{ "aria-label": "search google maps" }}
+        />
+
+        <IconButton sx={{ p: "0.7rem" }} aria-label="directions">
+          <SearchIcon />
+        </IconButton>
+
+        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+
+        {isSearching ? (
+          <IconButton
+            sx={{ p: "0.7rem" }}
+            aria-label="directions"
+            onClick={handleClick}
+          >
+            <AiOutlineClose />
+          </IconButton>
+        ) : (
+          <IconButton
+            sx={{ p: "0.7rem", color: "#001D4A" }}
+            aria-label="directions"
+          >
+            <LocalGroceryStoreSharpIcon />
+          </IconButton>
+        )}
+      </Paper>
+    </div>
   );
 }

@@ -28,7 +28,7 @@ export interface ProductWithPricesResponseDTO {
      * @type {Array<PriceResponseDto>}
      * @memberof ProductWithPricesResponseDTO
      */
-    'prices': Array<PriceResponseDto>;
+    'product_prices': Array<PriceResponseDto>;
     /**
      * 
      * @type {number}
