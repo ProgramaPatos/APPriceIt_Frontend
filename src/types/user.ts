@@ -1,16 +1,18 @@
 import { AxiosInstance } from "axios";
 import { Dispatch, SetStateAction } from "react";
-import { AuthApi, StoreApi } from "../services/api";
+import { AuthApi, SignInRequestDTO, StoreApi } from "../services/api";
+
+export enum AuthStatus {
+    AUTHENTICATED = "AUTHENTICATED",
+    UNAUTHENTICATED = "UNAUTHENTICATED",
+    LOGGING_IN = "LOGGING_IN"
+}
 
 export type UserContextValue = {
     id: number;
-    accessToken: string | null;
-    setAccessToken: (newAT: string) => void;
-    deleteAccessToken: () => void;
-    refreshToken: string | null;
-    setRefreshToken: (newAT: string) => void;
-    deleteRefreshToken: () => void;
-    authApi: AuthApi;
+    signIn: (request: SignInRequestDTO) => void;
+    logOut: () => void;
     storeApi: StoreApi;
-    authenticatedAxiosInstance: AxiosInstance
+    userStatus: AuthStatus;
+    hasAuthError: boolean;
 }

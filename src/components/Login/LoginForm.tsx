@@ -7,7 +7,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton } from "@mui/material";
 import "./LoginForm.scss";
-import useUser, { AuthStatus } from "../../hooks/useUser";
+import useUser from "../../hooks/useUser";
+import { AuthStatus } from "../../types/user";
 
 type LoginInputFieldProps = TextFieldProps & { endIcon: React.ReactNode };
 

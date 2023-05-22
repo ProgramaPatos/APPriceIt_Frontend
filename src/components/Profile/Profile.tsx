@@ -2,9 +2,10 @@ import "./Profile.scss";
 import { SideMenuCard } from "../../types/types";
 import { useCallback, useEffect, useState } from "react";
 import LoginForm from "../Login/LoginForm";
-import useUser, { AuthStatus } from "../../hooks/useUser";
+import useUser from "../../hooks/useUser";
 import { AccountCircle } from "@mui/icons-material";
 import { Button } from "@mui/base";
+import { AuthStatus } from "../../types/user";
 
 interface ProfileProps {
   card: SideMenuCard;

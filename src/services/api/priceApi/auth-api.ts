@@ -66,6 +66,35 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerLogOut: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/auth/logout`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Endpoint to get a new access token fron an access one.
          * @summary 
          * @param {RefreshRequestDTO} refreshRequestDTO 
@@ -158,6 +187,15 @@ export const AuthApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerLogOut(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerLogOut(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Endpoint to get a new access token fron an access one.
          * @summary 
          * @param {RefreshRequestDTO} refreshRequestDTO 
@@ -199,6 +237,14 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
             return localVarFp.authControllerGetProfile(options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerLogOut(options?: any): AxiosPromise<void> {
+            return localVarFp.authControllerLogOut(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Endpoint to get a new access token fron an access one.
          * @summary 
          * @param {RefreshRequestDTO} refreshRequestDTO 
@@ -237,6 +283,16 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerGetProfile(options?: AxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerGetProfile(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerLogOut(options?: AxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerLogOut(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

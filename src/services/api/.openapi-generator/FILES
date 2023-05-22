@@ -1,6 +1,5 @@
 .gitignore
 .npmignore
-.openapi-generator-ignore
 api.ts
 base.ts
 common.ts
@@ -8,6 +7,7 @@ configuration.ts
 git_push.sh
 index.ts
 priceApi/auth-api.ts
+priceApi/default-api.ts
 priceApi/product-api.ts
 priceApi/store-api.ts
 priceApiModels/geo-point.ts
@@ -26,3 +26,6 @@ priceApiModels/store-create-dto.ts
 priceApiModels/store-response-dto.ts
 priceApiModels/store-response-dtostore-location.ts
 priceApiModels/store-update-dto.ts
+priceApiModels/user-create-dto.ts
+priceApiModels/user-search-dto.ts
+priceApiModels/user-update-dto.ts

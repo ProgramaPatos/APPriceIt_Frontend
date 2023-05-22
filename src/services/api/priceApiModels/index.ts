@@ -13,3 +13,6 @@ export * from './store-create-dto';
 export * from './store-response-dto';
 export * from './store-response-dtostore-location';
 export * from './store-update-dto';
+export * from './user-create-dto';
+export * from './user-search-dto';
+export * from './user-update-dto';

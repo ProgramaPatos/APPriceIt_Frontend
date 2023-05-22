@@ -5,11 +5,12 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { useGeolocated } from "react-geolocated";
 import Loading from "../Loading/Loading";
 import EnableGeolocation from "../EnableGeolocation/EnableGeolocation";
-import useUser, { AuthStatus } from "../../../hooks/useUser";
+import useUser from "../../../hooks/useUser";
 import useStoreApi from "../../../hooks/useStoreApi";
 import { useQuery } from "react-query";
 import { getDistance } from "geolib";
 import GeoJSON from "geojson"
+import { AuthStatus } from "../../../types/user";
 
 
 const getQueryDistance = (mapRef: MapRef | null) => {
@@ -29,6 +30,17 @@ export default function MyMapContainer() {
 
   const mapRef = useRef<MapRef>(null);
 
+  const onMapLoad = useCallback(() => {
+
+    console.log("running here");
+    if (mapRef.current) {
+      console.log("miau");
+      mapRef.current.on("click", "point", (e) => {
+        console.log(e);
+        console.log(e.features);
+      });
+    }
+  }, []);
   const initialViewState = {
     longitude: -122.4,
     latitude: 37.8,
@@ -60,6 +72,7 @@ export default function MyMapContainer() {
     console.log(position);
     const { latitude, longitude } = position.coords;
     setViewState((prev) => ({ ...prev, latitude, longitude }));
+    setQueriedViewState((prev) => ({ ...prev, latitude, longitude }));
     setGeoIsLoading(false);
   }, []);
   const geo = useGeolocated({ onSuccess: onGeoSuccess });
@@ -69,11 +82,13 @@ export default function MyMapContainer() {
     const res = await storeApi.storeControllerSearchStores(queriedViewState.latitude, queriedViewState.longitude, dis);
     return res.data;
   }, {
+    retry: false,
     enabled:
       (userStatus == AuthStatus.AUTHENTICATED) &&
       isGeolocationAvailable
       && !geoIsLoading
   });
+
 
   const storesGeoJSON = useMemo(() => {
     const result = {
@@ -82,9 +97,9 @@ export default function MyMapContainer() {
         store => ({
           type: "Feature" as const,
           geometry: store.store_location,
-          properties: { id: store.store_id }
+          properties: { id: store.store_id, name: store.store_name }
         })) ?? [],
-    } as GeoJSON.FeatureCollection<GeoJSON.Point, { id: number }>;
+    } as GeoJSON.FeatureCollection<GeoJSON.Point, { id: number, name: string }>;
     return result;
   }, [stores]);
   return (
@@ -101,6 +116,7 @@ export default function MyMapContainer() {
         mapStyle="https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM"
         onMove={onMove}
         onMoveEnd={onMoveEnd}
+        onLoad={onMapLoad}
       >
         <Source id="stores" type="geojson" data={storesGeoJSON}>
           <Layer

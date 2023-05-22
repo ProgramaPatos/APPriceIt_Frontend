@@ -14,8 +14,23 @@
 
 
 
-export * from './priceApi/auth-api';
-export * from './priceApi/default-api';
-export * from './priceApi/product-api';
-export * from './priceApi/store-api';
+/**
+ * 
+ * @export
+ * @interface UserUpdateDTO
+ */
+export interface UserUpdateDTO {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDTO
+     */
+    'appuser_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserUpdateDTO
+     */
+    'appuser_password': string;
+}
 
