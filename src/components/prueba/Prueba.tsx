@@ -1,15 +1,16 @@
 import * as React from "react";
 import { useState } from "react";
-import { SideMenuCard } from "../../types/types";
+import { SideMenuCard, StoreApi } from "../../types/types";
 import { InfoBar } from "../InfoBar/InfoBar";
 import "./Prueba.scss";
 
 interface PruebaProps {
   isSearch: boolean;
   setIsSearch: (value: boolean) => void;
+  store?: StoreApi;
 }
 
-export default function Prueba({ setIsSearch, isSearch }: PruebaProps) {
+export default function Prueba({ setIsSearch, isSearch, store }: PruebaProps) {
   const handleClick = (): void => {
     setIsSearch(!isSearch);
   };
@@ -50,9 +51,9 @@ export default function Prueba({ setIsSearch, isSearch }: PruebaProps) {
         ></div>
       </div>
       <InfoBar
-        coord={
-          "no se aqui iria una solo la info de la tienda y los demas productos asi no sea el que estoy seleccionando si? algo asi"
-        }
+        storeName={store?.store_name}
+        storeDescription={store?.store_description}
+        id={"34"}
         viewPanel={isSearch}
         setViewPanel={setIsSearch}
       />

@@ -13,21 +13,11 @@ interface SearchProps {
   isSearch: boolean;
   setIsSearch: (value: boolean) => void;
   searchName: string;
-  setSearchName: (value: string) => void;
 }
 
-export function Search({
-  setIsSearch,
-  isSearch,
-  searchName,
-  setSearchName,
-}: SearchProps) {
+export function Search({ setIsSearch, isSearch, searchName }: SearchProps) {
   const handleClick = (): void => {
     setIsSearch(!isSearch);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(event.target.value);
   };
 
   return (
@@ -44,10 +34,10 @@ export function Search({
           boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
         }}
       >
-        <Icon sx={{ p: "0.7rem" }} aria-label="menu"></Icon>
+        {/* <Icon sx={{ p: "0.7rem" }} aria-label="menu"></Icon> */}
 
         <InputBase
-          sx={{ flex: 1 }}
+          sx={{ flex: 1, paddingLeft: "0.5rem" }}
           placeholder={isSearch ? searchName : "Qué estas buscando?"}
           inputProps={{ "aria-label": "search google maps" }}
         />
