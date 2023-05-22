@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { Dispatch, SetStateAction } from "react";
-import { AuthApi, SignInRequestDTO, StoreApi } from "../services/api";
+import { AuthApi, ProductApi, SignInRequestDTO, StoreApi } from "../services/api";
 
 export enum AuthStatus {
     AUTHENTICATED = "AUTHENTICATED",
@@ -13,6 +13,7 @@ export type UserContextValue = {
     signIn: (request: SignInRequestDTO) => void;
     logOut: () => void;
     storeApi: StoreApi;
+    productApi: ProductApi;
     userStatus: AuthStatus;
     hasAuthError: boolean;
 }

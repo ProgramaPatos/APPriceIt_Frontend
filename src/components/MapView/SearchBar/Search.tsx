@@ -8,19 +8,45 @@ import SearchIcon from "@mui/icons-material/Search";
 import { AiOutlineClose } from "react-icons/ai";
 import LocalGroceryStoreSharpIcon from "@mui/icons-material/LocalGroceryStoreSharp";
 import "./Search.scss";
+import { InputAdornment, TextField } from "@mui/material";
+import { useState } from "react";
+import useStoreApi from "../../../hooks/useStoreApi";
+import useProductApi from "../../../hooks/useProductApi";
+import { useQuery } from "react-query";
 
 interface SearchProps {
   isSearching: boolean;
   setIsSearching: (value: boolean) => void;
-  searchName: string;
+  setSearch: (value: number | null) => void;
 }
 
-export function Search({ setIsSearching, isSearching, searchName }: SearchProps) {
+export function Search({ setIsSearching, isSearching, setSearch }: SearchProps) {
+  const [searchInput, setSearchInput] = useState("");
+  const [searchText, setSearchText] = useState<string | null>(null);
+  const { productApi } = useProductApi();
   const handleClick = (): void => {
     setIsSearching(!isSearching);
   };
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
 
+  useQuery(["productSearch", searchText], async () => {
+    if (searchText) {
+      const { data } = await productApi.productControllerSearchProduct(searchText);
+      if (data.length > 0) {
+        console.log("encontrado", data[0]);
+        setSearchInput(data[0].product_name);
+        setSearch(data[0].product_id);
+      }
+      else {
+        setSearch(null);
+      }
+    }
+  }, {
+    enabled: (searchText !== null)
+  })
+  const handleSubmit: React.FormEventHandler = (e) => {
+    e.preventDefault();
+    console.log("Buscando", searchInput);
+    setSearchText(searchInput);
   };
 
 
@@ -37,18 +63,25 @@ export function Search({ setIsSearching, isSearching, searchName }: SearchProps)
           background: "#EEE9DA",
           boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
         }}
+        onSubmit={handleSubmit}
       >
-        {/* <Icon sx={{ p: "0.7rem" }} aria-label="menu"></Icon> */}
 
-        <InputBase
-          sx={{ flex: 1, paddingLeft: "0.5rem" }}
-          placeholder={isSearching ? searchName : "Qué estas buscando?"}
-          inputProps={{ "aria-label": "search google maps" }}
+        <TextField
+          id="searchInput"
+          label="Busca un producto"
+          placeholder="¿Qué buscas?"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton sx={{ p: "0.7rem" }} aria-label="directions" type="submit">
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
-
-        <IconButton sx={{ p: "0.7rem" }} aria-label="directions">
-          <SearchIcon />
-        </IconButton>
 
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
 

@@ -40,6 +40,7 @@ function App() {
     store_appuser_id: 1,
     store_distance: 0,
   });
+  const [productSearch, setProductSearch] = useState<number | null>(null);
 
   const card: SideMenuCard = {
     id: "card01",
@@ -75,15 +76,16 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <div className="Container">
           <Search
-            searchName={store.store_name}
             isSearching={isSearching}
             setIsSearching={setIsSearching}
+            setSearch={setProductSearch}
           />
 
           <MyMapContainer
             setStore={setStore}
             isSearching={isSearching}
             setIsSearching={setIsSearching}
+            searchId={productSearch}
           />
 
           {/* <Header /> */}

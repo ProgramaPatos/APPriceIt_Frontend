@@ -271,7 +271,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerSearchProduct(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductResponseDTO>> {
+        async productControllerSearchProduct(name: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductResponseDTO>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerSearchProduct(name, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -333,7 +333,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerSearchProduct(name: string, options?: any): AxiosPromise<ProductResponseDTO> {
+        productControllerSearchProduct(name: string, options?: any): AxiosPromise<Array<ProductResponseDTO>> {
             return localVarFp.productControllerSearchProduct(name, options).then((request) => request(axios, basePath));
         },
         /**

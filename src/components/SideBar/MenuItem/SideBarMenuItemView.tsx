@@ -15,10 +15,7 @@ export default function SideBarMenuItemView({
       <a className="A" href={item.url}>
         <div className={`ItemContent ${isOpen ? "expanded" : "collapsed"}`}>
           <div className="Icon">
-            <item.icon
-              size="2.4vh"
-              style={{ display: "block", margin: "auto" }}
-            />
+            {item.icon}
           </div>
           <span className="Label">{item.label}</span>
         </div>

@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { AuthApi, AuthApiFp, SignInRequestDTO, StoreApi } from "../services/api";
+import { AuthApi, AuthApiFp, ProductApi, SignInRequestDTO, StoreApi } from "../services/api";
 import { AuthStatus, UserContextValue } from "../types/user";
 import { Configuration } from "../services/api";
 import axios, { AxiosError, AxiosInstance, AxiosInterceptorOptions } from "axios";
@@ -50,6 +50,14 @@ const authApi = new AuthApi(
 );
 
 const storeApi = new StoreApi(
+  new Configuration({
+    basePath: process.env.REACT_APP_API_BASE_URL,
+  }),
+  undefined,
+  authenticatedAxiosInstance
+);
+
+const productApi = new ProductApi(
   new Configuration({
     basePath: process.env.REACT_APP_API_BASE_URL,
   }),
@@ -135,7 +143,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         signIn,
         logOut,
         userStatus,
-        hasAuthError
+        hasAuthError,
+        productApi
       }}
     >
       {children}

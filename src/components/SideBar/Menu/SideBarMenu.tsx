@@ -7,12 +7,16 @@ import SideBarMenuItemView from "../MenuItem/SideBarMenuItemView";
 import "./SideBarMenu.scss";
 import { RiFolderHistoryLine } from "react-icons/ri";
 import { BsBookmark, BsClockHistory } from "react-icons/bs";
+import { ReactComponent as Logo } from "../../../Img/logo_appriceit.svg";
+import { Icon, SvgIcon } from "@mui/material";
+
 
 interface SideBarMenuProps {
   card: SideMenuCard;
   viewPanel: boolean;
   setViewPanel: (value: boolean) => void;
 }
+
 
 export function SideBarMenu({
   card,
@@ -21,24 +25,34 @@ export function SideBarMenu({
 }: SideBarMenuProps) {
   const [isOPen, setIsOpen] = useState<boolean>(false);
 
+
   const items: SideBarMenuItem[] = [
     {
       id: "1",
       label: "Tiendas Registradas",
-      icon: BsBookmark,
+      icon: (<BsBookmark
+        size="2.4vh"
+        style={{ display: "block", margin: "auto" }}
+      />),
       url: "/",
     },
 
     {
       id: "2",
       label: "Búsquedas Recientes",
-      icon: BsClockHistory,
+      icon: (<BsClockHistory
+        size="2.4vh"
+        style={{ display: "block", margin: "auto" }}
+      />),
       url: "/",
     },
     {
       id: "3",
       label: "Crear Tienda",
-      icon: RiFolderHistoryLine,
+      icon: (<RiFolderHistoryLine
+        size="2.4vh"
+        style={{ display: "block", margin: "auto" }}
+      />),
       url: "/stores", //TODO: Change this or make it functional
     },
   ];
@@ -49,11 +63,21 @@ export function SideBarMenu({
   };
 
   return (
+
     <div
-      className={`MenuDisplay ${
-        isOPen || viewPanel ? "expanded" : "collapsed"
-      }`}
+      className={`MenuDisplay ${isOPen || viewPanel ? "expanded" : "collapsed"
+        }`}
     >
+      <SideBarMenuItemView
+        item={{
+          id: "-1",
+          label: "logo",
+          icon: (<Logo width={30} height={30} />),
+          url: "/"
+        }}
+        key={"-1"}
+        isOpen={isOPen || viewPanel}
+      />
       <div className="MenuButton">
         <button className="BurgerButton" onClick={handleClick}>
           {isOPen || viewPanel ? (

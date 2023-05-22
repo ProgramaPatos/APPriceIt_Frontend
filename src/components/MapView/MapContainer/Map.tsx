@@ -30,8 +30,9 @@ type MyMapContainerProps = {
   setStore: (store: StoreResponseDTO) => void;
   isSearching: boolean;
   setIsSearching: (b: boolean) => void;
+  searchId: number | null;
 };
-const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsSearching }) => {
+const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsSearching, searchId }) => {
   const { userStatus } = useUser();
   const { storeApi } = useStoreApi();
 
@@ -91,9 +92,13 @@ const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsS
   }, []);
   const geo = useGeolocated({ onSuccess: onGeoSuccess });
   const { isGeolocationAvailable, isGeolocationEnabled } = geo;
-  const { data: stores } = useQuery(["stores", queriedViewState], async () => {
+  const { data: stores } = useQuery(["stores", queriedViewState, searchId], async () => {
     const dis = getQueryDistance(mapRef.current);
-    const res = await storeApi.storeControllerSearchStores(queriedViewState.latitude, queriedViewState.longitude, dis);
+    const res = await storeApi.storeControllerSearchStores(
+      queriedViewState.latitude,
+      queriedViewState.longitude,
+      dis,
+      searchId ?? undefined);
     return res.data;
   }, {
     retry: false,
