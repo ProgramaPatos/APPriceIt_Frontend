@@ -1,0 +1,26 @@
+@use '../variables' as v;
+@import '../commons.scss';
+
+.SideBar{
+   background-color: v.$darkSecondary;
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+   z-index: 1;
+   left: 4rem;
+   box-shadow: 0 1px 2px rgba(27, 29, 30, 0.3), 0 2px 6px 2rgba(33, 34, 35, 0.1);
+
+   align-items: center;
+   justify-content: center;
+   &.expanded {
+     width: 27.5vw;
+   }
+
+   &.collapsed {
+     width: 0 ;
+   }
+ }

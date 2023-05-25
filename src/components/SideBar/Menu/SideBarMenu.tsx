@@ -1,5 +1,5 @@
 import { SideBarMenuItem, SideMenuCard } from "../../../types/types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HiMenu } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import SideBarMenuCardView from "../MenuCard/SideBarMenuCardView";
@@ -9,7 +9,12 @@ import { RiFolderHistoryLine } from "react-icons/ri";
 import { BsBookmark, BsClockHistory } from "react-icons/bs";
 import { ReactComponent as Logo } from "../../../Img/logo_appriceit.svg";
 import { Icon, SvgIcon } from "@mui/material";
+import { SideBarContext } from "../../GenericSideBar/GenericSideBar";
 
+
+const CreateStore = () => {
+  return (<h1> Un asombroso formulario de creacion de tiendas</h1>)
+}
 
 interface SideBarMenuProps {
   card: SideMenuCard;
@@ -18,12 +23,14 @@ interface SideBarMenuProps {
 }
 
 
+
 export function SideBarMenu({
   card,
   viewPanel,
   setViewPanel,
 }: SideBarMenuProps) {
   const [isOPen, setIsOpen] = useState<boolean>(false);
+  const setSideBar = useContext(SideBarContext);
 
 
   const items: SideBarMenuItem[] = [
@@ -35,6 +42,7 @@ export function SideBarMenu({
         style={{ display: "block", margin: "auto" }}
       />),
       url: "/",
+      onClick: () => {}
     },
 
     {
@@ -45,6 +53,7 @@ export function SideBarMenu({
         style={{ display: "block", margin: "auto" }}
       />),
       url: "/",
+      onClick: () => {}
     },
     {
       id: "3",
@@ -54,6 +63,10 @@ export function SideBarMenu({
         style={{ display: "block", margin: "auto" }}
       />),
       url: "/stores", //TODO: Change this or make it functional
+      onClick: () => {
+        setSideBar(CreateStore);
+
+      }
     },
   ];
 
@@ -73,7 +86,8 @@ export function SideBarMenu({
           id: "-1",
           label: "logo",
           icon: (<Logo width={30} height={30} />),
-          url: "/"
+          url: "/",
+          onClick: () => {}
         }}
         key={"-1"}
         isOpen={isOPen || viewPanel}

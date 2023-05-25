@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { FC, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import Map, { Layer, MapRef, Marker, Source, ViewState, ViewStateChangeEvent } from "react-map-gl";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -13,6 +13,8 @@ import { getDistance } from "geolib";
 import GeoJSON from "geojson"
 import { AuthStatus } from "../../../types/user";
 import { StoreResponseDTO } from "../../../services/api";
+import { SideBarContext } from "../../GenericSideBar/GenericSideBar";
+import '../../InfoBar/InfoBar.scss';
 
 
 const getQueryDistance = (mapRef: MapRef | null) => {
@@ -26,6 +28,45 @@ const getQueryDistance = (mapRef: MapRef | null) => {
   );
 }
 
+const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
+  const { storeApi } = useStoreApi();
+  const { data: storeInfo } = useQuery(["storeProducts", store.store_id], async () => {
+    const res = await storeApi.storeControllerGetStoreProducts(store.store_id);
+    return res.data;
+  })
+  return (
+    <div style={{ overflow: "scroll" }}>
+      <h1 className="InfoBarMainTitle">{store.store_name}</h1>
+      <h2 className="InfoBarMainSubTitle">{store.store_description}</h2>
+      {storeInfo?.map((product) => (
+        <div key={product.product_id}>
+          <div className="InfoCard">
+            <div className="InfoCardHeader">
+              <div className="InfoCardTitle">{product.product_name}</div>
+            </div>
+
+            <div className="InfoCardBody">
+              <div className="InfoCardSubtitle">
+                {product.product_description}
+              </div>
+              <p className="InfoCardSubtitle">Precios</p>
+              <div className="InfoCardPrice">
+                {product.product_prices.map((price) => (
+                  <div key={price.price_id}>
+                    <div className="InfoCardPriceValue">
+                      ${price.price_value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 type MyMapContainerProps = {
   setStore: (store: StoreResponseDTO) => void;
   isSearching: boolean;
@@ -35,10 +76,8 @@ type MyMapContainerProps = {
 const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsSearching, searchId }) => {
   const { userStatus } = useUser();
   const { storeApi } = useStoreApi();
+  const setSideBar = useContext(SideBarContext)
 
-  const handleClick = (): void => {
-    setIsSearching(!isSearching);
-  };
   const mapRef = useRef<MapRef>(null);
 
   const onMapLoad = useCallback(() => {
@@ -49,9 +88,9 @@ const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsS
       mapRef.current.on("click", "point", (e) => {
         console.log(e);
         if (e.features) {
-          const store = JSON.parse(e.features[0]!.properties?.store);
-          setStore(store);
-          handleClick();
+          const store = JSON.parse(e.features[0]!.properties?.store) as StoreResponseDTO;
+          setSideBar(() => <StoreDisplay store={store} />);
+
         }
       });
     }
@@ -150,45 +189,6 @@ const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsS
       </Map>
     </>
   );
-  // <Source id="vehicles" type="geojson" data={storesGeoJSON}>
-  //   <Layer
-  //     id="point"
-  //     type="circle"
-  //     paint={{
-  //       'circle-radius': 10,
-  //       'circle-color': '#007cbf'
-  //     }}
-  //   />
-  // </Source>
-  // {stores?.map(({ store_id, store_location }) => {
-  //   const [longitude, latitude] = store_location.coordinates;
-  //   return (
-  //     <Marker
-  //       key={store_id}
-  //       longitude={longitude}
-  //       latitude={latitude}
-  //     />
-  //   );
-  // })}
-
-  // <Source id="vehicles" type="geojson" data={storesGeoJSON}>
-  //   <Layer type="symbol"
-  //     layout={{
-  //       'icon-image': 'vehicle-icon',
-  //       'icon-size': 1,
-  //     }} />
-  // </Source>
-
-  // {storesGeoJSON.features.map(({ geometry, properties }) => {
-  //   const [longitude, latitude] = geometry.coordinates;
-  //   return (
-  //     <Marker
-  //       key={properties.id}
-  //       longitude={longitude}
-  //       latitude={latitude}
-  //     />
-  //   );
-  // })}
 }
 
 export default MyMapContainer;

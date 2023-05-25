@@ -21,6 +21,7 @@ import MyMapContainer from "../components/MapView/MapContainer/Map";
 import { Search } from "../components/MapView/SearchBar/Search";
 import { StoreResponseDTO } from "../services/api";
 import { InfoBar } from "../components/InfoBar/InfoBar";
+import GenericSideBar from "../components/GenericSideBar/GenericSideBar";
 
 const queryClient = new QueryClient();
 
@@ -81,30 +82,32 @@ function App() {
             setSearch={setProductSearch}
           />
 
-          <MyMapContainer
-            setStore={setStore}
-            isSearching={isSearching}
-            setIsSearching={setIsSearching}
-            searchId={productSearch}
-          />
 
           {/* <Header /> */}
           <Profile card={card} />
 
-          <SideBarMenu
-            card={card}
-            viewPanel={viewPanel}
-            setViewPanel={setViewPanel}
-          />
-          <InfoBar
-            store={store}
-            viewPanel={isSearching}
-            setViewPanel={setIsSearching}
-          />
+          <GenericSideBar>
+            <SideBarMenu
+              card={card}
+              viewPanel={viewPanel}
+              setViewPanel={setViewPanel}
+            />
+            <MyMapContainer
+              setStore={setStore}
+              isSearching={isSearching}
+              setIsSearching={setIsSearching}
+              searchId={productSearch}
+            />
+          </GenericSideBar>
         </div>
       </QueryClientProvider>
     </UserContextProvider>
   );
 }
 
+// <InfoBar
+//   store={store}
+//   viewPanel={isSearching}
+//   setViewPanel={setIsSearching}
+// />
 export default App;

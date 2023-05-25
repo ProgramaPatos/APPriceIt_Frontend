@@ -12,14 +12,14 @@ export default function SideBarMenuItemView({
 }: SideBarMenuItemViewProps) {
   return (
     <div className="SideBarMenuItemStyle">
-      <a className="A" href={item.url}>
+      <div onClick={item.onClick}>
         <div className={`ItemContent ${isOpen ? "expanded" : "collapsed"}`}>
           <div className="Icon">
             {item.icon}
           </div>
           <span className="Label">{item.label}</span>
         </div>
-      </a>
+      </div>
       {isOpen ? " " : <div className="ToolTip">{item.label} </div>}
     </div>
   );

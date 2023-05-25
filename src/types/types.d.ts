@@ -6,6 +6,7 @@ export interface SideBarMenuItem {
   label: string;
   icon: ReactElement;
   url: string;
+  onClick: () => void;
 }
 
 export interface SideMenuCard {
