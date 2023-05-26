@@ -2,6 +2,7 @@
 @import '../../commons.scss';
 
 .SideBarMenu {
+    color: v.$white;
     background-color: v.$darkMain;
     position: absolute;
     right: 0;
@@ -43,6 +44,8 @@
 }
 
 .MenuDisplay{
+  color: v.$white;
+
   background-color: v.$darkMain;
   position: absolute;
   left: 0;

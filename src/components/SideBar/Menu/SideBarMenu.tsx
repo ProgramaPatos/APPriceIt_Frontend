@@ -10,19 +10,13 @@ import { BsBookmark, BsClockHistory } from "react-icons/bs";
 import { ReactComponent as Logo } from "../../../Img/logo_appriceit.svg";
 import { Icon, SvgIcon } from "@mui/material";
 import { SideBarContext } from "../../GenericSideBar/GenericSideBar";
-
-
-const CreateStore = () => {
-  return (<h1> Un asombroso formulario de creacion de tiendas</h1>)
-}
+import { CreateStore } from "../../CreateStore/CreateStore";
 
 interface SideBarMenuProps {
   card: SideMenuCard;
   viewPanel: boolean;
   setViewPanel: (value: boolean) => void;
 }
-
-
 
 export function SideBarMenu({
   card,
@@ -32,41 +26,42 @@ export function SideBarMenu({
   const [isOPen, setIsOpen] = useState<boolean>(false);
   const setSideBar = useContext(SideBarContext);
 
-
   const items: SideBarMenuItem[] = [
     {
       id: "1",
       label: "Tiendas Registradas",
-      icon: (<BsBookmark
-        size="2.4vh"
-        style={{ display: "block", margin: "auto" }}
-      />),
+      icon: (
+        <BsBookmark size="2.4vh" style={{ display: "block", margin: "auto" }} />
+      ),
       url: "/",
-      onClick: () => {}
+      onClick: () => {},
     },
 
     {
       id: "2",
       label: "Búsquedas Recientes",
-      icon: (<BsClockHistory
-        size="2.4vh"
-        style={{ display: "block", margin: "auto" }}
-      />),
+      icon: (
+        <BsClockHistory
+          size="2.4vh"
+          style={{ display: "block", margin: "auto" }}
+        />
+      ),
       url: "/",
-      onClick: () => {}
+      onClick: () => {},
     },
     {
       id: "3",
       label: "Crear Tienda",
-      icon: (<RiFolderHistoryLine
-        size="2.4vh"
-        style={{ display: "block", margin: "auto" }}
-      />),
+      icon: (
+        <RiFolderHistoryLine
+          size="2.4vh"
+          style={{ display: "block", margin: "auto" }}
+        />
+      ),
       url: "/stores", //TODO: Change this or make it functional
       onClick: () => {
         setSideBar(CreateStore);
-
-      }
+      },
     },
   ];
 
@@ -76,18 +71,18 @@ export function SideBarMenu({
   };
 
   return (
-
     <div
-      className={`MenuDisplay ${isOPen || viewPanel ? "expanded" : "collapsed"
-        }`}
+      className={`MenuDisplay ${
+        isOPen || viewPanel ? "expanded" : "collapsed"
+      }`}
     >
       <SideBarMenuItemView
         item={{
           id: "-1",
           label: "logo",
-          icon: (<Logo width={30} height={30} />),
+          icon: <Logo width={30} height={30} />,
           url: "/",
-          onClick: () => {}
+          onClick: () => {},
         }}
         key={"-1"}
         isOpen={isOPen || viewPanel}

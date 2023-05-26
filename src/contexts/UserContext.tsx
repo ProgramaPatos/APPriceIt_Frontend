@@ -5,16 +5,24 @@ import {
   useEffect,
   useState,
 } from "react";
-import { AuthApi, AuthApiFp, ProductApi, SignInRequestDTO, StoreApi } from "../services/api";
+import {
+  AuthApi,
+  AuthApiFp,
+  ProductApi,
+  SignInRequestDTO,
+  StoreApi,
+  StoreCreateDTO,
+} from "../services/api";
 import { AuthStatus, UserContextValue } from "../types/user";
 import { Configuration } from "../services/api";
-import axios, { AxiosError, AxiosInstance, AxiosInterceptorOptions } from "axios";
-
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosInterceptorOptions,
+} from "axios";
 
 const UserContext = createContext<UserContextValue | undefined>(undefined);
-UserContext.displayName = "UserContext"
-
-
+UserContext.displayName = "UserContext";
 
 const authenticatedAxiosInstance = axios.create();
 const setAccessToken = (newToken: string) => {
@@ -29,7 +37,7 @@ const getAccessToken = () => {
 const deleteAccessToken = () => {
   window.localStorage.removeItem("accessToken");
   authenticatedAxiosInstance.defaults.headers.authorization = "";
-}
+};
 const setRefreshToken = (newToken: string) => {
   window.localStorage.setItem("refreshToken", newToken);
 };
@@ -38,7 +46,7 @@ const getRefreshToken = () => {
 };
 const deleteRefreshToken = () => {
   window.localStorage.removeItem("refreshToken");
-}
+};
 
 const unauthenticatedAxiosInstance = axios.create();
 const authApi = new AuthApi(
@@ -67,70 +75,97 @@ const productApi = new ProductApi(
 
 let didInit = false;
 
-
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
-  const [userStatus, setUserStatus] = useState<AuthStatus>(getAccessToken() == null ? AuthStatus.UNAUTHENTICATED : AuthStatus.AUTHENTICATED);
+  const [userStatus, setUserStatus] = useState<AuthStatus>(
+    getAccessToken() == null
+      ? AuthStatus.UNAUTHENTICATED
+      : AuthStatus.AUTHENTICATED
+  );
   const [hasAuthError, setHasAuthError] = useState(false);
 
-  const signIn = useCallback((requestPayload: SignInRequestDTO) => {
-
-    setUserStatus(AuthStatus.LOGGING_IN);
-    authApi.authControllerSignIn(requestPayload)
-      .then(
-        ({ data: { accessToken, refreshToken } }) => {
+  const signIn = useCallback(
+    (requestPayload: SignInRequestDTO) => {
+      setUserStatus(AuthStatus.LOGGING_IN);
+      authApi
+        .authControllerSignIn(requestPayload)
+        .then(({ data: { accessToken, refreshToken } }) => {
           setAccessToken(accessToken);
           setRefreshToken(refreshToken);
           setUserStatus(AuthStatus.AUTHENTICATED);
           setHasAuthError(false);
-        }
-      )
-      .catch(
-        (err) => {
+        })
+        .catch((err) => {
           deleteAccessToken();
           deleteRefreshToken();
           setHasAuthError(true);
           setUserStatus(AuthStatus.UNAUTHENTICATED);
           console.log(err);
-        }
-      );
-  }, [setAccessToken, setRefreshToken, setUserStatus, setHasAuthError, deleteAccessToken, deleteRefreshToken]);
+        });
+    },
+    [
+      setAccessToken,
+      setRefreshToken,
+      setUserStatus,
+      setHasAuthError,
+      deleteAccessToken,
+      deleteRefreshToken,
+    ]
+  );
   // ^ These functions should not change, but it's better to express
   // the dependency.
   const logOut = useCallback(() => {
     deleteAccessToken();
     deleteRefreshToken();
     setUserStatus(AuthStatus.UNAUTHENTICATED);
-  }, [deleteAccessToken, deleteRefreshToken, authenticatedAxiosInstance])
+  }, [deleteAccessToken, deleteRefreshToken, authenticatedAxiosInstance]);
 
-
+  const createStore = useCallback(
+    (requestPayload: StoreCreateDTO) => {
+      console.log(requestPayload, "requestPayload)");
+      setUserStatus(AuthStatus.LOGGING_IN);
+      storeApi
+        .storeControllerCreateStore(requestPayload)
+        .then(() => {
+          console.log("Store Created");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [storeApi]
+  );
 
   useEffect(() => {
     if (!didInit) {
-      const id = (authenticatedAxiosInstance.interceptors.response.use(
+      const id = authenticatedAxiosInstance.interceptors.response.use(
         undefined,
         async (error: AxiosError) => {
           const originalRequest = error.config;
           const refreshToken = getRefreshToken();
-          if (error.response?.status === 401 && refreshToken && originalRequest) {
+          if (
+            error.response?.status === 401 &&
+            refreshToken &&
+            originalRequest
+          ) {
             deleteAccessToken();
-            setUserStatus(AuthStatus.LOGGING_IN)
+            setUserStatus(AuthStatus.LOGGING_IN);
             try {
               const { accessToken: newAccessToken } = (
                 await authApi.authControllerRefresh({ refreshToken })
               ).data;
               setAccessToken(newAccessToken);
-              originalRequest.headers.Authorization = "Bearer " + newAccessToken;
+              originalRequest.headers.Authorization =
+                "Bearer " + newAccessToken;
               setUserStatus(AuthStatus.AUTHENTICATED);
               return authenticatedAxiosInstance(originalRequest);
-            }
-            catch (e) {
+            } catch (e) {
               deleteRefreshToken();
               setUserStatus(AuthStatus.UNAUTHENTICATED);
             }
           }
           return Promise.reject(error);
         }
-      ));
+      );
       didInit = true;
     }
   }, []);
@@ -144,7 +179,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
         logOut,
         userStatus,
         hasAuthError,
-        productApi
+        productApi,
+        createStore,
       }}
     >
       {children}

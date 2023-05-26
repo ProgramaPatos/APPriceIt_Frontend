@@ -1,0 +1,12 @@
+@use '../variables' as v;
+@import '../commons.scss';
+
+.createStore{
+   color: v.$white;
+}
+.storeFormTitle{
+   margin: 0;
+   font-size: 1.37rem;
+   font-weight: 400;
+   line-height: 1.75rem;
+  }
