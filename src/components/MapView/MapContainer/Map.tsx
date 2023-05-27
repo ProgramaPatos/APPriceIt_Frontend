@@ -171,7 +171,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({ setStore, isSearching, setIsS
         initialViewState={initialViewState}
         {...viewState}
         mapLib={maplibregl}
-        mapStyle="https://api.maptiler.com/maps/streets/style.json?key=HWu5MQaWC0VG5MdG9IxM"
+        mapStyle={process.env.REACT_APP_MAP_STYLE_URL}
         onMove={onMove}
         onMoveEnd={onMoveEnd}
         onLoad={onMapLoad}

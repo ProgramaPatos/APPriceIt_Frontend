@@ -152,16 +152,16 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `name_prefix` if provided
+         * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `product_id` if provided
          * @summary 
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {number} [product] 
+         * @param {number} [productId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerSearchStores: async (lat: number, lon: number, distance: number, product?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeControllerSearchStores: async (lat: number, lon: number, distance: number, productId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'lat' is not null or undefined
             assertParamExists('storeControllerSearchStores', 'lat', lat)
             // verify required parameter 'lon' is not null or undefined
@@ -196,8 +196,8 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
                 localVarQueryParameter['distance'] = distance;
             }
 
-            if (product !== undefined) {
-                localVarQueryParameter['product'] = product;
+            if (productId !== undefined) {
+                localVarQueryParameter['product_id'] = productId;
             }
 
 
@@ -299,17 +299,17 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `name_prefix` if provided
+         * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `product_id` if provided
          * @summary 
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {number} [product] 
+         * @param {number} [productId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerSearchStores(lat: number, lon: number, distance: number, product?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoreResponseDTO>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerSearchStores(lat, lon, distance, product, options);
+        async storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoreResponseDTO>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerSearchStores(lat, lon, distance, productId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -365,17 +365,17 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.storeControllerGetStoreProducts(storeId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `name_prefix` if provided
+         * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `product_id` if provided
          * @summary 
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {number} [product] 
+         * @param {number} [productId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerSearchStores(lat: number, lon: number, distance: number, product?: number, options?: any): AxiosPromise<Array<StoreResponseDTO>> {
-            return localVarFp.storeControllerSearchStores(lat, lon, distance, product, options).then((request) => request(axios, basePath));
+        storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: any): AxiosPromise<Array<StoreResponseDTO>> {
+            return localVarFp.storeControllerSearchStores(lat, lon, distance, productId, options).then((request) => request(axios, basePath));
         },
         /**
          * Updates *ALL* fields of an existing store with id `storeId`
@@ -435,18 +435,18 @@ export class StoreApi extends BaseAPI {
     }
 
     /**
-     * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `name_prefix` if provided
+     * Searches for stores within `distance` meters of coords (`lat`,`lon`), with a name that matches `product_id` if provided
      * @summary 
      * @param {number} lat 
      * @param {number} lon 
      * @param {number} distance 
-     * @param {number} [product] 
+     * @param {number} [productId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeControllerSearchStores(lat: number, lon: number, distance: number, product?: number, options?: AxiosRequestConfig) {
-        return StoreApiFp(this.configuration).storeControllerSearchStores(lat, lon, distance, product, options).then((request) => request(this.axios, this.basePath));
+    public storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerSearchStores(lat, lon, distance, productId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

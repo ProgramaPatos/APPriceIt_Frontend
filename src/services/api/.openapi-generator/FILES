@@ -7,9 +7,9 @@ configuration.ts
 git_push.sh
 index.ts
 priceApi/auth-api.ts
-priceApi/default-api.ts
 priceApi/product-api.ts
 priceApi/store-api.ts
+priceApi/user-api.ts
 priceApiModels/geo-point.ts
 priceApiModels/index.ts
 priceApiModels/price-response-dto.ts
