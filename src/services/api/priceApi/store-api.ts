@@ -157,19 +157,17 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {number} productId 
+         * @param {number} [productId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerSearchStores: async (lat: number, lon: number, distance: number, productId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        storeControllerSearchStores: async (lat: number, lon: number, distance: number, productId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'lat' is not null or undefined
             assertParamExists('storeControllerSearchStores', 'lat', lat)
             // verify required parameter 'lon' is not null or undefined
             assertParamExists('storeControllerSearchStores', 'lon', lon)
             // verify required parameter 'distance' is not null or undefined
             assertParamExists('storeControllerSearchStores', 'distance', distance)
-            // verify required parameter 'productId' is not null or undefined
-            assertParamExists('storeControllerSearchStores', 'productId', productId)
             const localVarPath = `/store/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -306,11 +304,11 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {number} productId 
+         * @param {number} [productId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerSearchStores(lat: number, lon: number, distance: number, productId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoreResponseDTO>>> {
+        async storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<StoreResponseDTO>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerSearchStores(lat, lon, distance, productId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -372,11 +370,11 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {number} lat 
          * @param {number} lon 
          * @param {number} distance 
-         * @param {number} productId 
+         * @param {number} [productId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerSearchStores(lat: number, lon: number, distance: number, productId: number, options?: any): AxiosPromise<Array<StoreResponseDTO>> {
+        storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: any): AxiosPromise<Array<StoreResponseDTO>> {
             return localVarFp.storeControllerSearchStores(lat, lon, distance, productId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -442,12 +440,12 @@ export class StoreApi extends BaseAPI {
      * @param {number} lat 
      * @param {number} lon 
      * @param {number} distance 
-     * @param {number} productId 
+     * @param {number} [productId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof StoreApi
      */
-    public storeControllerSearchStores(lat: number, lon: number, distance: number, productId: number, options?: AxiosRequestConfig) {
+    public storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeControllerSearchStores(lat, lon, distance, productId, options).then((request) => request(this.axios, this.basePath));
     }
 
