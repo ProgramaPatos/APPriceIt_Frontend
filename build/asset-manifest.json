@@ -1,16 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.073c9b0a.css",
-    "main.js": "/static/js/main.2e142eaf.js",
+    "main.css": "/static/css/main.e8ba91d3.css",
+    "main.js": "/static/js/main.ed07fcac.js",
+    "static/js/483.54d904fd.chunk.js": "/static/js/483.54d904fd.chunk.js",
     "static/js/787.243ab5ce.chunk.js": "/static/js/787.243ab5ce.chunk.js",
-    "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/paticobuscador.png": "/static/media/paticobuscador.d4fb02b0fbc161feb72d.png",
+    "static/media/logo_appriceit.svg": "/static/media/logo_appriceit.fb3801c14d260262d3a56676a69c1a69.svg",
     "index.html": "/index.html",
-    "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
-    "main.2e142eaf.js.map": "/static/js/main.2e142eaf.js.map",
+    "main.e8ba91d3.css.map": "/static/css/main.e8ba91d3.css.map",
+    "main.ed07fcac.js.map": "/static/js/main.ed07fcac.js.map",
+    "483.54d904fd.chunk.js.map": "/static/js/483.54d904fd.chunk.js.map",
     "787.243ab5ce.chunk.js.map": "/static/js/787.243ab5ce.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.2e142eaf.js"
+    "static/css/main.e8ba91d3.css",
+    "static/js/main.ed07fcac.js"
   ]
 }
