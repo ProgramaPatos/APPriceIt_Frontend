@@ -76,6 +76,44 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Delete a product
+         * @summary 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerDeleteProduct: async (productId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('productControllerDeleteProduct', 'productId', productId)
+            const localVarPath = `/product/{productId}`
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @param {number} productId 
          * @param {*} [options] Override http request option.
@@ -256,6 +294,17 @@ export const ProductApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Delete a product
+         * @summary 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async productControllerDeleteProduct(productId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerDeleteProduct(productId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @param {number} productId 
          * @param {*} [options] Override http request option.
@@ -319,6 +368,16 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.productControllerCreateProduct(productCreateDTO, options).then((request) => request(axios, basePath));
         },
         /**
+         * Delete a product
+         * @summary 
+         * @param {number} productId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        productControllerDeleteProduct(productId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.productControllerDeleteProduct(productId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @param {number} productId 
          * @param {*} [options] Override http request option.
@@ -377,6 +436,18 @@ export class ProductApi extends BaseAPI {
      */
     public productControllerCreateProduct(productCreateDTO: ProductCreateDTO, options?: AxiosRequestConfig) {
         return ProductApiFp(this.configuration).productControllerCreateProduct(productCreateDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Delete a product
+     * @summary 
+     * @param {number} productId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public productControllerDeleteProduct(productId: number, options?: AxiosRequestConfig) {
+        return ProductApiFp(this.configuration).productControllerDeleteProduct(productId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

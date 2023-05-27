@@ -15,7 +15,7 @@
 
 
 export * from './priceApi/auth-api';
-export * from './priceApi/default-api';
 export * from './priceApi/product-api';
 export * from './priceApi/store-api';
+export * from './priceApi/user-api';
 
