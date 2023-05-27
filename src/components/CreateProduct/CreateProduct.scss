@@ -1,7 +1,7 @@
 @use '../variables' as v;
 @import '../commons.scss';
 
-.createStore{
+.CreateProduct{
    color: v.$white;
    width: 90%;
    height: 80%;
@@ -14,7 +14,7 @@
   }
 
 
-.createStoreButton         
+.CreateProductButton         
 {
    margin: 0;
    background: transparent;
@@ -33,7 +33,7 @@
    }
 }
 
-.createStoreSchedule{
+.CreateProductSchedule{
    display: flex;
    justify-content: space-evenly;
    align-items: center;
@@ -43,7 +43,7 @@
 
 }
 
-.createStoreInputContainer{
+.CreateProductInputContainer{
    margin: 0;
    padding: 0;
    width: 100%;
@@ -76,12 +76,12 @@
    }
 }
 
-.createStoreInputLabel{
+.CreateProductInputLabel{
    margin-bottom: 0;
    font-size: 0.8rem;
 }
 
-.createStoreInputSeparator{
+.CreateProductInputSeparator{
    width: 1vw;
    height: 1vh;
 }

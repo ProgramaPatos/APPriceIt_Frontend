@@ -6,6 +6,8 @@ import {
   SignInRequestDTO,
   StoreApi,
   StoreCreateDTO,
+  ProductCreateDTO,
+  StoreResponseDTO,
 } from "../services/api";
 
 export enum AuthStatus {
@@ -19,6 +21,8 @@ export type UserContextValue = {
   signIn: (request: SignInRequestDTO) => void;
   logOut: () => void;
   createStore: (request: StoreCreateDTO) => void;
+  createProduct: (request: ProductCreateDTO) => void;
+  getMyStores: StoreResponseDTO[];
   storeApi: StoreApi;
   productApi: ProductApi;
   userStatus: AuthStatus;

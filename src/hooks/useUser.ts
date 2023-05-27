@@ -16,7 +16,15 @@ const useUser = () => {
     throw new Error("useUser must be within UserContextProvider");
   }
 
-  const { signIn, logOut, userStatus, hasAuthError, createStore } = userCtxVal;
+  const {
+    signIn,
+    logOut,
+    userStatus,
+    hasAuthError,
+    createStore,
+    createProduct,
+    getMyStores,
+  } = userCtxVal;
 
   return {
     signIn,
@@ -24,6 +32,8 @@ const useUser = () => {
     userStatus,
     hasAuthError,
     createStore,
+    createProduct,
+    getMyStores,
   };
 };
 

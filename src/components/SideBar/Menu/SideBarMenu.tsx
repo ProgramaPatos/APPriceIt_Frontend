@@ -11,6 +11,7 @@ import { ReactComponent as Logo } from "../../../Img/logo_appriceit.svg";
 import { Icon, SvgIcon } from "@mui/material";
 import { SideBarContext } from "../../GenericSideBar/GenericSideBar";
 import { CreateStore } from "../../CreateStore/CreateStore";
+import { AllStores } from "../../AllStores/AllStores";
 
 interface SideBarMenuProps {
   card: SideMenuCard;
@@ -34,7 +35,9 @@ export function SideBarMenu({
         <BsBookmark size="2.4vh" style={{ display: "block", margin: "auto" }} />
       ),
       url: "/",
-      onClick: () => {},
+      onClick: () => {
+        setSideBar(AllStores);
+      },
     },
 
     {
