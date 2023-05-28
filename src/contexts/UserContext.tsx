@@ -223,7 +223,9 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
               setUserStatus(AuthStatus.UNAUTHENTICATED);
             }
           }
-          return Promise.reject(error);
+          const newError = new AxiosError(error.message + "patitos", error.code, error.config, error.request, error.response);
+
+          return Promise.reject(newError);
         }
       );
       didInit = true;
