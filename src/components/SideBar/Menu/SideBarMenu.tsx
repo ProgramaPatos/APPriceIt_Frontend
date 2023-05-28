@@ -79,7 +79,7 @@ export function SideBarMenu({
         isOPen || viewPanel ? "expanded" : "collapsed"
       }`}
     >
-      <SideBarMenuItemView
+      {/* <SideBarMenuItemView
         item={{
           id: "-1",
           label: "logo",
@@ -89,7 +89,7 @@ export function SideBarMenu({
         }}
         key={"-1"}
         isOpen={isOPen || viewPanel}
-      />
+      /> */}
       <div className="MenuButton">
         <button className="BurgerButton" onClick={handleClick}>
           {isOPen || viewPanel ? (

@@ -39,8 +39,10 @@
   padding: 0 0.7vw;
   color: v.$white;
   font-size: 0.875rem;
-  margin-top: 9vh;
+  margin-top: 3vh;
   overflow-y: auto;
+  height: inherit;
+  width: 90%;
  }
 
  .InfoBarMainTitle{

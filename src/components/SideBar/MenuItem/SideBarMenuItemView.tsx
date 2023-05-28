@@ -14,9 +14,7 @@ export default function SideBarMenuItemView({
     <div className="SideBarMenuItemStyle">
       <div onClick={item.onClick}>
         <div className={`ItemContent ${isOpen ? "expanded" : "collapsed"}`}>
-          <div className="Icon">
-            {item.icon}
-          </div>
+          <div className="Icon">{item.icon}</div>
           <span className="Label">{item.label}</span>
         </div>
       </div>
