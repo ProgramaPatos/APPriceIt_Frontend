@@ -1,107 +1,87 @@
 import * as React from "react";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Icon from "@mui/material/Icon";
 import SearchIcon from "@mui/icons-material/Search";
-import { AiOutlineClose } from "react-icons/ai";
-import LocalGroceryStoreSharpIcon from "@mui/icons-material/LocalGroceryStoreSharp";
 import "./Search.scss";
-import { InputAdornment, TextField } from "@mui/material";
-import { useState } from "react";
-import useStoreApi from "../../../hooks/useStoreApi";
+import { useRef, useState } from "react";
 import useProductApi from "../../../hooks/useProductApi";
 import { useQuery } from "react-query";
+import { ProductResponseDTO } from "../../../services/api";
+import { AxiosError } from "axios";
 
 interface SearchProps {
-  isSearching: boolean;
-  setIsSearching: (value: boolean) => void;
   setSearch: (value: number | null) => void;
 }
 
-export function Search({ setIsSearching, isSearching, setSearch }: SearchProps) {
-  const [searchInput, setSearchInput] = useState("");
-  const [searchText, setSearchText] = useState<string | null>(null);
+export function Search({ setSearch }: SearchProps) {
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
+  const [selectedResult, setSelectedResult] = useState(0);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { productApi } = useProductApi();
-  const handleClick = (): void => {
-    setIsSearching(!isSearching);
+  const handleSearch = (p: ProductResponseDTO) => () => {
+    setSearchInput(p.product_name);
+    inputRef.current?.blur();
+    setIsSearching(false);
+    setSearch(p.product_id);
   };
+  const handleChange = (n: string) => {
+    setSearchInput(n);
+    setIsSearching(true);
+  }
 
-  useQuery(["productSearch", searchText], async () => {
-    if (searchText) {
-      const { data } = await productApi.productControllerSearchProduct(searchText);
-      if (data.length > 0) {
-        console.log("encontrado", data[0]);
-        setSearchInput(data[0].product_name);
-        setSearch(data[0].product_id);
-      }
-      else {
-        setSearch(null);
-      }
+  const { data: results, isLoading, isError, error, isFetching } = useQuery<ProductResponseDTO[], AxiosError>(["productSearch", searchInput], async () => {
+    if (searchInput) {
+      console.log("buscando", searchInput);
+      const { data } = await productApi.productControllerSearchProduct(searchInput);
+      return data;
     }
+    return [];
   }, {
-    enabled: (searchText !== null)
+    enabled: (searchInput !== undefined) && isSearching,
+    initialData: () => []
   })
   const handleSubmit: React.FormEventHandler = (e) => {
     e.preventDefault();
-    console.log("Buscando", searchInput);
-    setSearchText(searchInput);
+    if (results && results.length > selectedResult) {
+      handleSearch(results[selectedResult])();
+    }
   };
 
 
-  return (
-    <div className="searchIcon">
-      <Paper
-        component="form"
-        sx={{
-          p: "0.1rem 0.3rem",
-          display: "flex",
-          alignItems: "center",
-          width: "25.6vw",
-          height: 48,
-          background: "#EEE9DA",
-          boxShadow: "0rem 0.2rem 0.2rem -0.1rem rgba(0, 0, 0, 0.2)",
-        }}
-        onSubmit={handleSubmit}
-      >
 
-        <TextField
-          id="searchInput"
-          label="Busca un producto"
+  return (
+    <div className="searchContainer">
+      <form className="searchBar" onSubmit={handleSubmit}>
+        <input
+          ref={inputRef}
+          type="text"
+          className="searchInput"
           placeholder="¿Qué buscas?"
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton sx={{ p: "0.7rem" }} aria-label="directions" type="submit">
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
+          onChange={(e) => handleChange(e.target.value)}
         />
-
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-
-        {isSearching ? (
-          <IconButton
-            sx={{ p: "0.7rem" }}
-            aria-label="directions"
-            onClick={handleClick}
-          >
-            <AiOutlineClose />
-          </IconButton>
-        ) : (
-          <IconButton
-            sx={{ p: "0.7rem", color: "#001D4A" }}
-            aria-label="directions"
-          >
-            <LocalGroceryStoreSharpIcon />
-          </IconButton>
-        )}
-      </Paper>
+        <IconButton sx={{ p: "0.7rem" }} aria-label="directions" type="submit">
+          <SearchIcon />
+        </IconButton>
+      </form>
+      {isSearching && <div className="searchList">
+        {isFetching && <div>Cargando...</div>}
+        {isError && error?.response?.status === 404 && <div>No hay resultados :c</div>}
+        {isError && error?.response?.status !== 404 && <div>Error</div>}
+        {((results?.length ?? 0) > 0) && results?.map((prod, i) => {
+          return (
+            <div
+              className={`searchListItem ${selectedResult === i ? "selected" : ""}`}
+              key={prod.product_id}
+              onMouseEnter={() => setSelectedResult(i)}
+              onClick={handleSearch(prod)}
+            >
+              {prod.product_name}
+            </div>
+          );
+        })}
+      </div>
+      }
     </div>
   );
 }

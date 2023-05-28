@@ -77,8 +77,6 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <div className="Container">
           <Search
-            isSearching={isSearching}
-            setIsSearching={setIsSearching}
             setSearch={setProductSearch}
           />
 
