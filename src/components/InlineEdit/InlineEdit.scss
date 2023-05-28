@@ -1,0 +1,30 @@
+@use '../variables' as v;
+@import '../commons.scss';
+ 
+ input,
+ textarea {
+   background-color: transparent;
+   border: 0;
+   padding: 0;
+   color: v.$white;
+   border: 2px solid v.$darkSecondary;
+   width: 70%;
+ }
+ 
+ input:hover {
+  border: 2px solid v.$lightSecondary;
+   background-color: v.$darkSecondary;
+   cursor: pointer;
+ }
+ 
+ textarea {
+   resize: none;
+   overflow: hidden;
+ }
+ 
+ textarea:focus {
+   outline: 5px auto Highlight; /* Firefox */
+   outline: 5px auto -webkit-focus-ring-color; /* Chrome, Safari */
+ }
+ 
+ 

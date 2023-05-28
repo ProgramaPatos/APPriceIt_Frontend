@@ -69,7 +69,6 @@ export function CreateProduct() {
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
             {/* <input type="text" name="" placeholder="" /> */}
-            <p className="CreateProductInputLabel"> Horario de la tienda </p>
 
             <div className="SimpleSeparator" />
             {/* hay que hacer algo asi pero para la tienda creada

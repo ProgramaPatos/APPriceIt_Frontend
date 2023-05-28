@@ -1,11 +1,12 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import useStoreApi from "../../hooks/useStoreApi";
 import { useQuery } from "react-query";
 import { StoreResponseDTO } from "../../services/api";
-import "../InfoBar/InfoBar.scss";
+import "./StoreDisplay.scss";
 
 export const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
   const { storeApi } = useStoreApi();
+  const [isMyStore, setIsMyStore] = useState<boolean>(true);
   const { data: storeInfo } = useQuery(
     ["storeProducts", store.store_id],
     async () => {
@@ -44,6 +45,14 @@ export const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
           </div>
         </div>
       ))}
+      {isMyStore ? (
+        <div
+          className="StoreDIsplayButton"
+          onClick={() => console.log("cambio a crear producto")}
+        >
+          <p> Añadir Producto</p>
+        </div>
+      ) : null}
     </div>
   );
 };

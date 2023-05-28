@@ -12,6 +12,7 @@ import { Icon, SvgIcon } from "@mui/material";
 import { SideBarContext } from "../../GenericSideBar/GenericSideBar";
 import { CreateStore } from "../../CreateStore/CreateStore";
 import { AllStores } from "../../AllStores/AllStores";
+import { CreateProduct } from "../../CreateProduct/CreateProduct";
 
 interface SideBarMenuProps {
   card: SideMenuCard;
@@ -41,6 +42,7 @@ export function SideBarMenu({
     },
 
     {
+      //aqui voy a probar todo. so no se si despues se elimine o sea anadir perfil
       id: "2",
       label: "Búsquedas Recientes",
       icon: (
@@ -50,7 +52,9 @@ export function SideBarMenu({
         />
       ),
       url: "/",
-      onClick: () => {},
+      onClick: () => {
+        setSideBar(CreateProduct);
+      },
     },
     {
       id: "3",

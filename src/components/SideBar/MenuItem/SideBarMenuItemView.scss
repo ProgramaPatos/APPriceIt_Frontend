@@ -86,9 +86,10 @@
   text-align: left;
   display: flex;
   align-items: center;
-  margin: 0rem 0.4rem;
+  margin: 0 0.4rem  0.3rem 0.4rem;
 
   &:hover {
+    cursor: pointer;
     background-color: $darkSecondary;
     color: white;
     border-radius: 1rem;

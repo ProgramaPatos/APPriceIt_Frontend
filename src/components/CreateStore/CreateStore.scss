@@ -4,7 +4,7 @@
 .createStore{
    color: v.$white;
    width: 90%;
-   height: 80%;
+   height: 93%;
 }
 .storeFormTitle{
    margin: 0;
@@ -21,15 +21,16 @@
    padding: 0;
    height: 6vh;
    width: 10vw;
-   color: v.$lightMain;
+   color: v.$lightSecondary;
    align-self: center;
-   border: solid 1px v.$lightMain;
+   border: solid 1px v.$lightSecondary;
    border-radius: 0.2em;
    &:hover{
-      background: v.$lightMain;
+      border: solid 2px  v.$lightMain;
       font-weight: 400;
-      color: v.$black;
       cursor: pointer;
+      color: v.$white;
+
    }
 }
 
