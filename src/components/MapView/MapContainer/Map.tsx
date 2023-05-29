@@ -31,6 +31,9 @@ import { StoreResponseDTO } from "../../../services/api";
 import { SideBarContext } from "../../GenericSideBar/GenericSideBar";
 import "../../InfoBar/InfoBar.scss";
 import { StoreDisplay } from "../../StoreDisplay/StoreDisplay";
+import '../../InfoBar/InfoBar.scss';
+import MarkerSVG from '../../../Img/priceMarker.svg';
+
 
 const getQueryDistance = (mapRef: MapRef | null) => {
   const bounds = mapRef?.getBounds();
@@ -105,21 +108,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
 
   const mapRef = useRef<MapRef>(null);
 
-  const onMapLoad = useCallback(() => {
-    console.log("running here");
-    if (mapRef.current) {
-      console.log("miau");
-      mapRef.current.on("click", "point", (e) => {
-        console.log(e);
-        if (e.features) {
-          const store = JSON.parse(
-            e.features[0]!.properties?.store
-          ) as StoreResponseDTO;
-          setSideBar(() => <StoreDisplay store={store} />);
-        }
-      });
-    }
-  }, []);
+
   const initialViewState = {
     longitude: -122.4,
     latitude: 37.8,
@@ -178,18 +167,44 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
     }
   );
 
+  type StoreGeoJSONProp = { name: string, store: string };
   const storesGeoJSON = useMemo(() => {
     const result = {
-      type: "FeatureCollection" as const,
-      features:
-        stores?.map((store) => ({
+      type: 'FeatureCollection' as const,
+      features: stores?.map(
+        (store) => ({
           type: "Feature" as const,
           geometry: store.store_location,
-          properties: { store: store },
+          properties: { name: store.store_name, store: JSON.stringify(store) },
         })) ?? [],
-    } as GeoJSON.FeatureCollection<GeoJSON.Point, { store: StoreResponseDTO }>;
+    } as GeoJSON.FeatureCollection<GeoJSON.Point, StoreGeoJSONProp>;
     return result;
   }, [stores]);
+
+
+  const onMapLoad = useCallback(() => {
+    if (mapRef.current) {
+      const map = mapRef.current;
+      map.on("click", "point", (e) => {
+        if (e.features) {
+          const props = e.features[0].properties as StoreGeoJSONProp;
+          const store = JSON.parse(props.store) as StoreResponseDTO;
+          setSideBar(() => <StoreDisplay store={store} />);
+        }
+      });
+
+      const Img = new Image();
+
+      // Image src loading is async, and the onload function must be specified beforehand
+      Img.onload = () => {
+        map.addImage("priceMarker", Img);
+      };
+
+      Img.src = MarkerSVG;
+
+    }
+  }, []);
+
   return (
     <>
       {geoIsLoading && isGeolocationEnabled && <Loading />}
@@ -209,10 +224,12 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
         <Source id="stores" type="geojson" data={storesGeoJSON}>
           <Layer
             id="point"
-            type="circle"
-            paint={{
-              "circle-radius": 10,
-              "circle-color": "#007cbf",
+            type="symbol"
+            layout={{
+              "icon-image": "priceMarker",
+              "icon-anchor": "bottom",
+              "text-field": ["get", "name"],
+              "text-anchor": "top",
             }}
           />
         </Source>

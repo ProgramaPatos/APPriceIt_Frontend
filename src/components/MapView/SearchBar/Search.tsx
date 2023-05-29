@@ -14,7 +14,7 @@ interface SearchProps {
 
 export function Search({ setSearch }: SearchProps) {
   const [isSearching, setIsSearching] = useState(false);
-  const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
+  const [searchInput, setSearchInput] = useState<string>("");
   const [selectedResult, setSelectedResult] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const { productApi } = useProductApi();
@@ -37,7 +37,7 @@ export function Search({ setSearch }: SearchProps) {
     }
     return [];
   }, {
-    enabled: (searchInput !== undefined) && isSearching,
+    enabled: (searchInput !== "") && isSearching,
     initialData: () => []
   })
   const handleSubmit: React.FormEventHandler = (e) => {
