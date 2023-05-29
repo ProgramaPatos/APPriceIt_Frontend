@@ -9,6 +9,7 @@ import {
 } from "react";
 import Map, {
   Layer,
+  MapLayerMouseEvent,
   MapRef,
   Marker,
   Source,
@@ -33,6 +34,8 @@ import "../../InfoBar/InfoBar.scss";
 import { StoreDisplay } from "../../StoreDisplay/StoreDisplay";
 import '../../InfoBar/InfoBar.scss';
 import MarkerSVG from '../../../Img/priceMarker.svg';
+import mapboxgl from "mapbox-gl";
+import { CreateStore } from "../../CreateStore/CreateStore";
 
 
 const getQueryDistance = (mapRef: MapRef | null) => {
@@ -40,55 +43,11 @@ const getQueryDistance = (mapRef: MapRef | null) => {
   if (!bounds) {
     return 500;
   }
-  return Math.max(
+  return Math.min(Math.max(
     getDistance(bounds.getNorthEast(), bounds.getNorthWest()),
     getDistance(bounds.getNorthEast(), bounds.getSouthEast())
-  );
+  ), 1000);
 };
-
-// const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
-//   const { storeApi } = useStoreApi();
-//   const { data: storeInfo } = useQuery(
-//     ["storeProducts", store.store_id],
-//     async () => {
-//       const res = await storeApi.storeControllerGetStoreProducts(
-//         store.store_id
-//       );
-//       return res.data;
-//     }
-//   );
-//   return (
-//     <div className="InfoBarContainer">
-//       <h1 className="InfoBarMainTitle">{store.store_name}</h1>
-//       <h2 className="InfoBarMainSubTitle">{store.store_description}</h2>
-//       {storeInfo?.map((product) => (
-//         <div key={product.product_id}>
-//           <div className="InfoCard">
-//             <div className="InfoCardHeader">
-//               <div className="InfoCardTitle">{product.product_name}</div>
-//             </div>
-
-//             <div className="InfoCardBody">
-//               <div className="InfoCardSubtitle">
-//                 {product.product_description}
-//               </div>
-//               <p className="InfoCardSubtitle">Precios</p>
-//               <div className="InfoCardPrice">
-//                 {product.product_prices.map((price) => (
-//                   <div key={price.price_id}>
-//                     <div className="InfoCardPriceValue">
-//                       ${price.price_value}
-//                     </div>
-//                   </div>
-//                 ))}
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
 
 type MyMapContainerProps = {
   setStore: (store: StoreResponseDTO) => void;
@@ -104,7 +63,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
 }) => {
   const { userStatus } = useUser();
   const { storeApi } = useStoreApi();
-  const setSideBar = useContext(SideBarContext);
+  const { setSideBar } = useContext(SideBarContext);
 
   const mapRef = useRef<MapRef>(null);
 
@@ -123,6 +82,10 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
     Partial<ViewState> & { longitude: number; latitude: number }
   >(viewState);
 
+  const [queriedBounds, setQueriedBounds] = useState<null | mapboxgl.LngLatBounds
+  >(null);
+
+
   const onMove = useCallback<(e: ViewStateChangeEvent) => void>(
     ({ viewState }) => {
       setViewState(viewState);
@@ -132,13 +95,20 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
 
   const onMoveEnd = useCallback<(e: ViewStateChangeEvent) => void>(
     ({ viewState }) => {
-      setQueriedViewState(viewState);
+
+      if (
+        (queriedBounds &&
+          !queriedBounds.contains(new maplibregl.LngLat(viewState.longitude, viewState.latitude))) ||
+        !queriedBounds
+      ) {
+        setQueriedViewState(viewState);
+        setQueriedBounds(mapRef.current?.getBounds() ?? null);
+      }
     },
     []
   );
   const [geoIsLoading, setGeoIsLoading] = useState<boolean>(true);
   const onGeoSuccess = useCallback((position: GeolocationPosition) => {
-    console.log(position);
     const { latitude, longitude } = position.coords;
     setViewState((prev) => ({ ...prev, latitude, longitude }));
     setQueriedViewState((prev) => ({ ...prev, latitude, longitude }));
@@ -146,7 +116,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
   }, []);
   const geo = useGeolocated({ onSuccess: onGeoSuccess });
   const { isGeolocationAvailable, isGeolocationEnabled } = geo;
-  const { data: stores } = useQuery(
+  const { data: stores, refetch: refresh } = useQuery(
     ["stores", queriedViewState, searchId],
     async () => {
       const dis = getQueryDistance(mapRef.current);
@@ -172,11 +142,13 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
     const result = {
       type: 'FeatureCollection' as const,
       features: stores?.map(
-        (store) => ({
-          type: "Feature" as const,
-          geometry: store.store_location,
-          properties: { name: store.store_name, store: JSON.stringify(store) },
-        })) ?? [],
+        (store) => {
+          return ({
+            type: "Feature" as const,
+            geometry: store.store_location,
+            properties: { name: store.store_name, store: JSON.stringify(store) },
+          })
+        }) ?? [],
     } as GeoJSON.FeatureCollection<GeoJSON.Point, StoreGeoJSONProp>;
     return result;
   }, [stores]);
@@ -189,7 +161,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
         if (e.features) {
           const props = e.features[0].properties as StoreGeoJSONProp;
           const store = JSON.parse(props.store) as StoreResponseDTO;
-          setSideBar(() => <StoreDisplay store={store} />);
+          setSideBar(() => <StoreDisplay storeId={store.store_id} />);
         }
       });
 
@@ -202,6 +174,13 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
 
       Img.src = MarkerSVG;
 
+    }
+  }, []);
+
+  const [ctxMenuCoords, setCtxMenuCoords] = useState<null | mapboxgl.LngLat>(null);
+  const onContextMenu = useCallback((e: MapLayerMouseEvent) => {
+    if (mapRef.current) {
+      setCtxMenuCoords(e.lngLat)
     }
   }, []);
 
@@ -220,6 +199,8 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
         onMove={onMove}
         onMoveEnd={onMoveEnd}
         onLoad={onMapLoad}
+        onContextMenu={onContextMenu}
+        minZoom={15}
       >
         <Source id="stores" type="geojson" data={storesGeoJSON}>
           <Layer
@@ -230,9 +211,31 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
               "icon-anchor": "bottom",
               "text-field": ["get", "name"],
               "text-anchor": "top",
+              "icon-allow-overlap": true,
             }}
           />
         </Source>
+        {ctxMenuCoords &&
+          <Marker
+            longitude={ctxMenuCoords.lng}
+            latitude={ctxMenuCoords.lat}
+          >
+            <menu className="menu">
+              <li><button
+                onClick={() => {
+                  setCtxMenuCoords(null);
+                  setSideBar(() => <CreateStore
+                    lon={ctxMenuCoords.lng}
+                    lat={ctxMenuCoords.lat}
+                    refresh={refresh}
+                  />);
+                }}
+              >
+                Añadir Tienda
+              </button></li>
+            </menu>
+          </Marker>
+        }
       </Map>
     </>
   );

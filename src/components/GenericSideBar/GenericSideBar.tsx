@@ -3,44 +3,44 @@ import {
   createContext,
   FC,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from "react";
 
-type SideBarContextValue = (e: () => JSX.Element) => void;
+type SideBarContextValue = {
+  setSideBar: (e: (() => JSX.Element) | null) => void;
+};
 
-const defaultSideBarChild = () => <p>Hola</p>;
+const defaultSideBarChild = () => <p>Bienvenido</p>;
 
-export const SideBarContext = createContext<SideBarContextValue>((e) => {});
+export const SideBarContext = createContext<SideBarContextValue>({ setSideBar: (e) => {} });
 
 const GenericSideBar: FC<PropsWithChildren> = ({ children }) => {
   const [Child, setChild] = useState(() => defaultSideBarChild);
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
+  const setSideBar: SideBarContextValue["setSideBar"] = useCallback((v) => {
+    if (v === null) {
+      console.log("Got here");
+      setOpen(false);
+    }
+    else {
+      setOpen(true);
+      setChild(() => v);
+    }
+
+  }, []);
   return (
-    <SideBarContext.Provider value={(v) => setChild(() => v)}>
-      <div className="SideBar expanded">
+    <SideBarContext.Provider value={{ setSideBar }}>
+      <div className={`SideBar ${(open ? "expanded" : "collapsed")}`} >
         <Child />
       </div>
       {children}
-    </SideBarContext.Provider>
+    </SideBarContext.Provider >
   );
 };
 
-const TestSideBarConsumer = () => {
-  const setChild = useContext(SideBarContext);
-  const [counter, setCounter] = useState(0);
-
-  // useEffect(() => {
-  //     setChild(() => () => );
-  // }, []);
-  const handleClick = () => {
-    setCounter((v) => v + 1);
-    setChild(() => <div>{counter}</div>);
-  };
-
-  return <button onClick={handleClick}>click</button>;
-};
 
 export default GenericSideBar;

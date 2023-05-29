@@ -26,7 +26,7 @@ export function SideBarMenu({
   setViewPanel,
 }: SideBarMenuProps) {
   const [isOPen, setIsOpen] = useState<boolean>(false);
-  const setSideBar = useContext(SideBarContext);
+  const { setSideBar } = useContext(SideBarContext);
 
   const items: SideBarMenuItem[] = [
     {
@@ -53,21 +53,7 @@ export function SideBarMenu({
       ),
       url: "/",
       onClick: () => {
-        setSideBar(CreateProduct);
-      },
-    },
-    {
-      id: "3",
-      label: "Crear Tienda",
-      icon: (
-        <RiFolderHistoryLine
-          size="2.4vh"
-          style={{ display: "block", margin: "auto" }}
-        />
-      ),
-      url: "/stores", //TODO: Change this or make it functional
-      onClick: () => {
-        setSideBar(CreateStore);
+        // setSideBar(CreateProduct);
       },
     },
   ];
@@ -79,9 +65,8 @@ export function SideBarMenu({
 
   return (
     <div
-      className={`MenuDisplay ${
-        isOPen || viewPanel ? "expanded" : "collapsed"
-      }`}
+      className={`MenuDisplay ${isOPen || viewPanel ? "expanded" : "collapsed"
+        }`}
     >
       {/* <SideBarMenuItemView
         item={{

@@ -8,6 +8,7 @@ import {
   StoreCreateDTO,
   ProductCreateDTO,
   StoreResponseDTO,
+  UserApi,
 } from "../services/api";
 
 export enum AuthStatus {
@@ -25,6 +26,8 @@ export type UserContextValue = {
   getMyStores: StoreResponseDTO[];
   storeApi: StoreApi;
   productApi: ProductApi;
+  userApi: UserApi;
   userStatus: AuthStatus;
+  authApi: AuthApi;
   hasAuthError: boolean;
 };

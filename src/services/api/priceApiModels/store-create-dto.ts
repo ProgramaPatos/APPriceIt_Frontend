@@ -50,11 +50,5 @@ export interface StoreCreateDTO {
      * @memberof StoreCreateDTO
      */
     'store_schedule'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreCreateDTO
-     */
-    'store_appuser_id': number;
 }
 

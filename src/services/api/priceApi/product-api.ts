@@ -24,6 +24,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { ProductCreateDTO } from '../priceApiModels';
 // @ts-ignore
+import { ProductIdResponseDto } from '../priceApiModels';
+// @ts-ignore
 import { ProductResponseDTO } from '../priceApiModels';
 // @ts-ignore
 import { ProductUpdateDTO } from '../priceApiModels';
@@ -289,7 +291,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerCreateProduct(productCreateDTO: ProductCreateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async productControllerCreateProduct(productCreateDTO: ProductCreateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductIdResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerCreateProduct(productCreateDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -332,7 +334,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async productControllerUpdateProduct(productId: number, productUpdateDTO: ProductUpdateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async productControllerUpdateProduct(productId: number, productUpdateDTO: ProductUpdateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductIdResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productControllerUpdateProduct(productId, productUpdateDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -364,7 +366,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerCreateProduct(productCreateDTO: ProductCreateDTO, options?: any): AxiosPromise<void> {
+        productControllerCreateProduct(productCreateDTO: ProductCreateDTO, options?: any): AxiosPromise<ProductIdResponseDto> {
             return localVarFp.productControllerCreateProduct(productCreateDTO, options).then((request) => request(axios, basePath));
         },
         /**
@@ -403,7 +405,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        productControllerUpdateProduct(productId: number, productUpdateDTO: ProductUpdateDTO, options?: any): AxiosPromise<void> {
+        productControllerUpdateProduct(productId: number, productUpdateDTO: ProductUpdateDTO, options?: any): AxiosPromise<ProductIdResponseDto> {
             return localVarFp.productControllerUpdateProduct(productId, productUpdateDTO, options).then((request) => request(axios, basePath));
         },
         /**

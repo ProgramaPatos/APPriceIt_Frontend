@@ -32,11 +32,5 @@ export interface ProductCreateDTO {
      * @memberof ProductCreateDTO
      */
     'product_description'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductCreateDTO
-     */
-    'product_appuser_id': number;
 }
 

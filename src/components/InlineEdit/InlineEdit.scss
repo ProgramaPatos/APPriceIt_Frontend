@@ -1,7 +1,7 @@
 @use '../variables' as v;
 @import '../commons.scss';
  
- input,
+.InlineEditInput,
  textarea {
    background-color: transparent;
    border: 0;
@@ -11,7 +11,7 @@
    width: 70%;
  }
  
- input:hover {
+.InlineEditInput:hover {
   border: 2px solid v.$lightSecondary;
    background-color: v.$darkSecondary;
    cursor: pointer;
@@ -26,5 +26,3 @@
    outline: 5px auto Highlight; /* Firefox */
    outline: 5px auto -webkit-focus-ring-color; /* Chrome, Safari */
  }
- 
- 

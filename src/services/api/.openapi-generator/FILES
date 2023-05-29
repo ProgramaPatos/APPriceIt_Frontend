@@ -14,6 +14,7 @@ priceApiModels/geo-point.ts
 priceApiModels/index.ts
 priceApiModels/price-response-dto.ts
 priceApiModels/product-create-dto.ts
+priceApiModels/product-id-response-dto.ts
 priceApiModels/product-response-dto.ts
 priceApiModels/product-update-dto.ts
 priceApiModels/product-with-prices-response-dto.ts
@@ -21,7 +22,10 @@ priceApiModels/refresh-request-dto.ts
 priceApiModels/refresh-response-dto.ts
 priceApiModels/sign-in-request-dto.ts
 priceApiModels/sign-in-response-dto.ts
+priceApiModels/store-assign-price-dto.ts
+priceApiModels/store-assign-product-dto.ts
 priceApiModels/store-create-dto.ts
+priceApiModels/store-id-response-dto.ts
 priceApiModels/store-response-dto.ts
 priceApiModels/store-response-dtostore-location.ts
 priceApiModels/store-update-dto.ts

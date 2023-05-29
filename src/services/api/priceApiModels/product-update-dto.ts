@@ -32,11 +32,5 @@ export interface ProductUpdateDTO {
      * @memberof ProductUpdateDTO
      */
     'product_description'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductUpdateDTO
-     */
-    'product_appuser_id'?: number;
 }
 

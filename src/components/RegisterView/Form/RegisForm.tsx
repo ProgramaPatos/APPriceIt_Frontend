@@ -13,21 +13,23 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, OutlinedInput } from "@mui/material";
 import { Box } from "@mui/system";
+import useAuthApi from "../../../hooks/useAuthApi";
+import useUserApi from "../../../hooks/useUserApi";
+import { redirect } from "react-router";
 
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [rol, setRol] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-  const [errorName, setErrorName] = useState(false);
   const [errorUsername, setErrorUsername] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
-  const [errorRol, setErrorRol] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
   const [errorRePassword, setErrorRePassword] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { userApi } = useUserApi();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -39,15 +41,27 @@ export default function RegisterForm() {
   const validate = (value: string) => {
     return value.length > 0;
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    validate(name) ? setErrorName(false) : setErrorName(true);
     validate(username) ? setErrorUsername(false) : setErrorUsername(true);
     validate(email) ? setErrorEmail(false) : setErrorEmail(true);
-    validate(rol) ? setErrorRol(false) : setErrorRol(true);
     validate(password) ? setErrorPassword(false) : setErrorPassword(true);
-    validate(rePassword) ? setErrorRePassword(false) : setErrorRePassword(true);
+    validate(rePassword) && rePassword === password ? setErrorRePassword(false) : setErrorRePassword(true);
+
+    if (errorUsername || errorEmail || errorPassword || errorRePassword) {
+      return;
+    }
+
+    await userApi.userControllerSignUp({
+      appuser_name: username,
+      appuser_email: email,
+      appuser_password: password
+    });
+
+    console.log("got here");
+    window.location.replace("/");
   };
+
 
   return (
     <>
@@ -62,23 +76,6 @@ export default function RegisterForm() {
           alignItems="center"
         >
           <div className="Order">
-            <TextField
-              id="Name"
-              label="Tu Nombre"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              error={errorName}
-              // required = {true}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle />
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-            />
 
             <TextField
               id="Username"
@@ -115,22 +112,6 @@ export default function RegisterForm() {
               variant="outlined"
             />
 
-            <TextField
-              id="Rol"
-              label="Tu Rol"
-              type="text"
-              value={rol}
-              onChange={(e) => setRol(e.target.value)}
-              error={errorRol}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <WorkIcon />
-                  </InputAdornment>
-                ),
-              }}
-              variant="outlined"
-            />
           </div>
           <div className="Order">
             <FormControl variant="outlined">
@@ -158,6 +139,8 @@ export default function RegisterForm() {
                 label="Password"
               />
             </FormControl>
+          </div>
+          <div className="Order">
 
             <FormControl variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">

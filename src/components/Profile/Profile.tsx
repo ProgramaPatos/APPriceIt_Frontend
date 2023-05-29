@@ -6,6 +6,7 @@ import useUser from "../../hooks/useUser";
 import { AccountCircle } from "@mui/icons-material";
 import { Button } from "@mui/base";
 import { AuthStatus } from "../../types/user";
+import { BiUserCircle } from "react-icons/bi";
 
 interface ProfileProps {
   card: SideMenuCard;
@@ -25,10 +26,8 @@ export default function Profile({ card }: ProfileProps) {
   }, [userStatus]);
   return (
     <div className={`ProfileContainer ${isOpen ? "expanded" : ""}`}>
-      <img
+      <BiUserCircle
         className="Profile"
-        src={card.photoURL}
-        alt="profile"
         onClick={() => {
           if (userStatus == AuthStatus.AUTHENTICATED) {
             setIsOpen(!isOpen);

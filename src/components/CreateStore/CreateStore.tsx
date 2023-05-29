@@ -1,42 +1,39 @@
 import "./CreateStore.scss";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
-import React, { FormEventHandler, useState } from "react";
+import React, { FC, FormEventHandler, useContext, useState } from "react";
 import useUser from "../../hooks/useUser";
+import useStoreApi from "../../hooks/useStoreApi";
+import { SideBarContext } from "../GenericSideBar/GenericSideBar";
+import { StoreDisplay } from "../StoreDisplay/StoreDisplay";
 
-type LoginInputFieldProps = TextFieldProps & { endIcon: React.ReactNode };
 
-const LoginInputField: React.FC<LoginInputFieldProps> = (props) => {
-  const { id, label, value, onChange, ...other } = props;
-  return (
-    <TextField
-      id={id}
-      label={label}
-      required={true}
-      value={value}
-      onChange={onChange}
-      {...other}
-    />
-  );
-};
+type CreateStoreProps = {
+  lon: number;
+  lat: number;
+  refresh: () => void;
+}
 
-export function CreateStore() {
+export const CreateStore: FC<CreateStoreProps> = ({ lon, lat, refresh }) => {
   const [description, setDescription] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
   const [open, setOpen] = useState<string>("");
   const [close, setClose] = useState<string>("");
+  const { storeApi } = useStoreApi();
+  const { setSideBar } = useContext(SideBarContext);
   const date = new Date();
 
-  const { createStore } = useUser();
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const enabled = (description !== "") && (storeName !== "");
+  console.log(enabled);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     let currentDate = date.toJSON().slice(0, 10);
     if (storeName) {
-      createStore({
+      const res = await storeApi.storeControllerCreateStore({
         store_name: storeName,
         store_description: description ? description : "",
-        store_appuser_id: 1,
-        store_lat: 4.636866196500524,
-        store_lon: -74.0835964893141,
+        store_lat: lat,
+        store_lon: lon,
         store_schedule:
           "[" +
           currentDate +
@@ -48,6 +45,10 @@ export function CreateStore() {
           close +
           "]",
       });
+
+      refresh()
+      setSideBar(() => <StoreDisplay storeId={res.data.store_id} />);
+
     }
   };
 
@@ -65,7 +66,7 @@ export function CreateStore() {
               name="storeName"
               id="storeName"
               placeholder=""
-              className={`createStoreInputContainer`}
+              className="createStoreInputContainer"
               onChange={(e) => {
                 setStoreName(e.target.value);
               }}
@@ -76,10 +77,9 @@ export function CreateStore() {
             <textarea
               name="description"
               id="description"
-              className={`createStoreInputContainer description`}
+              className={"createStoreInputContainer description"}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
-            {/* <input type="text" name="" placeholder="" /> */}
             <p className="createStoreInputLabel"> Horario de la tienda </p>
             <div className="createStoreSchedule">
               <label htmlFor="schedule1"></label>
@@ -87,8 +87,7 @@ export function CreateStore() {
                 type="time"
                 name="schedule1"
                 id="schedule1"
-                className={`createStoreInputContainer time`}
-                placeholder=""
+                className={"createStoreInputContainer time"}
                 onChange={(e) => setOpen(e.target.value)}
               />
 
@@ -99,17 +98,18 @@ export function CreateStore() {
                 type="time"
                 name="schedule2"
                 id="schedule2"
-                className={`createStoreInputContainer time`}
-                placeholder=""
+                className={"createStoreInputContainer time"}
                 onChange={(e) => setClose(e.target.value)}
               />
             </div>
 
             <div className="SimpleSeparator" />
-            {/* hay que hacer algo asi pero para la tienda creada
-          {userStatus === AuthStatus.LOGGING_IN && <strong>Cargando...</strong>} 
-          {hasAuthError && <strong>Error de autenticación</strong>}*/}
-            <button className="createStoreButton" type="submit">
+
+            <button
+              className="createStoreButton"
+              disabled={!enabled}
+              type="submit"
+            >
               Crear Tienda
             </button>
           </form>

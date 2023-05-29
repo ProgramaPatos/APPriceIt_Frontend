@@ -1,21 +1,30 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import useStoreApi from "../../hooks/useStoreApi";
 import { useQuery } from "react-query";
 import { StoreResponseDTO } from "../../services/api";
 import "./StoreDisplay.scss";
+import { SideBarContext } from "../GenericSideBar/GenericSideBar";
+import { CreateProduct } from "../CreateProduct/CreateProduct";
+import { CreatePriceForm } from "../CreatePriceForm/CreatePriceForm";
 
-export const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
+export const StoreDisplay: FC<{ storeId: number }> = ({ storeId }) => {
   const { storeApi } = useStoreApi();
   const [isMyStore, setIsMyStore] = useState<boolean>(true);
-  const { data: storeInfo } = useQuery(
-    ["storeProducts", store.store_id],
+  const { setSideBar } = useContext(SideBarContext);
+  const { data } = useQuery(
+    ["storeProducts", storeId],
     async () => {
-      const res = await storeApi.storeControllerGetStoreProducts(
-        store.store_id
+      const prod = await storeApi.storeControllerGetStoreProducts(
+        storeId
       );
-      return res.data;
+      const storeReq = await storeApi.storeControllerGetStore(storeId);
+      return { storeInfo: prod.data, store: storeReq.data };
     }
   );
+  if (!data) {
+    return (<span>Cargando..</span>);
+  }
+  const { storeInfo, store } = data;
   return (
     <div className="InfoBarContainer">
       <h1 className="InfoBarMainTitle">{store.store_name}</h1>
@@ -33,14 +42,14 @@ export const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
               </div>
               <p className="InfoCardSubtitle">Precios</p>
               <div className="InfoCardPrice">
-                {product.product_prices.map((price) => (
-                  <div key={price.price_id}>
-                    <div className="InfoCardPriceValue">
-                      ${price.price_value}
-                    </div>
+                {product.product_prices.map((price) => price && (<div key={price.price_id} >
+                  <div className="InfoCardPriceValue">
+                    ${price.price_value}
                   </div>
-                ))}
+                </div>)
+                )}
               </div>
+              <CreatePriceForm storeId={storeId} productId={product.product_id} />
             </div>
           </div>
         </div>
@@ -48,7 +57,9 @@ export const StoreDisplay: FC<{ store: StoreResponseDTO }> = ({ store }) => {
       {isMyStore ? (
         <div
           className="StoreDIsplayButton"
-          onClick={() => console.log("cambio a crear producto")}
+          onClick={() => {
+            setSideBar(() => <CreateProduct storeId={storeId} />)
+          }}
         >
           <p> Añadir Producto</p>
         </div>

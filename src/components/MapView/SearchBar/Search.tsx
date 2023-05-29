@@ -31,7 +31,6 @@ export function Search({ setSearch }: SearchProps) {
 
   const { data: results, isLoading, isError, error, isFetching } = useQuery<ProductResponseDTO[], AxiosError>(["productSearch", searchInput], async () => {
     if (searchInput) {
-      console.log("buscando", searchInput);
       const { data } = await productApi.productControllerSearchProduct(searchInput);
       return data;
     }

@@ -6,14 +6,23 @@ import useUser from "../../hooks/useUser";
 import { StoreResponseDTO } from "../../services/api";
 import { InlineEdit } from "../InlineEdit/InlineEdit";
 import { ComponentDisplay } from "../ComponentDisplay/ComponentDisplay";
+import useUserApi from "../../hooks/useUserApi";
 
 export function AllStores() {
-  const { getMyStores } = useUser();
-  const stores = getMyStores;
-
+  const { userApi } = useUserApi();
+  const [stores, setStores] = useState<StoreResponseDTO[]>([]);
   const [counter, setCounter] = useState(0);
   const [isUpdatingEnable, setIsUpdatingEnable] = useState(false);
   const [nameStore, setNameStore] = useState("");
+  useEffect(
+    () => {
+      userApi.userControllerGetMyStores().then(
+        ({ data }) => {
+          setStores((data as unknown) as StoreResponseDTO[]);
+        }
+      )
+    }, []);
+
 
   return (
     <div className="AllStoresDisplay">

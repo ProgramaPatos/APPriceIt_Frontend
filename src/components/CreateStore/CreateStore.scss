@@ -25,12 +25,15 @@
    align-self: center;
    border: solid 1px v.$lightSecondary;
    border-radius: 0.2em;
-   &:hover{
+   &:hover:enabled{
       border: solid 2px  v.$lightMain;
       font-weight: 400;
       cursor: pointer;
       color: v.$white;
 
+   }
+   &:disabled {
+      background: rgba(0,0,0,0.5) ;
    }
 }
 

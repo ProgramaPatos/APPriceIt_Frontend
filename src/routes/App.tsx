@@ -73,33 +73,31 @@ function App() {
   // hasta aqui deberia ir en el child de markers y deberia llamar a la funcion que me trae una tienda y la guardo en un estado
 
   return (
-    <UserContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <div className="Container">
-          <Search
-            setSearch={setProductSearch}
+    <QueryClientProvider client={queryClient}>
+      <div className="Container">
+        <Search
+          setSearch={setProductSearch}
+        />
+
+
+        {/* <Header /> */}
+        <Profile card={card} />
+
+        <GenericSideBar>
+          <SideBarMenu
+            card={card}
+            viewPanel={viewPanel}
+            setViewPanel={setViewPanel}
           />
-
-
-          {/* <Header /> */}
-          <Profile card={card} />
-
-          <GenericSideBar>
-            <SideBarMenu
-              card={card}
-              viewPanel={viewPanel}
-              setViewPanel={setViewPanel}
-            />
-            <MyMapContainer
-              setStore={setStore}
-              isSearching={isSearching}
-              setIsSearching={setIsSearching}
-              searchId={productSearch}
-            />
-          </GenericSideBar>
-        </div>
-      </QueryClientProvider>
-    </UserContextProvider>
+          <MyMapContainer
+            setStore={setStore}
+            isSearching={isSearching}
+            setIsSearching={setIsSearching}
+            searchId={productSearch}
+          />
+        </GenericSideBar>
+      </div>
+    </QueryClientProvider>
   );
 }
 

@@ -1,85 +1,75 @@
 import "./CreateProduct.scss";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
-import React, { FormEventHandler, useState } from "react";
-import useUser from "../../hooks/useUser";
+import React, { FormEventHandler, useContext, useState } from "react";
+import useProductApi from "../../hooks/useProductApi";
+import useStoreApi from "../../hooks/useStoreApi";
+import { SideBarContext } from "../GenericSideBar/GenericSideBar";
+import { StoreDisplay } from "../StoreDisplay/StoreDisplay";
 
-type LoginInputFieldProps = TextFieldProps & { endIcon: React.ReactNode };
 
-const LoginInputField: React.FC<LoginInputFieldProps> = (props) => {
-  const { id, label, value, onChange, ...other } = props;
-  return (
-    <TextField
-      id={id}
-      label={label}
-      required={true}
-      value={value}
-      onChange={onChange}
-      {...other}
-    />
-  );
-};
+export const CreateProduct: React.FC<{ storeId: number }> =
+  ({ storeId }) => {
+    const [description, setDescription] = useState<string>("");
+    const [productName, setProductName] = useState<string>("");
+    const { productApi } = useProductApi();
+    const { storeApi } = useStoreApi();
+    const { setSideBar } = useContext(SideBarContext);
 
-export function CreateProduct() {
-  const [description, setDescription] = useState<string>("");
-  const [storeName, setStoreName] = useState<string>("");
+    const enabled = (description !== "") && (productName !== "");
 
-  // creo que habria que cambiar a post product por tienda
+    const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+      e.preventDefault();
+      if (productName) {
+        const res = await productApi.productControllerCreateProduct({
+          product_name: productName,
+          product_description: description ? description : "",
+        });
+        console.log(res);
 
-  const { createProduct } = useUser();
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    if (storeName) {
-      createProduct({
-        product_name: storeName,
-        product_description: description ? description : "",
-        product_appuser_id: 1,
-      });
-    }
-  };
 
-  return (
-    <>
-      <div className="CreateProduct">
-        <h1 className="storeFormTitle">Nuevo producto</h1>
-        <div className="storeFormContainer">
-          <form onSubmit={handleSubmit}>
-            <p className={`CreateProductInputLabel`}> Nombre del producto </p>
-            <label htmlFor="storeName"></label>
+        await storeApi.storeControllerAddProduct(storeId, res.data.product_id, {});
+        setSideBar(() => <StoreDisplay storeId={storeId} />);
+      }
+    };
+    console.log(enabled);
 
-            <input
-              type="text"
-              name="storeName"
-              id="storeName"
-              placeholder=""
-              className={`CreateProductInputContainer`}
-              onChange={(e) => {
-                setStoreName(e.target.value);
-              }}
-            />
+    return (
+      <>
+        <div className="CreateProduct">
+          <h1 className="storeFormTitle">Nuevo producto</h1>
+          <div className="storeFormContainer">
+            <form onSubmit={handleSubmit}>
+              <p className={`CreateProductInputLabel`}> Nombre del producto </p>
+              <label htmlFor="storeName"></label>
 
-            <p className="CreateProductInputLabel">
-              {" "}
-              Descripción de la tienda{" "}
-            </p>
-            <label htmlFor="description"></label>
-            <textarea
-              name="description"
-              id="description"
-              className={`CreateProductInputContainer description`}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-            {/* <input type="text" name="" placeholder="" /> */}
+              <input
+                type="text"
+                name="storeName"
+                id="storeName"
+                placeholder=""
+                className={`CreateProductInputContainer`}
+                onChange={(e) => {
+                  setProductName(e.target.value);
+                }}
+              />
 
-            <div className="SimpleSeparator" />
-            {/* hay que hacer algo asi pero para la tienda creada
-          {userStatus === AuthStatus.LOGGING_IN && <strong>Cargando...</strong>} 
-          {hasAuthError && <strong>Error de autenticación</strong>}*/}
-            <button className="CreateProductButton" type="submit">
-              Crear Producto
-            </button>
-          </form>
+              <p className="CreateProductInputLabel">
+                {" "}
+                Descripción de la tienda{" "}
+              </p>
+              <label htmlFor="description"></label>
+              <textarea
+                name="description"
+                id="description"
+                className={`CreateProductInputContainer description`}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+              <div className="SimpleSeparator" />
+              <button disabled={!enabled} className="CreateProductButton" type="submit" >
+                Crear Producto
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </>
-  );
-}
+      </>
+    );
+  }

@@ -50,11 +50,5 @@ export interface StoreUpdateDTO {
      * @memberof StoreUpdateDTO
      */
     'store_schedule'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof StoreUpdateDTO
-     */
-    'store_appuser_id'?: number;
 }
 

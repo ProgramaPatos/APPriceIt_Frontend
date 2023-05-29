@@ -10,6 +10,7 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Error from "./routes/Error";
 import Create from "./routes/Create";
+import { UserContextProvider } from "./contexts/UserContext";
 
 const router = createBrowserRouter([
   {
@@ -36,9 +37,11 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
+  <UserContextProvider>
+    <React.StrictMode>
+      <RouterProvider router={router} />
+    </React.StrictMode>
+  </UserContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

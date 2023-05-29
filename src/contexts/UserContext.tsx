@@ -13,6 +13,7 @@ import {
   StoreApi,
   StoreCreateDTO,
   ProductCreateDTO,
+  UserApi,
 } from "../services/api";
 import { AuthStatus, UserContextValue } from "../types/user";
 import { Configuration } from "../services/api";
@@ -67,6 +68,14 @@ const storeApi = new StoreApi(
 );
 
 const productApi = new ProductApi(
+  new Configuration({
+    basePath: process.env.REACT_APP_API_BASE_URL,
+  }),
+  undefined,
+  authenticatedAxiosInstance
+);
+
+const userApi = new UserApi(
   new Configuration({
     basePath: process.env.REACT_APP_API_BASE_URL,
   }),
@@ -237,6 +246,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
       value={{
         id: 1,
         storeApi,
+        userApi,
+        authApi,
         signIn,
         logOut,
         userStatus,

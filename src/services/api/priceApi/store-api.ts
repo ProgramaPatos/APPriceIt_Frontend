@@ -24,7 +24,13 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { ProductWithPricesResponseDTO } from '../priceApiModels';
 // @ts-ignore
+import { StoreAssignPriceDTO } from '../priceApiModels';
+// @ts-ignore
+import { StoreAssignProductDTO } from '../priceApiModels';
+// @ts-ignore
 import { StoreCreateDTO } from '../priceApiModels';
+// @ts-ignore
+import { StoreIdResponseDTO } from '../priceApiModels';
 // @ts-ignore
 import { StoreResponseDTO } from '../priceApiModels';
 // @ts-ignore
@@ -35,6 +41,102 @@ import { StoreUpdateDTO } from '../priceApiModels';
  */
 export const StoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Assign a product with id `productId` to the store with id `storeId`
+         * @summary 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignProductDTO} storeAssignProductDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerAddProduct: async (storeId: number, productId: number, storeAssignProductDTO: StoreAssignProductDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            assertParamExists('storeControllerAddProduct', 'storeId', storeId)
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('storeControllerAddProduct', 'productId', productId)
+            // verify required parameter 'storeAssignProductDTO' is not null or undefined
+            assertParamExists('storeControllerAddProduct', 'storeAssignProductDTO', storeAssignProductDTO)
+            const localVarPath = `/store/{storeId}/products/{productId}`
+                .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)))
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(storeAssignProductDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Assign a prize with id `productId` in the store with id `storeId`.
+         * @summary 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerAssignPrice: async (storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            assertParamExists('storeControllerAssignPrice', 'storeId', storeId)
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('storeControllerAssignPrice', 'productId', productId)
+            // verify required parameter 'storeAssignPriceDTO' is not null or undefined
+            assertParamExists('storeControllerAssignPrice', 'storeAssignPriceDTO', storeAssignPriceDTO)
+            const localVarPath = `/store/{storeId}/products/{productId}/price`
+                .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)))
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(storeAssignPriceDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Creates a new store
          * @summary 
@@ -69,6 +171,88 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(storeCreateDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {number} priceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerDeletePrice: async (storeId: number, productId: number, priceId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            assertParamExists('storeControllerDeletePrice', 'storeId', storeId)
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('storeControllerDeletePrice', 'productId', productId)
+            // verify required parameter 'priceId' is not null or undefined
+            assertParamExists('storeControllerDeletePrice', 'priceId', priceId)
+            const localVarPath = `/store/{storeId}/products/{productId}/price/{priceId}`
+                .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)))
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)))
+                .replace(`{${"priceId"}}`, encodeURIComponent(String(priceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} storeId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerDeleteStore: async (storeId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            assertParamExists('storeControllerDeleteStore', 'storeId', storeId)
+            const localVarPath = `/store/{storeId}`
+                .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -212,6 +396,53 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerUpdatePrice: async (storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'storeId' is not null or undefined
+            assertParamExists('storeControllerUpdatePrice', 'storeId', storeId)
+            // verify required parameter 'productId' is not null or undefined
+            assertParamExists('storeControllerUpdatePrice', 'productId', productId)
+            // verify required parameter 'storeAssignPriceDTO' is not null or undefined
+            assertParamExists('storeControllerUpdatePrice', 'storeAssignPriceDTO', storeAssignPriceDTO)
+            const localVarPath = `/store/{storeId}/products/{productId}/price`
+                .replace(`{${"storeId"}}`, encodeURIComponent(String(storeId)))
+                .replace(`{${"productId"}}`, encodeURIComponent(String(productId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(storeAssignPriceDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Updates *ALL* fields of an existing store with id `storeId`
          * @summary 
          * @param {number} storeId 
@@ -266,14 +497,62 @@ export const StoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StoreApiAxiosParamCreator(configuration)
     return {
         /**
+         * Assign a product with id `productId` to the store with id `storeId`
+         * @summary 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignProductDTO} storeAssignProductDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerAddProduct(storeId: number, productId: number, storeAssignProductDTO: StoreAssignProductDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerAddProduct(storeId, productId, storeAssignProductDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Assign a prize with id `productId` in the store with id `storeId`.
+         * @summary 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerAssignPrice(storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerAssignPrice(storeId, productId, storeAssignPriceDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Creates a new store
          * @summary 
          * @param {StoreCreateDTO} storeCreateDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerCreateStore(storeCreateDTO: StoreCreateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async storeControllerCreateStore(storeCreateDTO: StoreCreateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreIdResponseDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerCreateStore(storeCreateDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {number} priceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerDeletePrice(storeId: number, productId: number, priceId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerDeletePrice(storeId, productId, priceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {number} storeId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerDeleteStore(storeId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerDeleteStore(storeId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -313,6 +592,18 @@ export const StoreApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async storeControllerUpdatePrice(storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerUpdatePrice(storeId, productId, storeAssignPriceDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Updates *ALL* fields of an existing store with id `storeId`
          * @summary 
          * @param {number} storeId 
@@ -320,7 +611,7 @@ export const StoreApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async storeControllerUpdateStore(storeId: number, storeUpdateDTO: StoreUpdateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async storeControllerUpdateStore(storeId: number, storeUpdateDTO: StoreUpdateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StoreIdResponseDTO>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.storeControllerUpdateStore(storeId, storeUpdateDTO, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -335,14 +626,58 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = StoreApiFp(configuration)
     return {
         /**
+         * Assign a product with id `productId` to the store with id `storeId`
+         * @summary 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignProductDTO} storeAssignProductDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerAddProduct(storeId: number, productId: number, storeAssignProductDTO: StoreAssignProductDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerAddProduct(storeId, productId, storeAssignProductDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Assign a prize with id `productId` in the store with id `storeId`.
+         * @summary 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerAssignPrice(storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerAssignPrice(storeId, productId, storeAssignPriceDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Creates a new store
          * @summary 
          * @param {StoreCreateDTO} storeCreateDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerCreateStore(storeCreateDTO: StoreCreateDTO, options?: any): AxiosPromise<void> {
+        storeControllerCreateStore(storeCreateDTO: StoreCreateDTO, options?: any): AxiosPromise<StoreIdResponseDTO> {
             return localVarFp.storeControllerCreateStore(storeCreateDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {number} priceId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerDeletePrice(storeId: number, productId: number, priceId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerDeletePrice(storeId, productId, priceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} storeId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerDeleteStore(storeId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerDeleteStore(storeId, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns information of store with `storeId`
@@ -378,6 +713,17 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.storeControllerSearchStores(lat, lon, distance, productId, options).then((request) => request(axios, basePath));
         },
         /**
+         * 
+         * @param {number} storeId 
+         * @param {number} productId 
+         * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        storeControllerUpdatePrice(storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.storeControllerUpdatePrice(storeId, productId, storeAssignPriceDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Updates *ALL* fields of an existing store with id `storeId`
          * @summary 
          * @param {number} storeId 
@@ -385,7 +731,7 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        storeControllerUpdateStore(storeId: number, storeUpdateDTO: StoreUpdateDTO, options?: any): AxiosPromise<void> {
+        storeControllerUpdateStore(storeId: number, storeUpdateDTO: StoreUpdateDTO, options?: any): AxiosPromise<StoreIdResponseDTO> {
             return localVarFp.storeControllerUpdateStore(storeId, storeUpdateDTO, options).then((request) => request(axios, basePath));
         },
     };
@@ -399,6 +745,34 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
  */
 export class StoreApi extends BaseAPI {
     /**
+     * Assign a product with id `productId` to the store with id `storeId`
+     * @summary 
+     * @param {number} storeId 
+     * @param {number} productId 
+     * @param {StoreAssignProductDTO} storeAssignProductDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerAddProduct(storeId: number, productId: number, storeAssignProductDTO: StoreAssignProductDTO, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerAddProduct(storeId, productId, storeAssignProductDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Assign a prize with id `productId` in the store with id `storeId`.
+     * @summary 
+     * @param {number} storeId 
+     * @param {number} productId 
+     * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerAssignPrice(storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerAssignPrice(storeId, productId, storeAssignPriceDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Creates a new store
      * @summary 
      * @param {StoreCreateDTO} storeCreateDTO 
@@ -408,6 +782,30 @@ export class StoreApi extends BaseAPI {
      */
     public storeControllerCreateStore(storeCreateDTO: StoreCreateDTO, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeControllerCreateStore(storeCreateDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} storeId 
+     * @param {number} productId 
+     * @param {number} priceId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerDeletePrice(storeId: number, productId: number, priceId: number, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerDeletePrice(storeId, productId, priceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} storeId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerDeleteStore(storeId: number, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerDeleteStore(storeId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -447,6 +845,19 @@ export class StoreApi extends BaseAPI {
      */
     public storeControllerSearchStores(lat: number, lon: number, distance: number, productId?: number, options?: AxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeControllerSearchStores(lat, lon, distance, productId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} storeId 
+     * @param {number} productId 
+     * @param {StoreAssignPriceDTO} storeAssignPriceDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoreApi
+     */
+    public storeControllerUpdatePrice(storeId: number, productId: number, storeAssignPriceDTO: StoreAssignPriceDTO, options?: AxiosRequestConfig) {
+        return StoreApiFp(this.configuration).storeControllerUpdatePrice(storeId, productId, storeAssignPriceDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
