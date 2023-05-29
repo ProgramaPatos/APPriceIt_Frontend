@@ -8,7 +8,7 @@ import { InlineEdit } from "../InlineEdit/InlineEdit";
 import { ComponentDisplay } from "../ComponentDisplay/ComponentDisplay";
 import useUserApi from "../../hooks/useUserApi";
 
-export function AllStores() {
+export function AllStores({ refresh }: { refresh: () => void }) {
   const { userApi } = useUserApi();
   const [stores, setStores] = useState<StoreResponseDTO[]>([]);
   const [counter, setCounter] = useState(0);
@@ -30,7 +30,7 @@ export function AllStores() {
       <div className="AllStoresContainer">
         <h1 className="AllStoresMainTitle">Tus tiendas</h1>
         {stores.map((store: StoreResponseDTO) => {
-          return <ComponentDisplay store={store} />;
+          return <ComponentDisplay key={store.store_id} store={store} />;
         })}
       </div>
     </div>

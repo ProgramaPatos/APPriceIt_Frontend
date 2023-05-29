@@ -54,13 +54,16 @@ type MyMapContainerProps = {
   isSearching: boolean;
   setIsSearching: (b: boolean) => void;
   searchId: number | null;
+  setRefresh: (f: () => void) => void;
 };
 const MyMapContainer: FC<MyMapContainerProps> = ({
   setStore,
   isSearching,
   setIsSearching,
   searchId,
+  setRefresh
 }) => {
+  const [ctxMenuCoords, setCtxMenuCoords] = useState<null | mapboxgl.LngLat>(null);
   const { userStatus } = useUser();
   const { storeApi } = useStoreApi();
   const { setSideBar } = useContext(SideBarContext);
@@ -89,11 +92,12 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
   const onMove = useCallback<(e: ViewStateChangeEvent) => void>(
     ({ viewState }) => {
       setViewState(viewState);
+      setCtxMenuCoords(null);
     },
     []
   );
 
-  const onMoveEnd = useCallback<(e: ViewStateChangeEvent) => void>(
+  const onMoveEnd: (e: ViewStateChangeEvent) => void =
     ({ viewState }) => {
 
       if (
@@ -104,9 +108,8 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
         setQueriedViewState(viewState);
         setQueriedBounds(mapRef.current?.getBounds() ?? null);
       }
-    },
-    []
-  );
+    }
+    ;
   const [geoIsLoading, setGeoIsLoading] = useState<boolean>(true);
   const onGeoSuccess = useCallback((position: GeolocationPosition) => {
     const { latitude, longitude } = position.coords;
@@ -136,6 +139,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
         !geoIsLoading,
     }
   );
+
 
   type StoreGeoJSONProp = { name: string, store: string };
   const storesGeoJSON = useMemo(() => {
@@ -177,7 +181,6 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
     }
   }, []);
 
-  const [ctxMenuCoords, setCtxMenuCoords] = useState<null | mapboxgl.LngLat>(null);
   const onContextMenu = useCallback((e: MapLayerMouseEvent) => {
     if (mapRef.current) {
       setCtxMenuCoords(e.lngLat)
@@ -220,8 +223,8 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
             longitude={ctxMenuCoords.lng}
             latitude={ctxMenuCoords.lat}
           >
-            <menu className="menu">
-              <li><button
+            <menu className="context-menu">
+              <div className="context-menu-item"
                 onClick={() => {
                   setCtxMenuCoords(null);
                   setSideBar(() => <CreateStore
@@ -232,7 +235,7 @@ const MyMapContainer: FC<MyMapContainerProps> = ({
                 }}
               >
                 Añadir Tienda
-              </button></li>
+              </div>
             </menu>
           </Marker>
         }

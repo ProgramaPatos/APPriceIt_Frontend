@@ -52,25 +52,7 @@ function App() {
     url: "/",
   };
 
-  //se supone que desde un child de markers debo llamar a la funcion que me trae una tienda y la guardo en un estado
-
-  // const exampleStore: StoreApi = {
-  //   store_location: {
-  //     type: "Point",
-  //     coordinates: [-74.091117035, 4.63663201],
-  //   },
-  //   store_id: 7974,
-  //   store_name: "Hemeroteca Nacional",
-  //   store_description: "Repositorio de revistas de la UN",
-  //   store_schedule: "string",
-  //   store_creation_time: "2023-04-21T20:14:01.539Z",
-  //   store_appuser_id: 1,
-  //   store_distance: 0,
-  // };
-
-  // setStore(exampleStore);
-
-  // hasta aqui deberia ir en el child de markers y deberia llamar a la funcion que me trae una tienda y la guardo en un estado
+  const [refresh, setRefresh] = useState<() => void>(() => () => {});
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -88,12 +70,14 @@ function App() {
             card={card}
             viewPanel={viewPanel}
             setViewPanel={setViewPanel}
+            refresh={refresh}
           />
           <MyMapContainer
             setStore={setStore}
             isSearching={isSearching}
             setIsSearching={setIsSearching}
             searchId={productSearch}
+            setRefresh={(f: () => void) => { setRefresh(() => f) }}
           />
         </GenericSideBar>
       </div>

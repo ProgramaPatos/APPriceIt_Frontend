@@ -8,6 +8,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 
 type SideBarContextValue = {
   setSideBar: (e: (() => JSX.Element) | null) => void;
@@ -35,6 +36,13 @@ const GenericSideBar: FC<PropsWithChildren> = ({ children }) => {
   return (
     <SideBarContext.Provider value={{ setSideBar }}>
       <div className={`SideBar ${(open ? "expanded" : "collapsed")}`} >
+        <div className="panelHeader">
+          {open && (
+            <button className="ExBurgerButton" onClick={() => { setOpen(false) }}>
+              <AiOutlineClose style={{ height: "2.7vh" }} />
+            </button>
+          )}
+        </div>
         <Child />
       </div>
       {children}

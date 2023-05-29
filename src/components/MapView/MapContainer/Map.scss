@@ -11,11 +11,28 @@
   height: 100%;
 }
 
-.menu {
-  background-color: white;
-  border-radius: 1em;
+
+.context-menu {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  padding: 4px 0;
+  z-index: 1000;
+  border-radius: 0.5em;
 }
-   
+
+/* Context Menu Item */
+.context-menu-item {
+  display: block;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #333;
+  border-radius: 0.5em;
+}
+
+.context-menu-item:hover {
+  background-color: rgba(0,0,0,0.2);
+}
 
 .navControl{
   right: 6rem;

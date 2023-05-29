@@ -18,12 +18,14 @@ interface SideBarMenuProps {
   card: SideMenuCard;
   viewPanel: boolean;
   setViewPanel: (value: boolean) => void;
+  refresh: () => void;
 }
 
 export function SideBarMenu({
   card,
   viewPanel,
   setViewPanel,
+  refresh
 }: SideBarMenuProps) {
   const [isOPen, setIsOpen] = useState<boolean>(false);
   const { setSideBar } = useContext(SideBarContext);
@@ -37,7 +39,7 @@ export function SideBarMenu({
       ),
       url: "/",
       onClick: () => {
-        setSideBar(AllStores);
+        setSideBar(() => <AllStores refresh={refresh} />);
       },
     },
 

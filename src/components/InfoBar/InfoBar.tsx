@@ -14,7 +14,7 @@ interface InfoCardProps {
 export function InfoBar({
   viewPanel,
   setViewPanel,
-  store
+  store,
 }: InfoCardProps) {
 
 
