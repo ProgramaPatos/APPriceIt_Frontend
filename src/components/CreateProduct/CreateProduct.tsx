@@ -23,14 +23,14 @@ export const CreateProduct: React.FC<{ storeId: number }> =
           product_name: productName,
           product_description: description ? description : "",
         });
-        console.log(res);
+        // // console.log(res);
 
 
         await storeApi.storeControllerAddProduct(storeId, res.data.product_id, {});
         setSideBar(() => <StoreDisplay storeId={storeId} />);
       }
     };
-    console.log(enabled);
+    // // console.log(enabled);
 
     return (
       <>

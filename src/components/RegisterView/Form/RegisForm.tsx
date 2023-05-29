@@ -58,7 +58,7 @@ export default function RegisterForm() {
       appuser_password: password
     });
 
-    console.log("got here");
+    // console.log("got here");
     window.location.replace("/");
   };
 

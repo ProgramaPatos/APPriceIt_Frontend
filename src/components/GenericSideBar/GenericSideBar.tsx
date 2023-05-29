@@ -24,7 +24,7 @@ const GenericSideBar: FC<PropsWithChildren> = ({ children }) => {
 
   const setSideBar: SideBarContextValue["setSideBar"] = useCallback((v) => {
     if (v === null) {
-      console.log("Got here");
+      // console.log("Got here");
       setOpen(false);
     }
     else {

@@ -35,7 +35,7 @@ function Create(): JSX.Element {
     const submitSuccess: boolean = true || (await submitform(formData)); //delete true
     setSubmitSuccess(submitSuccess);
     setValues({ ...values, formData });
-    console.log(formData);
+    // console.log(formData);
     setLoading(false);
     setTimeout(() => {
       navigate("/");

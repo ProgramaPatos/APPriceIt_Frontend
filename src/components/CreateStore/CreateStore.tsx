@@ -23,7 +23,7 @@ export const CreateStore: FC<CreateStoreProps> = ({ lon, lat, refresh }) => {
   const date = new Date();
 
   const enabled = (description !== "") && (storeName !== "");
-  console.log(enabled);
+  // console.log(enabled);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();

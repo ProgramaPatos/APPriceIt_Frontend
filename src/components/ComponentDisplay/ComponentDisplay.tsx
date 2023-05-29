@@ -49,7 +49,7 @@ export const ComponentDisplay: FC<{ store: StoreResponseDTO }> = ({
             />
             <AiOutlineClose
               onClick={() => {
-                console.log("borrar tienda");
+                // console.log("borrar tienda");
                 //deleteStore(store.store_id);
               }}
             />

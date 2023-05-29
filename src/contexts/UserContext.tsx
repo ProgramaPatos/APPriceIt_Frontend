@@ -109,7 +109,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
           deleteRefreshToken();
           setHasAuthError(true);
           setUserStatus(AuthStatus.UNAUTHENTICATED);
-          console.log(err);
+          // console.log(err);
         });
     },
     [
@@ -131,15 +131,15 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
   const createStore = useCallback(
     (requestPayload: StoreCreateDTO) => {
-      console.log(requestPayload, "requestPayload)");
+      // console.log(requestPayload, "requestPayload)");
       setUserStatus(AuthStatus.LOGGING_IN);
       storeApi
         .storeControllerCreateStore(requestPayload)
         .then(() => {
-          console.log("Store Created");
+          // console.log("Store Created");
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
     },
     [storeApi]
@@ -147,15 +147,15 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
   const createProduct = useCallback(
     (requestPayload: ProductCreateDTO) => {
-      console.log(requestPayload, "requestPayload)");
+      // console.log(requestPayload, "requestPayload)");
       setUserStatus(AuthStatus.LOGGING_IN);
       productApi
         .productControllerCreateProduct(requestPayload)
         .then(() => {
-          console.log("Product Created");
+          // console.log("Product Created");
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     },
     [storeApi]
