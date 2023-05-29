@@ -1,0 +1,24 @@
+@use '../variables' as v;
+@import '../commons.scss';
+/* Chrome, Safari, Edge, Opera */
+.priceFormInput::-webkit-outer-spin-button,
+.priceFormInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.priceFormInput[type=number] {
+  -moz-appearance: textfield;
+}
+.priceFormInput {
+  background-color: rgba(v.$darkSecondary , 0.3);
+  border-radius: 0.5em;
+  height: 3vh;
+  padding: 0 0.5em;
+  color: v.$white;
+}
+
+.priceFormInput:focus {
+      
+}
